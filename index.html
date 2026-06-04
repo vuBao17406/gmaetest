@@ -752,6 +752,9 @@ function login() {
     errEl.innerText = '❌ Sai mật mã! Kiểm tra lại hoặc liên hệ BTC.'; return;
   }
   APP.team = team;
+  try {
+    localStorage.setItem('gdpt_logged_team', team);
+  } catch (e) {}
   document.getElementById('team-passcode').value = '';
   document.getElementById('team-badge').innerText = team;
   updateStations();
@@ -760,6 +763,9 @@ function login() {
 
 function logout() {
   APP.team = '';
+  try {
+    localStorage.removeItem('gdpt_logged_team');
+  } catch (e) {}
   document.getElementById('team-passcode').value = '';
   document.getElementById('login-err').innerText = '';
   goScreen('scr-login');
@@ -1101,6 +1107,15 @@ function loadLocal() {
 
 // Khởi động
 loadLocal();
+try {
+  const savedTeam = localStorage.getItem('gdpt_logged_team');
+  if (savedTeam && PASSCODES[savedTeam]) {
+    APP.team = savedTeam;
+    document.getElementById('team-badge').innerText = savedTeam;
+    updateStations();
+    goScreen('scr-stations');
+  }
+} catch (e) {}
 </script>
 </body>
 </html>
