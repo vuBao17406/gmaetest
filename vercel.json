@@ -6,6 +6,10 @@
       "dest": "/api/chat.js"
     },
     {
+      "src": "/game_clean.html",
+      "dest": "/index.html"
+    },
+    {
       "src": "/",
       "dest": "/index.html"
     }
