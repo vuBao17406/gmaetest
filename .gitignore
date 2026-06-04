@@ -1,0 +1,5 @@
+# Không đưa API key lên GitHub
+.env
+
+# Node modules (nếu có)
+node_modules/
