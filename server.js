@@ -181,13 +181,13 @@ async function handleGemini(geminiApiKey, clientPayload) {
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer(async (req, res) => {
-  // 1. Serve frontend (game_clean.html)
-  if (req.method === 'GET' && (req.url === '/' || req.url === '/game_clean.html')) {
-    const filePath = path.join(__dirname, 'game_clean.html');
+  // 1. Serve frontend (index.html)
+  if (req.method === 'GET' && (req.url === '/' || req.url === '/index.html')) {
+    const filePath = path.join(__dirname, 'index.html');
     fs.readFile(filePath, (err, content) => {
       if (err) {
         res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('Error loading game_clean.html');
+        res.end('Error loading index.html');
       } else {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         res.end(content);

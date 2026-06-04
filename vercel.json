@@ -7,7 +7,7 @@
     },
     {
       "src": "/",
-      "dest": "/game_clean.html"
+      "dest": "/index.html"
     }
   ]
 }
