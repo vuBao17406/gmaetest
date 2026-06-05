@@ -1255,6 +1255,9 @@ try {
     goScreen('scr-stations');
   }
 } catch (e) {}
+document.addEventListener("contextmenu", e => {
+   e.preventDefault();
+});
 </script>
 </body>
 </html>
