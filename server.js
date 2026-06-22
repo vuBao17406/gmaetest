@@ -182,7 +182,8 @@ const PORT = process.env.PORT || 3000;
 
 const server = http.createServer(async (req, res) => {
   // 1. Serve frontend (index.html)
-  if (req.method === 'GET' && (req.url === '/' || req.url === '/index.html')) {
+  const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+  if (req.method === 'GET' && !parsedUrl.pathname.startsWith('/api/')) {
     const filePath = path.join(__dirname, 'index.html');
     fs.readFile(filePath, (err, content) => {
       if (err) {
