@@ -1261,5 +1261,69 @@ document.addEventListener("contextmenu", e => {
 });
 
 </script>
+<style>
+  #zalo-warning-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 999999;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 20px;
+    font-family: sans-serif;
+  }
+  #zalo-warning-overlay.active {
+    display: flex;
+  }
+  .zalo-warning-box {
+    background: #fff;
+    color: #333;
+    padding: 30px 20px;
+    border-radius: 12px;
+    max-width: 400px;
+  }
+  .zalo-warning-box h3 {
+    margin-top: 0;
+    color: #0068ff;
+  }
+  .zalo-warning-box p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .zalo-guide-img {
+    margin: 15px 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff3b30;
+  }
+</style>
+
+<div id="zalo-warning-overlay">
+  <div class="zalo-warning-box">
+    <h3>Trải nghiệm chưa tốt trên Zalo</h3>
+    <p>Zalo có thể chặn một số tính năng của website. Để trang web hoạt động tốt nhất, vui lòng mở bằng trình duyệt ngoài.</p>
+    <div class="zalo-guide-img">
+      &#x22EE;
+    </div>
+    <p><strong>Bước 1:</strong> Nhấn vào biểu tượng 3 chấm ở góc trên bên phải màn hình.<br><br>
+    <strong>Bước 2:</strong> Chọn <b>"Mở bằng trình duyệt"</b> (hoặc "Open in browser").</p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var isZalo = /Zalo/i.test(navigator.userAgent);
+    if (isZalo) {
+      document.getElementById('zalo-warning-overlay').classList.add('active');
+    }
+  });
+</script>
 </body>
 </html>
