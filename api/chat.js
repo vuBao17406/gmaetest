@@ -33,12 +33,39 @@ function handleLocalMockAI(clientPayload) {
       break;
 
     case 2:
-      if (query.includes('pháp cú') || query.includes('kinh') || query.includes('kệ') || query.includes('đáp án') || query.includes('tâm')) {
-        text = "🤖 Câu kệ đầu tiên Kinh Pháp Cú: '... dẫn đầu các pháp, ... là chủ, ... tạo tác'. Chữ còn thiếu xuất hiện 3 lần liên tiếp — đó chính là chìa khóa vàng bạn cần tìm! 🤫";
-      } else if (query.includes('phật') || query.includes('giáo') || query.includes('ý thức')) {
-        text = "🤖 Phật giáo dạy rằng vạn vật đều do tư tưởng dẫn dắt. Chữ đó liên quan đến 'tấm lòng', 'suy nghĩ', 'ý thức' của mỗi người... 🧘";
+      if (
+        query.includes('nhóm 1') || query.includes('nhóm một') || query.includes('nhom 1') || query.includes('nhom mot') ||
+        query.includes('mica') || query.includes('sơ đồ') || query.includes('so do') || query.includes('mạch') || query.includes('mach') ||
+        query.includes('đè') || query.includes('de up') || query.includes('vẽ') || query.includes('ve') || query.includes('đường lạ') ||
+        query.includes('duong la') || query.includes('bản tin') || query.includes('ban tin')
+      ) {
+        text = "🤖 LOTUS-X gợi ý Nhóm 1: Sau khi giải xong bản tin, hãy dùng sơ đồ mạch điện và đè tấm mica lên (hoặc vẽ các đường lạ trên mạch) để tìm ra một dãy gồm 5 chữ số của nhóm mình. Chú ý: dãy số này chưa đúng thứ tự nhé! 🤫";
+      } else if (
+        query.includes('nhóm 2') || query.includes('nhóm hai') || query.includes('nhom 2') || query.includes('nhom hai') ||
+        query.includes('5 trụ') || query.includes('5 tru') || query.includes('trục') || query.includes('truc') || query.includes('trụ') ||
+        query.includes('tru') || query.includes('hoàn thành') || query.includes('hoan thanh') || query.includes('toán') || query.includes('toan') ||
+        query.includes('phật pháp') || query.includes('phat phap') || query.includes('kỹ năng') || query.includes('ky nang') ||
+        query.includes('bài hát') || query.includes('bai hat') || query.includes('lịch sử') || query.includes('lich su')
+      ) {
+        text = "🤖 LOTUS-X gợi ý Nhóm 2: Các bạn cần vượt qua 5 trụ thử thách (Toán, Phật Pháp, Kỹ năng, Đoán bài hát, Lịch sử Đức Phật) để nhận 5 con số chỉ vị trí tương ứng. Hãy đi hết cả 5 trụ để thu thập đầy đủ dãy số vị trí nhé! 🧭";
+      } else if (
+        query.includes('quy luật') || query.includes('quy luat') || query.includes('liên kết') || query.includes('lien ket') ||
+        query.includes('giải mã') || query.includes('giai ma') || query.includes('ghép') || query.includes('ghep') ||
+        query.includes('thứ tự') || query.includes('thu tu') || query.includes('cách giải') || query.includes('cach giai') ||
+        query.includes('hint') || query.includes('gợi ý') || query.includes('goi y') || query.includes('phối hợp') ||
+        query.includes('phoi hop') || query.includes('đối chiếu') || query.includes('doi chieu') || query.includes('kết hợp') ||
+        query.includes('ket hop') || query.includes('2 nhóm') || query.includes('2 nhom') || query.includes('làm sao') ||
+        query.includes('lam sao') || query.includes('hướng dẫn') || query.includes('huong dan')
+      ) {
+        text = "🤖 LOTUS-X hướng dẫn quy luật giải mã:\n- Nhóm 1 tìm được một dãy số (đặt trên tờ giấy ghép lại).\n- Nhóm 2 tìm được dãy số vị trí sau khi hoàn thành 5 trụ.\n- Quy luật: Dãy số của Nhóm 2 chính là thứ tự để lấy các chữ số của Nhóm 1. Ví dụ, nếu Nhóm 2 có số đầu tiên là X, các bạn hãy lấy chữ số ở vị trí X của Nhóm 1 làm chữ số đầu tiên của mật mã. Cứ tương tự như vậy đối chiếu giữa 2 nhóm để ra mật mã cuối cùng! 🔑";
+      } else if (
+        query.includes('mật mã') || query.includes('mat ma') || query.includes('đáp án') || query.includes('dap an') ||
+        query.includes('cuối cùng') || query.includes('cuoi cung') || query.includes('mật thư') || query.includes('mat thu') ||
+        query.includes('kết quả') || query.includes('ket qua') || query.includes('mã') || query.includes('ma')
+      ) {
+        text = "🤖 LOTUS-X gợi ý: Mật mã cuối cùng gồm 5 chữ số. Hãy lấy dãy số tìm được ở Nhóm 1 xếp lại theo thứ tự vị trí tương ứng từ dãy số tìm được ở Nhóm 2. Hai nhóm hãy phối hợp, gọi điện hoặc trao đổi thông tin với nhau để giải nhé! 🌟";
       } else {
-        text = "🤖 Trạm 2: Vùng Mã Hóa Bí Ẩn. Hỏi tôi về câu kệ đầu tiên của Kinh Pháp Cú để tìm đáp án! 📖";
+        text = "🤖 Trạm 2: Vùng Mã Hóa Bí Ẩn. Trạm này mỗi đội tách làm 2 nhóm:\n- Nhóm 1: Giải sơ đồ mạch điện đè tấm mica để tìm số.\n- Nhóm 2: Hoàn thành 5 trụ để tìm vị trí.\nHãy hỏi tôi về 'nhóm 1', 'nhóm 2' hoặc 'quy luật giải mã' để nhận gợi ý! 📡";
       }
       break;
 

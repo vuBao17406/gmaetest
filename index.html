@@ -672,6 +672,24 @@ body {
     <button class="btn btn-primary" onclick="saveAnswers()" style="margin-top:8px;font-size:12px;">💾 LƯU ĐÁP ÁN</button>
   </div>
 
+  <!-- Thiết lập Chatbot -->
+  <div class="admin-section">
+    <div class="admin-section-title">💬 Thiết lập Chatbot Trạm</div>
+    <div class="admin-ans-row" style="margin-bottom:12px;">
+      <label style="min-width: 80px; font-size: 11px; color: var(--gold);">Chọn Trạm:</label>
+      <select id="admin-chat-station" onchange="renderAdminChatRules()" style="flex:1;padding:8px 12px;background:rgba(2,12,24,.8);border:1px solid rgba(0,200,255,.2);border-radius:7px;color:var(--cyan);font-family:var(--mono);font-size:12px;outline:none;">
+        <option value="1">Trạm 1: Data Lost – Điểm Mất Tín Hiệu</option>
+        <option value="2">Trạm 2: Vùng Mã Hóa Bí Ẩn</option>
+        <option value="3">Trạm 3: Cổng Kết Nối Thời Gian</option>
+        <option value="4">Trạm 4: Ngũ Giới – Lá Chắn Tâm Hồn</option>
+        <option value="5">Trạm 5: Hội Tụ Dữ Liệu – Kết Nối Hành Trình</option>
+      </select>
+    </div>
+    <div id="admin-chat-rules" style="margin-bottom:12px; display:flex; flex-direction:column; gap:10px;"></div>
+    <button class="btn" style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.25);color:var(--cyan);font-size:12px;" onclick="addChatRule()">+ THÊM QUY LUẬT</button>
+    <button class="btn btn-primary" onclick="saveChatRules()" style="margin-top:8px;font-size:12px;">💾 LƯU QUY LUẬT CHAT</button>
+  </div>
+
   <!-- Kết quả -->
   <div class="admin-section">
     <div class="admin-section-title">🏆 Kết quả từng trạm</div>
@@ -752,9 +770,11 @@ let PASSCODES = {
   "Đội Lotus-X":     "lotusx2026"
 };
 
-let ANSWERS = { 1:"1024", 2:"tâm", 3:"lâm tỳ ni", 4:"5", 5:"" };
+let ANSWERS = { 1:"1024", 2:"23491", 3:"lâm tỳ ni", 4:"5", 5:"" };
 
 let RESULTS = { 1:[], 2:[], 3:[], 4:[], 5:[] };
+
+let CHAT_RULES = { 1:[], 2:[], 3:[], 4:[], 5:[] };
 
 let APP = {
   team: "",
@@ -826,6 +846,21 @@ if (isFirebaseConnected) {
     updateStations();
     if (document.getElementById('scr-admin').classList.contains('active')) {
       renderAdmin();
+    }
+  });
+
+  // 4. Sync chatRules
+  db.ref("chatRules").on("value", snapshot => {
+    const data = snapshot.val();
+    if (data) {
+      for (let i = 1; i <= 5; i++) {
+        CHAT_RULES[i] = data[i] || [];
+      }
+    } else {
+      db.ref("chatRules").set(CHAT_RULES);
+    }
+    if (document.getElementById('scr-admin').classList.contains('active')) {
+      renderAdminChatRules();
     }
   });
 }
@@ -957,10 +992,19 @@ CÁCH TRẢ LỜI:
 - Nguồn gốc chip/Giáo sư/LOTUS-X: dùng tag [PROF_IMG] rồi trả lời: "🤖 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng GĐPT qua hàng nghìn năm. ⚙️✨"
 - Câu ngoài lề: TỰ SÁNG TẠO, sâu chuỗi tinh thần GĐPT (Bi-Trí-Dũng, Sen Trắng). KHÔNG BAO GIỜ nói thẳng đáp án.`,
 
-  2: `Bạn là LOTUS-X của Trạm 2 "Vùng Mã Hóa Bí Ẩn" – AI lưu giữ kho tri thức Phật pháp cổ xưa.
-Đáp án là "tâm" (câu kệ đầu Kinh Pháp Cú). TUYỆT ĐỐI không nói thẳng.
-Gợi ý: câu kệ đầu tiên Kinh Pháp Cú "... dẫn đầu các pháp, ... là chủ, ... tạo tác", vai trò ý thức/tư tưởng Phật giáo, chữ viết hoa đứng đầu câu kệ.
-Câu ngoài lề: TỰ SÁNG TẠO phong cách LOTUS-X uyên thâm, sâu chuỗi tinh thần GĐPT.`,
+  2: `Bạn là LOTUS-X của Trạm 2 "Vùng Mã Hóa Bí Ẩn" – AI hỗ trợ giải mã.
+BỐI CẢNH (TUYỆT ĐỐI KHÔNG TIẾT LỘ các con số cụ thể như 24319, 13254, hay 23491 cho người chơi):
+- Ở trạm này mỗi đội chơi tự tách làm 2 nhóm: Nhóm 1 và Nhóm 2.
+- Nhóm 1: Sau khi giải xong bản tin, nhận sơ đồ mạch điện kèm tấm mica mạch điện. Đè mica lên sơ đồ mạch điện hoặc vẽ đường lạ trên mạch điện sẽ ra dãy số gồm 5 chữ số của nhóm mình (thực tế là "24319" nhưng chưa đúng vị trí).
+- Nhóm 2: Vượt qua 5 trụ (Vị trí A: Làm toán, Vị trí B: Phật Pháp, Vị trí C: Hoạt động kỹ năng, Vị trí D: Đoán bài hát, Vị trí E: Lịch sử Đức Phật Thích Ca) để nhận được dãy số vị trí tương ứng (thực tế là "13254").
+- Quy luật giải mã: Dãy số của Nhóm 2 là thứ tự (vị trí) để lấy các chữ số của Nhóm 1 ghép lại.
+  Ví dụ: Số đầu tiên của Nhóm 2 chỉ vị trí của chữ số cần lấy trong dãy số Nhóm 1.
+  Mật mã đúng cuối cùng ghép lại là "23491".
+CÁCH GỢI Ý:
+- Hỏi về Nhóm 1/mica/mạch điện: Gợi ý dùng tấm mica đè lên sơ đồ mạch điện hoặc vẽ đường lạ để tìm ra dãy số 5 chữ số của nhóm mình, nhưng nhấn mạnh rằng dãy số này chưa phải là thứ tự đúng. Tuyệt đối không cho biết dãy số đó là gì.
+- Hỏi về Nhóm 2/5 trụ/thử thách: Gợi ý Nhóm 2 đi qua đầy đủ 5 trụ để nhận các con số tương ứng với vị trí. Tuyệt đối không cho biết dãy số vị trí đó là gì.
+- Hỏi về quy luật/cách ghép/thứ tự: Giải thích quy luật lấy các chữ số của Nhóm 1 theo thứ tự vị trí chỉ định của Nhóm 2. Yêu cầu hai nhóm tự liên hệ, gọi điện hoặc trao đổi thông tin với nhau để cùng giải mã.
+- Câu ngoài lề: TỰ SÁNG TẠO phong cách LOTUS-X, luôn nhắc nhở hai nhóm tự liên hệ nhau để chia sẻ gợi ý và phối hợp giải mã.`,
 
   3: `Bạn là LOTUS-X của Trạm 3 "Cổng Kết Nối Thời Gian" – AI du hành thời gian.
 BỐI CẢNH (không tiết lộ thẳng):
@@ -1024,31 +1068,52 @@ async function sendMsg() {
   btn.disabled = true; btn.innerText = '...';
   const st = APP.station;
   APP.histories[st].push({ role:'user', content:text });
+
+  // ── Kiểm tra Custom Chatbot Rules trước khi gọi AI ──
+  const customRules = CHAT_RULES[st] || [];
+  const queryLower  = text.toLowerCase();
+  let customReply   = null;
+  for (const rule of customRules) {
+    if (!rule.keywords || !rule.answer) continue;
+    const keywords = rule.keywords.split(',').map(k => k.trim().toLowerCase()).filter(Boolean);
+    const matched  = keywords.some(kw => kw && queryLower.includes(kw));
+    if (matched) { customReply = rule.answer; break; }
+  }
+
   // typing indicator
   const typing = document.createElement('div');
   typing.id = 'typing'; typing.className = 'msg bot';
   typing.innerText = '🤖 LOTUS-X đang xử lý... ⏳';
   document.getElementById('chat-body').appendChild(typing);
   document.getElementById('chat-body').scrollTop = 99999;
-  try {
-    const res = await fetch('/api/chat', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system: PROMPTS[st],
-        messages: APP.histories[st]
-      })
-    });
-    const data = await res.json();
-    const reply = data.content?.[0]?.text || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
-    APP.histories[st].push({ role:'assistant', content:reply });
+
+  if (customReply) {
+    // Dùng custom rule — không gọi AI
+    await new Promise(r => setTimeout(r, 400)); // hiệu ứng nhỏ
     document.getElementById('typing')?.remove();
-    addMsg(reply, 'bot');
-  } catch(e) {
-    document.getElementById('typing')?.remove();
-    addMsg('⚠️ Mất kết nối! Kiểm tra internet.', 'bot');
+    APP.histories[st].push({ role:'assistant', content:customReply });
+    addMsg(customReply, 'bot');
+  } else {
+    try {
+      const res = await fetch('/api/chat', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          model:'claude-sonnet-4-20250514',
+          max_tokens:1000,
+          system: PROMPTS[st],
+          messages: APP.histories[st]
+        })
+      });
+      const data = await res.json();
+      const reply = data.content?.[0]?.text || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
+      APP.histories[st].push({ role:'assistant', content:reply });
+      document.getElementById('typing')?.remove();
+      addMsg(reply, 'bot');
+    } catch(e) {
+      document.getElementById('typing')?.remove();
+      addMsg('⚠️ Mất kết nối! Kiểm tra internet.', 'bot');
+    }
   }
   btn.disabled = false; btn.innerText = 'GỬI';
 }
@@ -1145,6 +1210,7 @@ function renderAdmin() {
     '<div>🔐 Mật khẩu BTC: <span style="color:var(--gold);">btcgdpt2026</span></div>' +
     '<div>🤖 Model AI: <span style="color:var(--cyan);">claude-sonnet-4</span></div>' +
     '<div>📅 Phiên: <span style="color:var(--text);">'+new Date().toLocaleString('vi-VN')+'</span></div>';
+  renderAdminChatRules();
 }
 
 function addTeam() {
@@ -1215,6 +1281,83 @@ function clearResults() {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   PHẦN J: QUẢN LÝ CHATBOT RULES (ADMIN)
+══════════════════════════════════════════════════════════= */
+function renderAdminChatRules() {
+  const st   = parseInt(document.getElementById('admin-chat-station')?.value || '1');
+  const rules = CHAT_RULES[st] || [];
+  const container = document.getElementById('admin-chat-rules');
+  if (!container) return;
+
+  if (rules.length === 0) {
+    container.innerHTML = '<div style="font-size:11px;color:var(--muted);text-align:center;padding:10px 0;">⚡ Chưa có quy luật nào. Nhấn "+ THÊM QUY LUẬT" để thêm.</div>';
+    return;
+  }
+
+  container.innerHTML = rules.map((rule, idx) => `
+    <div id="cr-row-${idx}" style="background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.15);border-radius:10px;padding:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:10px;color:var(--gold);letter-spacing:1px;">QUY LUẬT #${idx+1}</span>
+        <button onclick="removeChatRule(${idx})" style="background:rgba(239,71,111,.15);border:1px solid rgba(239,71,111,.3);color:var(--red);border-radius:6px;padding:3px 8px;cursor:pointer;font-size:11px;">✕ Xóa</button>
+      </div>
+      <div style="margin-bottom:6px;">
+        <label style="font-size:10px;color:var(--muted);display:block;margin-bottom:3px;">🔑 KEYWORDS (phân cách bằng dấu phẩy):</label>
+        <input id="cr-kw-${idx}" value="${escapeHtml(rule.keywords||'')}" placeholder="vd: chip, giáo sư, lotus-x" style="width:100%;padding:6px 10px;background:rgba(2,12,24,.85);border:1px solid rgba(0,200,255,.25);border-radius:6px;color:var(--cyan);font-family:var(--mono);font-size:11px;outline:none;">
+      </div>
+      <div>
+        <label style="font-size:10px;color:var(--muted);display:block;margin-bottom:3px;">💬 CÂU TRẢ LỜI:</label>
+        <textarea id="cr-ans-${idx}" rows="3" placeholder="Nhập câu trả lời của chatbot..." style="width:100%;padding:6px 10px;background:rgba(2,12,24,.85);border:1px solid rgba(0,200,255,.25);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:11px;outline:none;resize:vertical;">${escapeHtml(rule.answer||'')}</textarea>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+function addChatRule() {
+  const st = parseInt(document.getElementById('admin-chat-station')?.value || '1');
+  if (!CHAT_RULES[st]) CHAT_RULES[st] = [];
+  CHAT_RULES[st].push({ keywords:'', answer:'' });
+  renderAdminChatRules();
+}
+
+function removeChatRule(idx) {
+  const st = parseInt(document.getElementById('admin-chat-station')?.value || '1');
+  if (CHAT_RULES[st]) {
+    CHAT_RULES[st].splice(idx, 1);
+    renderAdminChatRules();
+    showToast('🗑 Đã xóa quy luật #' + (idx+1));
+  }
+}
+
+function saveChatRules() {
+  const st    = parseInt(document.getElementById('admin-chat-station')?.value || '1');
+  const rules = CHAT_RULES[st] || [];
+
+  // Đọc lại giá trị từ các input
+  const updated = rules.map((_, idx) => ({
+    keywords: (document.getElementById('cr-kw-' + idx)?.value  || '').trim(),
+    answer:   (document.getElementById('cr-ans-' + idx)?.value || '').trim()
+  })).filter(r => r.keywords || r.answer);
+
+  CHAT_RULES[st] = updated;
+
+  if (isFirebaseConnected) {
+    db.ref('chatRules').set(CHAT_RULES)
+      .then(() => showToast('✅ Đã lưu chatbot rules lên Firebase!'))
+      .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
+  } else {
+    saveLocal();
+    showToast('✅ Đã lưu chatbot rules (Local)!');
+  }
+  renderAdminChatRules();
+}
+
+/* ═══════════════════════════════════════════════════════════
    PHẦN I: LOTUS MODAL & TOAST & LOCAL STORAGE
 ═══════════════════════════════════════════════════════════ */
 function showLotus() {
@@ -1229,16 +1372,21 @@ function showToast(msg) {
 
 function saveLocal() {
   try {
-    localStorage.setItem('gdpt_data', JSON.stringify({ ANSWERS, RESULTS, PASSCODES }));
+    localStorage.setItem('gdpt_data', JSON.stringify({ ANSWERS, RESULTS, PASSCODES, CHAT_RULES }));
   } catch(e) {}
 }
 
 function loadLocal() {
   try {
     const d = JSON.parse(localStorage.getItem('gdpt_data')||'{}');
-    if (d.ANSWERS)   ANSWERS   = {...ANSWERS,   ...d.ANSWERS};
-    if (d.RESULTS)   RESULTS   = {...RESULTS,   ...d.RESULTS};
-    if (d.PASSCODES) PASSCODES = {...PASSCODES, ...d.PASSCODES};
+    if (d.ANSWERS)    ANSWERS    = {...ANSWERS,    ...d.ANSWERS};
+    if (d.RESULTS)    RESULTS    = {...RESULTS,    ...d.RESULTS};
+    if (d.PASSCODES)  PASSCODES  = {...PASSCODES,  ...d.PASSCODES};
+    if (d.CHAT_RULES) {
+      for (let i = 1; i <= 5; i++) {
+        CHAT_RULES[i] = d.CHAT_RULES[i] || [];
+      }
+    }
   } catch(e) {}
 }
 
