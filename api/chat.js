@@ -7,13 +7,13 @@
 function handleLocalMockAI(clientPayload) {
   const sys = clientPayload.system || '';
   const station = sys.includes('Trạm 1') ? 1 :
-                  sys.includes('Trạm 2') ? 2 :
-                  sys.includes('Trạm 3') ? 3 :
-                  sys.includes('Trạm 4') ? 4 : 5;
+    sys.includes('Trạm 2') ? 2 :
+      sys.includes('Trạm 3') ? 3 :
+        sys.includes('Trạm 4') ? 4 : 5;
 
   const messages = clientPayload.messages || [];
-  const lastMsg  = messages[messages.length - 1];
-  const query    = lastMsg ? lastMsg.content.toLowerCase() : '';
+  const lastMsg = messages[messages.length - 1];
+  const query = lastMsg ? lastMsg.content.toLowerCase() : '';
 
   let text = '';
 
@@ -22,7 +22,7 @@ function handleLocalMockAI(clientPayload) {
       if (query.includes('chip') || query.includes('giáo sư') || query.includes('lotus-x') || query.includes('nguồn gốc')) {
         text = "[PROF_IMG] 🤖 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng GĐPT qua hàng nghìn năm. ⚙️✨";
       } else if (query.includes('quy luật') || query.includes('giải mã') || query.includes('thay thế') || query.includes('phật giáo')) {
-        text = "[PROF_IMG] 🤖 Giáo sư đã từng nhấn mạnh trong phát biểu: 'Phật Giáo Việt Nam như hình với bóng, Chúng ta suy cùng tấn công xây dựng.' Bạn thử tìm hiểu xem nó có liên quan gì không nhé... 🤫";
+        text = "[PROF_IMG] 🤖 Giáo sư đã từng nhấn mạnh trong phát biểu: 'Phật giáo VIỆT NAM luôn đồng hành cùng vận nước, soi sáng và chở che cho CHÚNG TA  qua bao thăng trầm lịch sử' Bạn thử tìm hiểu xem nó có liên quan gì không nhé... 🤫";
       } else if (query.includes('chai') || query.includes('nước') || query.includes('aquafina')) {
         text = "🤖 Loại nước thương hiệu Mỹ bắt đầu bằng chữ A... Giáo sư hay nhắc đến lắm 😏 Thử cuốn tờ giấy quanh thân chai xem sao!";
       } else if (query.includes('tờ giấy') || query.includes('ký tự') || query.includes('cuốn') || query.includes('mật thư')) {
@@ -114,10 +114,10 @@ module.exports = async (req, res) => {
   try {
     const clientPayload = req.body;
 
-    const groqApiKey       = process.env.GROQ_API_KEY;
+    const groqApiKey = process.env.GROQ_API_KEY;
     const openrouterApiKey = process.env.OPENROUTER_API_KEY;
-    const geminiApiKey     = process.env.GEMINI_API_KEY;
-    const anthropicApiKey  = process.env.ANTHROPIC_API_KEY;
+    const geminiApiKey = process.env.GEMINI_API_KEY;
+    const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
     const isValid = k => k && !k.startsWith('your_') && k.trim() !== '';
 
     // ─── GROQ (free, no card) ───
