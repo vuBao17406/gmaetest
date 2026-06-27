@@ -810,6 +810,21 @@ function updateModeBadge() {
   }
 }
 
+let isAutoLoggedIn = false;
+function checkAutoLogin() {
+  if (isAutoLoggedIn) return;
+  try {
+    const savedTeam = localStorage.getItem('gdpt_logged_team');
+    if (savedTeam && PASSCODES[savedTeam]) {
+      isAutoLoggedIn = true;
+      APP.team = savedTeam;
+      document.getElementById('team-badge').innerText = savedTeam;
+      updateStations();
+      goScreen('scr-stations');
+    }
+  } catch (e) {}
+}
+
 // Set up real-time database listeners if Firebase is connected
 if (isFirebaseConnected) {
   // 1. Sync and seed passcodes
@@ -818,6 +833,7 @@ if (isFirebaseConnected) {
     if (data) {
       PASSCODES = data;
       updateTeamDropdown();
+      checkAutoLogin();
     } else {
       db.ref("passcodes").set(PASSCODES);
     }
@@ -888,6 +904,7 @@ function login() {
     errEl.innerText = '❌ Sai mật mã! Kiểm tra lại hoặc liên hệ BTC.'; return;
   }
   APP.team = team;
+  isAutoLoggedIn = true;
   try {
     localStorage.setItem('gdpt_logged_team', team);
   } catch (e) {}
@@ -899,6 +916,7 @@ function login() {
 
 function logout() {
   APP.team = '';
+  isAutoLoggedIn = false;
   try {
     localStorage.removeItem('gdpt_logged_team');
   } catch (e) {}
@@ -1394,15 +1412,7 @@ function loadLocal() {
 loadLocal();
 updateTeamDropdown();
 updateModeBadge();
-try {
-  const savedTeam = localStorage.getItem('gdpt_logged_team');
-  if (savedTeam && PASSCODES[savedTeam]) {
-    APP.team = savedTeam;
-    document.getElementById('team-badge').innerText = savedTeam;
-    updateStations();
-    goScreen('scr-stations');
-  }
-} catch (e) {}
+checkAutoLogin();
 
 document.addEventListener("contextmenu", e => {
    e.preventDefault();
