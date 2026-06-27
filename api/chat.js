@@ -22,7 +22,7 @@ function handleLocalMockAI(clientPayload) {
       if (query.includes('chip') || query.includes('giáo sư') || query.includes('lotus-x') || query.includes('nguồn gốc')) {
         text = "[PROF_IMG] 🤖 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng GĐPT qua hàng nghìn năm. ⚙️✨";
       } else if (query.includes('quy luật') || query.includes('giải mã') || query.includes('thay thế') || query.includes('phật giáo')) {
-        text = "[PROF_IMG] 🤖 Giáo sư đã từng nhấn mạnh trong phát biểu: 'Phật giáo VIỆT NAM luôn đồng hành cùng vận nước, soi sáng và chở che cho CHÚNG TA  qua bao thăng trầm lịch sử' Bạn thử tìm hiểu xem nó có liên quan gì không nhé... 🤫";
+        text = "[PROF_IMG] 🤖 Giáo sư đã từng nhấn mạnh trong phát biểu: 'Phật giáo VIỆT NAM luôn đồng hành cùng vận nước, soi sáng và chở che cho CHÚNG TA qua bao thăng trầm lịch sử' Bạn thử tìm hiểu xem nó có liên quan gì không nhé... 🤫";
       } else if (query.includes('chai') || query.includes('nước') || query.includes('aquafina')) {
         text = "🤖 Loại nước thương hiệu Mỹ bắt đầu bằng chữ A... Giáo sư hay nhắc đến lắm 😏 Thử cuốn tờ giấy quanh thân chai xem sao!";
       } else if (query.includes('tờ giấy') || query.includes('ký tự') || query.includes('cuốn') || query.includes('mật thư')) {
@@ -85,7 +85,7 @@ function handleLocalMockAI(clientPayload) {
       } else if (query.includes('ngũ') || query.includes('giới') || query.includes('5') || query.includes('phật tử') || query.includes('luật')) {
         text = "🤖 'Ngũ' trong tiếng Hán có nghĩa là bao nhiêu? Đó chính là con số thiêng liêng GĐPT ẩn trong video! 🤫";
       } else {
-        text = "🤖 Trạm 4: Ngũ Giới - Lá Chắn Tâm Hồn. Hỏi tôi về cách lọc số trong 'video' hoặc ý nghĩa 'Ngũ giới' để tìm đáp án! ⚔️";
+        text = "🤖 Trạm 4: STREAMING DATA - D. Hỏi tôi về cách lọc số trong 'video' hoặc ý nghĩa 'Ngũ giới' để tìm đáp án! ⚔️";
       }
       break;
 
@@ -93,7 +93,7 @@ function handleLocalMockAI(clientPayload) {
       if (query.includes('mảnh') || query.includes('ghép') || query.includes('quy luật') || query.includes('loại trừ') || query.includes('xác suất') || query.includes('đúng') || query.includes('sai')) {
         text = "[ANALYZE] 🤖 LOTUS-X đang tổng hợp dữ liệu 4 trạm...\n\"Mỗi ký hiệu chỉ mang một GIÁ TRỊ — ĐÚNG hoặc SAI. Đứng riêng lẻ vô nghĩa. Nhưng khi đặt 4 mảnh cạnh nhau... quy luật tự hiện ra.\" 🔍\nThứ ĐÚNG được củng cố. Thứ SAI bị loại. Thứ còn lại — chính là sự thật. 😏\n🤖 \"...hãy đặt 4 mảnh lại... để quy luật tự nói chuyện... ✨\"";
       } else {
-        text = "🤖 Trạm Cuối: Hội Tụ Dữ Liệu! Hãy lấy 4 mảnh giấy từ tất cả các trạm, đặt cạnh nhau và hỏi tôi về 'quy luật loại trừ' để giải mã phần thưởng cuối cùng! 🎁✨";
+        text = "🤖 Trạm Cuối: MASTER DATA - Khám phá tương lai! Hãy lấy 4 mảnh giấy từ tất cả các trạm, đặt cạnh nhau và hỏi tôi về 'quy luật loại trừ' để giải mã phần thưởng cuối cùng! 🎁✨";
       }
       break;
   }
