@@ -85,7 +85,7 @@ function handleLocalMockAI(clientPayload) {
       } else if (query.includes('ngũ') || query.includes('giới') || query.includes('5') || query.includes('phật tử') || query.includes('luật')) {
         text = "🤖 'Ngũ' trong tiếng Hán có nghĩa là bao nhiêu? Đó chính là con số thiêng liêng GĐPT ẩn trong video! 🤫";
       } else {
-        text = "🤖 Trạm 4: STREAMING DATA - D. Hỏi tôi về cách lọc số trong 'video' hoặc ý nghĩa 'Ngũ giới' để tìm đáp án! ⚔️";
+        text = "🤖 Trạm 4: STREAMING DATA - Dòng chảy lam. Hỏi tôi về cách lọc số trong 'video' hoặc ý nghĩa 'Ngũ giới' để tìm đáp án! ⚔️";
       }
       break;
 
