@@ -60,8 +60,8 @@ function tryKeywordMatch(clientPayload) {
       // Không khớp từ khóa → responseText vẫn null → sẽ gọi API AI
       break;
     case 4:
-      if (query.includes('khóa') || query.includes('mật thư') || query.includes('hai khóa') || query.includes('giải mã') || query.includes('tọa độ') || query.includes('tâm')) {
-        responseText = "[ANALYZE] 🤖 LOTUS-X phân tích kết cấu mật thư...\n\"Một thông điệp bị niêm phong bởi hai tầng ấn chú. Tầng thứ nhất nằm ở điểm giao thoa giữa những con đường ngang và dọc trên sa bàn. Tầng thứ hai... vạn vật không đứng yên mà dịch chuyển không ngừng quanh một lõi trung tâm.\"\nBạn hiểu sự liên kết giữa 'lưới tọa độ' và 'sự dịch chuyển' chứ? 🌀";
+      if (query.includes('khóa') || query.includes('mật thư') || query.includes('hai khóa') || query.includes('giải mã') || query.includes('tọa độ') || query.includes('tâm') || query.includes('bảng') || query.includes('hàng') || query.includes('cột')) {
+        responseText = "🤖 LOTUS-X gợi ý: KHÓA THỨ 1 LÀ TỌA ĐỘ BẢNG HÀNG CỘT, KHÓA THỨ 2 LẤY TÂM CỦA NHỮNG TỪ GIẢI RA Ở KHÓA 1. 🔮";
       }
       // Không khớp từ khóa → responseText vẫn null → sẽ gọi API AI
       break;
@@ -198,14 +198,7 @@ const server = http.createServer(async (req, res) => {
 
         const clientPayload = JSON.parse(body);
 
-        // ─── ƯU TIÊN #1: KEYWORD MATCH (trả lời cố định) ───
-        const keywordResult = tryKeywordMatch(clientPayload);
-        if (keywordResult) {
-          console.log('[Mode] Keyword Match (trả lời cố định)');
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(keywordResult));
-          return;
-        }
+        // Keyword match đã được chuyển xuống Offline Fallback
 
         // ─── ƯU TIÊN #2: GỌI API AI (khi không khớp từ khóa) ───
         const geminiApiKey     = process.env.GEMINI_API_KEY;
@@ -280,11 +273,25 @@ const server = http.createServer(async (req, res) => {
 
         // ─── OFFLINE FALLBACK (không có API nào hoạt động) ───
         console.log('[Mode] Offline Fallback (không có API)');
+        const keywordResult = tryKeywordMatch(clientPayload);
+        if (keywordResult) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(keywordResult));
+          return;
+        }
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ content: [{ type: 'text', text: '🤖 Hiện tại không có kết nối API. Hãy thử hỏi bằng các từ khóa liên quan đến chặng hiện tại nhé! 🔌' }] }));
 
       } catch (err) {
         console.error('Server Error:', err);
+        let fallbackPayload = {};
+        try { fallbackPayload = JSON.parse(body); } catch(e) {}
+        const keywordResult = tryKeywordMatch(fallbackPayload);
+        if (keywordResult) {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(keywordResult));
+          return;
+        }
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ content: [{ type: 'text', text: '🤖 Đã xảy ra lỗi kết nối. Vui lòng thử lại! ⚠️' }] }));
       }
