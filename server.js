@@ -29,10 +29,10 @@ loadEnv();
 // LOCAL MOCK AI (Fallback khi không có API Key nào)
 // ═══════════════════════════════════════════════════════════
 function handleLocalMockAI(clientPayload) {
-  const station = clientPayload.system && clientPayload.system.includes('Trạm 1') ? 1 :
-                  clientPayload.system && clientPayload.system.includes('Trạm 2') ? 2 :
-                  clientPayload.system && clientPayload.system.includes('Trạm 3') ? 3 :
-                  clientPayload.system && clientPayload.system.includes('Trạm 4') ? 4 : 5;
+  const station = clientPayload.system && clientPayload.system.includes('Chặng 1') ? 1 :
+                  clientPayload.system && clientPayload.system.includes('Chặng 2') ? 2 :
+                  clientPayload.system && clientPayload.system.includes('Chặng 3') ? 3 :
+                  clientPayload.system && clientPayload.system.includes('Chặng 4') ? 4 : 5;
 
   const messages = clientPayload.messages || [];
   const lastMessage = messages[messages.length - 1];
@@ -42,77 +42,34 @@ function handleLocalMockAI(clientPayload) {
 
   switch (station) {
     case 1:
-      if (query.includes('chai') || query.includes('nước') || query.includes('aquafina')) {
-        responseText = "🤖 LOTUS-X gợi ý: Giáo sư Lotus X thường mang theo một loại nước giải khát thương hiệu Mỹ bắt đầu bằng chữ A. Thử xem chiếc chai nhựa hình trụ đó có thể giúp gì để làm thẳng hàng các ký tự không nhé... 😏";
-      } else if (query.includes('tờ giấy') || query.includes('cuốn') || query.includes('ký tự')) {
-        responseText = "🤖 LOTUS-X gợi ý: Hãy quấn tờ giấy đó xung quanh thân chai nước Aquafina. Phép màu của Giáo sư sẽ sắp xếp các ký tự thẳng hàng để đọc thông điệp ẩn! 🌀";
-      } else if (query.includes('quy luật') || query.includes('giải mã') || query.includes('phật giáo')) {
-        responseText = "[PROF_IMG] 🤖 LOTUS-X trích xuất ghi chép của Giáo sư:\n'Phật Giáo Việt Nam như hình với bóng, Chúng ta suy cùng tấn công xây dựng.'\nĐây là câu khóa dùng để đối chiếu bảng thay thế ký tự. 🤫";
-      } else if (query.includes('giáo sư') || query.includes('lotus-x')) {
-        responseText = "[PROF_IMG] 🤖 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026. Nhiệm vụ của tôi là bảo vệ thông điệp lịch sử GĐPT. ⚙️✨";
-      } else {
-        responseText = "🤖 Chào Chiến Binh Sen Trắng! Hỏi tôi về 'tờ giấy', 'chai nước', hoặc 'quy luật giải mã' để nhận gợi ý! 🌟";
-      }
+      responseText = "🤖 Chặng 1 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
       break;
     case 2:
-      if (
-        query.includes('nhóm 1') || query.includes('nhóm một') || query.includes('nhom 1') || query.includes('nhom mot') ||
-        query.includes('mica') || query.includes('sơ đồ') || query.includes('so do') || query.includes('mạch') || query.includes('mach') ||
-        query.includes('đè') || query.includes('de up') || query.includes('vẽ') || query.includes('ve') || query.includes('đường lạ') ||
-        query.includes('duong la') || query.includes('bản tin') || query.includes('ban tin')
-      ) {
-        responseText = "🤖 LOTUS-X gợi ý Nhóm 1: Sau khi giải xong bản tin, hãy dùng sơ đồ mạch điện và đè tấm mica lên (hoặc vẽ các đường lạ trên mạch) để tìm ra một dãy gồm 5 chữ số của nhóm mình. Chú ý: dãy số này chưa đúng thứ tự nhé! 🤫";
-      } else if (
-        query.includes('nhóm 2') || query.includes('nhóm hai') || query.includes('nhom 2') || query.includes('nhom hai') ||
-        query.includes('5 trụ') || query.includes('5 tru') || query.includes('trục') || query.includes('truc') || query.includes('trụ') ||
-        query.includes('tru') || query.includes('hoàn thành') || query.includes('hoan thanh') || query.includes('toán') || query.includes('toan') ||
-        query.includes('phật pháp') || query.includes('phat phap') || query.includes('kỹ năng') || query.includes('ky nang') ||
-        query.includes('bài hát') || query.includes('bai hat') || query.includes('lịch sử') || query.includes('lich su')
-      ) {
-        responseText = "🤖 LOTUS-X gợi ý Nhóm 2: Các bạn cần vượt qua 5 trụ thử thách (Toán, Phật Pháp, Kỹ năng, Đoán bài hát, Lịch sử Đức Phật) để nhận 5 con số chỉ vị trí tương ứng. Hãy đi hết cả 5 trụ để thu thập đầy đủ dãy số vị trí nhé! 🧭";
-      } else if (
-        query.includes('quy luật') || query.includes('quy luat') || query.includes('liên kết') || query.includes('lien ket') ||
-        query.includes('giải mã') || query.includes('giai ma') || query.includes('ghép') || query.includes('ghep') ||
-        query.includes('thứ tự') || query.includes('thu tu') || query.includes('cách giải') || query.includes('cach giai') ||
-        query.includes('hint') || query.includes('gợi ý') || query.includes('goi y') || query.includes('phối hợp') ||
-        query.includes('phoi hop') || query.includes('đối chiếu') || query.includes('doi chieu') || query.includes('kết hợp') ||
-        query.includes('ket hop') || query.includes('2 nhóm') || query.includes('2 nhom') || query.includes('làm sao') ||
-        query.includes('lam sao') || query.includes('hướng dẫn') || query.includes('huong dan')
-      ) {
-        responseText = "🤖 LOTUS-X hướng dẫn quy luật giải mã:\n- Nhóm 1 tìm được một dãy số (đặt trên tờ giấy ghép lại).\n- Nhóm 2 tìm được dãy số vị trí sau khi hoàn thành 5 trụ.\n- Quy luật: Dãy số của Nhóm 2 chính là thứ tự để lấy các chữ số của Nhóm 1. Ví dụ, nếu Nhóm 2 có số đầu tiên là X, các bạn hãy lấy chữ số ở vị trí X của Nhóm 1 làm chữ số đầu tiên của mật mã. Cứ tương tự như vậy đối chiếu giữa 2 nhóm để ra mật mã cuối cùng! 🔑";
-      } else if (
-        query.includes('mật mã') || query.includes('mat ma') || query.includes('đáp án') || query.includes('dap an') ||
-        query.includes('cuối cùng') || query.includes('cuoi cung') || query.includes('mật thư') || query.includes('mat thu') ||
-        query.includes('kết quả') || query.includes('ket qua') || query.includes('mã') || query.includes('ma')
-      ) {
-        responseText = "🤖 LOTUS-X gợi ý: Mật mã cuối cùng gồm 5 chữ số. Hãy lấy dãy số tìm được ở Nhóm 1 xếp lại theo thứ tự vị trí tương ứng từ dãy số tìm được ở Nhóm 2. Hai nhóm hãy phối hợp, gọi điện hoặc trao đổi thông tin với nhau để giải nhé! 🌟";
-      } else {
-        responseText = "🤖 Trạm 2: Vùng Mã Hóa Bí Ẩn. Trạm này mỗi đội tách làm 2 nhóm:\n- Nhóm 1: Giải sơ đồ mạch điện đè tấm mica để tìm số.\n- Nhóm 2: Hoàn thành 5 trụ để tìm vị trí.\nHãy hỏi tôi về 'nhóm 1', 'nhóm 2' hoặc 'quy luật giải mã' để nhận gợi ý! 📡";
-      }
+      responseText = "🤖 Chặng 2 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
       break;
     case 3:
-      if (query.includes('chip') || query.includes('chồng') || query.includes('khớp')) {
-        responseText = "[ANALYZE] 🤖 LOTUS-X phân tích đường nét...\nLấy tấm chip Trạm 1 đặt đè lên tờ giấy Trạm 3 — khi trùng khớp sẽ chỉ ra vị trí đáp án! 🔍";
-      } else if (query.includes('lâm') || query.includes('phật') || query.includes('đản sinh')) {
-        responseText = "🤖 LOTUS-X gợi ý: Nơi Đức Phật đản sinh là khu vườn hoàng gia giữa Ấn Độ và Nepal, bắt đầu bằng chữ L... 🌸";
+      if (query.includes('chai') || query.includes('nước') || query.includes('cuốn') || query.includes('quấn') || query.includes('aquafina')) {
+        responseText = "🤖 LOTUS-X gợi ý: Có lẽ thông tin này giúp ích cho bạn có một câu nói 'Đầu XUÔI đuôi thì KẸT' 🧩";
+      } else if (query.includes('giấy') || query.includes('tờ giấy') || query.includes('mảnh giấy') || query.includes('kí tự') || query.includes('ký tự')) {
+        responseText = "🤖 LOTUS-X gợi ý: ĐÓ LÀ MỘT LOẠI NƯỚC CỦA NƯỚC MỸ BẮT ĐẦU LÀ TỪ A... BẠN XEM THỬ CÓ GIÚP ÍCH GÌ KHÔNG NHÉ! 💧";
       } else {
-        responseText = "🤖 Trạm 3 đã kết nối. Hỏi tôi về cách dùng 'chip' hoặc nơi 'Đức Phật đản sinh'!";
+        responseText = "🤖 Chặng 3 đã kết nối. Hãy hỏi tôi về các 'kí tự' trên 'tờ giấy' hoặc sau khi đã 'cuốn chai nước' để nhận gợi ý! 🔍";
       }
       break;
     case 4:
-      if (query.includes('video') || query.includes('số') || query.includes('chạy')) {
-        responseText = "[ANALYZE] 🤖 LOTUS-X lọc tín hiệu video...\nGiữa hàng ngàn con số, có một chữ số lặp lại cố định. Tập trung nhìn vào nửa dưới video để tìm nó! 👀";
-      } else if (query.includes('ngũ') || query.includes('giới')) {
-        responseText = "🤖 'Ngũ giới' tức là bao nhiêu giới luật? Con số đó chính là đáp án Trạm 4! 🤫";
+      if (query.includes('khóa') || query.includes('mật thư') || query.includes('hai khóa') || query.includes('giải mã') || query.includes('tọa độ') || query.includes('tâm')) {
+        responseText = "[ANALYZE] 🤖 LOTUS-X phân tích kết cấu mật thư...\n\"Một thông điệp bị niêm phong bởi hai tầng ấn chú. Tầng thứ nhất nằm ở điểm giao thoa giữa những con đường ngang và dọc trên sa bàn. Tầng thứ hai... vạn vật không đứng yên mà dịch chuyển không ngừng quanh một lõi trung tâm.\"\nBạn hiểu sự liên kết giữa 'lưới tọa độ' và 'sự dịch chuyển' chứ? 🌀";
       } else {
-        responseText = "🤖 Trạm 4 đã kết nối. Hỏi tôi về cách lọc số trong 'video' hoặc 'Ngũ giới' để tìm đáp án!";
+        responseText = "🤖 Chặng 4 đã kết nối. Hãy hỏi tôi về 'mật thư' hoặc 'khóa' để nhận được sự dẫn đường... 🔮";
       }
       break;
     case 5:
-      if (query.includes('mảnh') || query.includes('ghép') || query.includes('quy luật')) {
-        responseText = "[ANALYZE] 🤖 LOTUS-X tổng hợp 4 trạm...\nĐặt 4 mảnh giấy cạnh nhau, loại trừ ký hiệu SAI, giữ lại ký hiệu ĐÚNG — mã nguồn cuối sẽ hiện ra! 🔍";
+      if (query.includes('250') || query.includes('tcn') || query.includes('ý nghĩa') || query.includes('y nghia')) {
+        responseText = "🤖 Năm 250 TCN, ám ảnh bởi sự tàn khốc của chiến tranh, Vua A Dục (Ashoka) quyết định buông gươm, quy y Phật giáo và cho dựng một trụ đá vĩ đại tại đất thiêng Sarnath. Ông muốn đây là biểu tượng của lòng từ bi thay vì uy quyền máu lửa.\n\nDưới bàn tay tài hoa của các nghệ nhân, khối sa thạch nguyên khối biến thành một kiệt tác: đỉnh cột khắc bốn con sư tử dũng mãnh nhìn ra bốn hướng để truyền bá Chánh pháp, thân cột mài nhẵn như gương khắc sắc lệnh kêu gọi muôn dân sống hòa hợp, ngừng sát sinh.\n\nNgày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị minh quân khẽ mỉm cười thanh thản. Ông biết mình vừa để lại cho hậu thế một ngọn hải đăng vĩnh cửu về hòa bình và tình thương. 🌸";
+      } else if (query.includes('mạch') || query.includes('mach') || query.includes('mica') || query.includes('đè') || query.includes('vẽ') || query.includes('vị trí')) {
+        responseText = "🤖 LOTUS-X gợi ý: Hãy dùng sơ đồ mạch điện và đè tấm mica lên (hoặc vẽ các đường lạ trên mạch) để tìm ra các con số. Chú ý: các con số này hiện ra nhưng chưa đúng vị trí nhé! 🤫";
       } else {
-        responseText = "🤖 Trạm Cuối đã kết nối. Ghép 4 mảnh giấy lại và hỏi tôi về 'quy luật loại trừ' để giải mã phần thưởng! 🎁";
+        responseText = "🤖 Chặng Cuối đã kết nối. Hãy hỏi tôi về 'sơ đồ mạch điện' hoặc ý nghĩa của 'con số' bạn vừa tìm được! 🔍";
       }
       break;
   }
