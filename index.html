@@ -1364,7 +1364,7 @@
         if (isDone(i)) {
           el.className = 'station-status-done'; el.innerText = '✅ Hoàn thành';
           btn.classList.add('done');
-        } else if (i === 1 || i === 2 || isDone(i - 1)) {
+        } else if (i === 1 || i === 2 || i === 3 || isDone(i - 1)) {
           el.className = 'station-status-open'; el.innerText = '▶ Đang mở';
           btn.classList.add('unlocked');
         } else {
@@ -1377,7 +1377,7 @@
     }
 
     function goStation(st) {
-      const canEnter = st === 1 || st === 2 || isDone(st - 1);
+      const canEnter = st === 1 || st === 2 || st === 3 || isDone(st - 1);
       if (!canEnter) { showToast("🔒 Cần hoàn thành chặng " + (st - 1) + " trước!"); return; }
       APP.station = st;
       APP.histories[st] = [];
