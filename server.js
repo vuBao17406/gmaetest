@@ -26,9 +26,11 @@ function loadEnv() {
 loadEnv();
 
 // ═══════════════════════════════════════════════════════════
-// LOCAL MOCK AI (Fallback khi không có API Key nào)
+// KEYWORD MATCH (Ưu tiên #1 — trả lời cố định theo từ khóa)
+// Trả về object nếu khớp từ khóa, trả về null nếu không khớp
+// (khi null → sẽ fallback sang API AI)
 // ═══════════════════════════════════════════════════════════
-function handleLocalMockAI(clientPayload) {
+function tryKeywordMatch(clientPayload) {
   const station = clientPayload.system && clientPayload.system.includes('Chặng 1') ? 1 :
                   clientPayload.system && clientPayload.system.includes('Chặng 2') ? 2 :
                   clientPayload.system && clientPayload.system.includes('Chặng 3') ? 3 :
@@ -38,7 +40,7 @@ function handleLocalMockAI(clientPayload) {
   const lastMessage = messages[messages.length - 1];
   const query = lastMessage ? lastMessage.content.toLowerCase() : '';
 
-  let responseText = '';
+  let responseText = null;
 
   switch (station) {
     case 1:
@@ -48,33 +50,35 @@ function handleLocalMockAI(clientPayload) {
       responseText = "🤖 Chặng 2 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
       break;
     case 3:
-      if (query.includes('chai') || query.includes('nước') || query.includes('cuốn') || query.includes('quấn') || query.includes('aquafina')) {
-        responseText = "🤖 LOTUS-X gợi ý: Có lẽ thông tin này giúp ích cho bạn có một câu nói 'Đầu XUÔI đuôi thì KẸT' 🧩";
+      if (query.includes('cuốn') || query.includes('quấn') || query.includes('cách giải tiếp') || query.includes('tiếp theo') || query.includes('quy luật') || query.includes('thẳng hàng')) {
+        responseText = "🤖 LOTUS-X gợi ý: Khi tờ giấy đã ôm trọn lấy thân chai, hãy để ánh mắt xuôi theo chiều dọc. Nhớ câu 'Đầu XUÔI đuôi thì KẸT'... Và đừng quên một giao ước ngầm: 'X' chỉ là lớp mặt nạ của 'J'. 🧩";
+      } else if (query.includes('chai') || query.includes('nước') || query.includes('aquafina')) {
+        responseText = "🤖 LOTUS-X gợi ý: Hãy thử dùng tờ giấy và 'cuốn' quanh chai nước xem có điều gì kỳ diệu xảy ra không nhé! 🌀";
       } else if (query.includes('giấy') || query.includes('tờ giấy') || query.includes('mảnh giấy') || query.includes('kí tự') || query.includes('ký tự')) {
         responseText = "🤖 LOTUS-X gợi ý: ĐÓ LÀ MỘT LOẠI NƯỚC CỦA NƯỚC MỸ BẮT ĐẦU LÀ TỪ A... BẠN XEM THỬ CÓ GIÚP ÍCH GÌ KHÔNG NHÉ! 💧";
-      } else {
-        responseText = "🤖 Chặng 3 đã kết nối. Hãy hỏi tôi về các 'kí tự' trên 'tờ giấy' hoặc sau khi đã 'cuốn chai nước' để nhận gợi ý! 🔍";
       }
+      // Không khớp từ khóa → responseText vẫn null → sẽ gọi API AI
       break;
     case 4:
       if (query.includes('khóa') || query.includes('mật thư') || query.includes('hai khóa') || query.includes('giải mã') || query.includes('tọa độ') || query.includes('tâm')) {
         responseText = "[ANALYZE] 🤖 LOTUS-X phân tích kết cấu mật thư...\n\"Một thông điệp bị niêm phong bởi hai tầng ấn chú. Tầng thứ nhất nằm ở điểm giao thoa giữa những con đường ngang và dọc trên sa bàn. Tầng thứ hai... vạn vật không đứng yên mà dịch chuyển không ngừng quanh một lõi trung tâm.\"\nBạn hiểu sự liên kết giữa 'lưới tọa độ' và 'sự dịch chuyển' chứ? 🌀";
-      } else {
-        responseText = "🤖 Chặng 4 đã kết nối. Hãy hỏi tôi về 'mật thư' hoặc 'khóa' để nhận được sự dẫn đường... 🔮";
       }
+      // Không khớp từ khóa → responseText vẫn null → sẽ gọi API AI
       break;
     case 5:
       if (query.includes('250') || query.includes('tcn') || query.includes('ý nghĩa') || query.includes('y nghia')) {
         responseText = "🤖 Năm 250 TCN, ám ảnh bởi sự tàn khốc của chiến tranh, Vua A Dục (Ashoka) quyết định buông gươm, quy y Phật giáo và cho dựng một trụ đá vĩ đại tại đất thiêng Sarnath. Ông muốn đây là biểu tượng của lòng từ bi thay vì uy quyền máu lửa.\n\nDưới bàn tay tài hoa của các nghệ nhân, khối sa thạch nguyên khối biến thành một kiệt tác: đỉnh cột khắc bốn con sư tử dũng mãnh nhìn ra bốn hướng để truyền bá Chánh pháp, thân cột mài nhẵn như gương khắc sắc lệnh kêu gọi muôn dân sống hòa hợp, ngừng sát sinh.\n\nNgày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị minh quân khẽ mỉm cười thanh thản. Ông biết mình vừa để lại cho hậu thế một ngọn hải đăng vĩnh cửu về hòa bình và tình thương. 🌸";
       } else if (query.includes('mạch') || query.includes('mach') || query.includes('mica') || query.includes('đè') || query.includes('vẽ') || query.includes('vị trí')) {
         responseText = "🤖 LOTUS-X gợi ý: Hãy dùng sơ đồ mạch điện và đè tấm mica lên (hoặc vẽ các đường lạ trên mạch) để tìm ra các con số. Chú ý: các con số này hiện ra nhưng chưa đúng vị trí nhé! 🤫";
-      } else {
-        responseText = "🤖 Chặng Cuối đã kết nối. Hãy hỏi tôi về 'sơ đồ mạch điện' hoặc ý nghĩa của 'con số' bạn vừa tìm được! 🔍";
       }
+      // Không khớp từ khóa → responseText vẫn null → sẽ gọi API AI
       break;
   }
 
-  return { content: [{ type: 'text', text: responseText }] };
+  if (responseText) {
+    return { content: [{ type: 'text', text: responseText }] };
+  }
+  return null; // Không khớp từ khóa → fallback sang API AI
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -192,6 +196,18 @@ const server = http.createServer(async (req, res) => {
       try {
         loadEnv();
 
+        const clientPayload = JSON.parse(body);
+
+        // ─── ƯU TIÊN #1: KEYWORD MATCH (trả lời cố định) ───
+        const keywordResult = tryKeywordMatch(clientPayload);
+        if (keywordResult) {
+          console.log('[Mode] Keyword Match (trả lời cố định)');
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify(keywordResult));
+          return;
+        }
+
+        // ─── ƯU TIÊN #2: GỌI API AI (khi không khớp từ khóa) ───
         const geminiApiKey     = process.env.GEMINI_API_KEY;
         const anthropicApiKey  = process.env.ANTHROPIC_API_KEY;
         const groqApiKey       = process.env.GROQ_API_KEY;
@@ -199,11 +215,9 @@ const server = http.createServer(async (req, res) => {
 
         const isValid = k => k && !k.startsWith('your_') && k !== '';
 
-        const clientPayload = JSON.parse(body);
-
         // ─── GROQ (free, no card needed) ───
         if (isValid(groqApiKey)) {
-          console.log('[Mode] Groq API');
+          console.log('[Mode] Groq API (fallback từ keyword)');
           const groqRes = await handleGroq(groqApiKey, clientPayload);
           const data = await groqRes.json();
           if (groqRes.ok) {
@@ -217,7 +231,7 @@ const server = http.createServer(async (req, res) => {
 
         // ─── OPENROUTER (free models available) ───
         if (isValid(openrouterApiKey)) {
-          console.log('[Mode] OpenRouter API');
+          console.log('[Mode] OpenRouter API (fallback từ keyword)');
           const orRes = await handleOpenRouter(openrouterApiKey, clientPayload);
           const data = await orRes.json();
           if (orRes.ok) {
@@ -231,7 +245,7 @@ const server = http.createServer(async (req, res) => {
 
         // ─── GEMINI ───
         if (isValid(geminiApiKey)) {
-          console.log('[Mode] Gemini API');
+          console.log('[Mode] Gemini API (fallback từ keyword)');
           const gemRes = await handleGemini(geminiApiKey, clientPayload);
           const data = await gemRes.json();
           if (gemRes.ok) {
@@ -245,7 +259,7 @@ const server = http.createServer(async (req, res) => {
 
         // ─── ANTHROPIC ───
         if (isValid(anthropicApiKey)) {
-          console.log('[Mode] Anthropic API');
+          console.log('[Mode] Anthropic API (fallback từ keyword)');
           const antRes = await fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
             headers: {
@@ -264,22 +278,15 @@ const server = http.createServer(async (req, res) => {
           console.error('[Anthropic Error]', data);
         }
 
-        // ─── LOCAL MOCK AI (Offline fallback) ───
-        console.log('[Mode] Local Mock AI (Offline)');
-        const mockResponse = handleLocalMockAI(clientPayload);
+        // ─── OFFLINE FALLBACK (không có API nào hoạt động) ───
+        console.log('[Mode] Offline Fallback (không có API)');
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(mockResponse));
+        res.end(JSON.stringify({ content: [{ type: 'text', text: '🤖 Hiện tại không có kết nối API. Hãy thử hỏi bằng các từ khóa liên quan đến chặng hiện tại nhé! 🔌' }] }));
 
       } catch (err) {
         console.error('Server Error:', err);
-        try {
-          const mockResponse = handleLocalMockAI(JSON.parse(body));
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(mockResponse));
-        } catch (e) {
-          res.writeHead(500, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: { message: 'Internal Server Error' } }));
-        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ content: [{ type: 'text', text: '🤖 Đã xảy ra lỗi kết nối. Vui lòng thử lại! ⚠️' }] }));
       }
     });
     return;
@@ -292,11 +299,12 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log('═══════════════════════════════════════');
   console.log(`  LOTUS-X Server: http://localhost:${PORT}`);
-  console.log('  Thứ tự ưu tiên API:');
-  console.log('  1. Groq (MIỄN PHÍ - gsk_...)');
-  console.log('  2. OpenRouter (FREE models)');
-  console.log('  3. Gemini (cần billing)');
-  console.log('  4. Anthropic Claude (có phí)');
-  console.log('  5. Local Mock AI (offline)');
+  console.log('  Thứ tự ưu tiên xử lý:');
+  console.log('  1. Keyword Match (từ khóa → trả cố định)');
+  console.log('  2. Groq API (MIỄN PHÍ - gsk_...)');
+  console.log('  3. OpenRouter (FREE models)');
+  console.log('  4. Gemini (cần billing)');
+  console.log('  5. Anthropic Claude (có phí)');
+  console.log('  6. Offline Fallback');
   console.log('═══════════════════════════════════════');
 });
