@@ -44,10 +44,14 @@ function tryKeywordMatch(clientPayload) {
 
   switch (station) {
     case 1:
-      responseText = "🤖 Chặng 1 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
+      if (query.includes('giải mã') || query.includes('gợi ý') || query.includes('giúp') || query.includes('đáp án') || query.includes('cách làm') || query.includes('mật mã') || query.includes('khóa') || query.includes('trợ giúp')) {
+        responseText = "🤖 Chặng 1 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
+      }
       break;
     case 2:
-      responseText = "🤖 Chặng 2 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
+      if (query.includes('giải mã') || query.includes('gợi ý') || query.includes('giúp') || query.includes('đáp án') || query.includes('cách làm') || query.includes('mật mã') || query.includes('khóa') || query.includes('trợ giúp')) {
+        responseText = "🤖 Chặng 2 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
+      }
       break;
     case 3:
       if (query.includes('cuốn') || query.includes('quấn') || query.includes('cách giải tiếp') || query.includes('tiếp theo') || query.includes('quy luật') || query.includes('thẳng hàng')) {
@@ -198,9 +202,6 @@ const server = http.createServer(async (req, res) => {
 
         const clientPayload = JSON.parse(body);
 
-        // Keyword match đã được chuyển xuống Offline Fallback
-
-        // ─── ƯU TIÊN #2: GỌI API AI (khi không khớp từ khóa) ───
         const geminiApiKey     = process.env.GEMINI_API_KEY;
         const anthropicApiKey  = process.env.ANTHROPIC_API_KEY;
         const groqApiKey       = process.env.GROQ_API_KEY;
@@ -210,7 +211,7 @@ const server = http.createServer(async (req, res) => {
 
         // ─── GROQ (free, no card needed) ───
         if (isValid(groqApiKey)) {
-          console.log('[Mode] Groq API (fallback từ keyword)');
+          console.log('[Mode] Groq API');
           const groqRes = await handleGroq(groqApiKey, clientPayload);
           const data = await groqRes.json();
           if (groqRes.ok) {
@@ -273,10 +274,10 @@ const server = http.createServer(async (req, res) => {
 
         // ─── OFFLINE FALLBACK (không có API nào hoạt động) ───
         console.log('[Mode] Offline Fallback (không có API)');
-        const keywordResult = tryKeywordMatch(clientPayload);
-        if (keywordResult) {
+        const offlineKwResult = tryKeywordMatch(clientPayload);
+        if (offlineKwResult) {
           res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(keywordResult));
+          res.end(JSON.stringify(offlineKwResult));
           return;
         }
         res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -286,10 +287,10 @@ const server = http.createServer(async (req, res) => {
         console.error('Server Error:', err);
         let fallbackPayload = {};
         try { fallbackPayload = JSON.parse(body); } catch(e) {}
-        const keywordResult = tryKeywordMatch(fallbackPayload);
-        if (keywordResult) {
+        const catchKwResult = tryKeywordMatch(fallbackPayload);
+        if (catchKwResult) {
           res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(keywordResult));
+          res.end(JSON.stringify(catchKwResult));
           return;
         }
         res.writeHead(200, { 'Content-Type': 'application/json' });

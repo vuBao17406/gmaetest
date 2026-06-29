@@ -21,11 +21,15 @@ function tryKeywordMatch(clientPayload) {
 
   switch (station) {
     case 1:
-      text = "🤖 Chặng 1 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
+      if (query.includes('giải mã') || query.includes('gợi ý') || query.includes('giúp') || query.includes('đáp án') || query.includes('cách làm') || query.includes('mật mã') || query.includes('khóa') || query.includes('trợ giúp')) {
+        text = "🤖 Chặng 1 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
+      }
       break;
 
     case 2:
-      text = "🤖 Chặng 2 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
+      if (query.includes('giải mã') || query.includes('gợi ý') || query.includes('giúp') || query.includes('đáp án') || query.includes('cách làm') || query.includes('mật mã') || query.includes('khóa') || query.includes('trợ giúp')) {
+        text = "🤖 Chặng 2 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
+      }
       break;
 
     case 3:
@@ -75,9 +79,6 @@ module.exports = async (req, res) => {
   try {
     const clientPayload = req.body;
 
-    // Keyword match đã được chuyển xuống Offline Fallback
-
-    // ─── ƯU TIÊN #2: GỌI API AI (khi không khớp từ khóa) ───
     const groqApiKey = process.env.GROQ_API_KEY;
     const openrouterApiKey = process.env.OPENROUTER_API_KEY;
     const geminiApiKey = process.env.GEMINI_API_KEY;
@@ -86,7 +87,7 @@ module.exports = async (req, res) => {
 
     // ─── GROQ (free, no card) ───
     if (isValid(groqApiKey)) {
-      console.log('[Mode] Groq API (fallback từ keyword)');
+      console.log('[Mode] Groq API');
       const messages = [];
       if (clientPayload.system) messages.push({ role: 'system', content: clientPayload.system });
       for (const m of (clientPayload.messages || [])) messages.push({ role: m.role, content: m.content });
@@ -164,9 +165,9 @@ module.exports = async (req, res) => {
 
     // ─── OFFLINE FALLBACK (không có API nào hoạt động) ───
     console.log('[Mode] Offline Fallback (không có API)');
-    const keywordResult = tryKeywordMatch(clientPayload);
-    if (keywordResult) {
-      res.status(200).json(keywordResult);
+    const offlineKwResult = tryKeywordMatch(clientPayload);
+    if (offlineKwResult) {
+      res.status(200).json(offlineKwResult);
       return;
     }
     res.status(200).json({ content: [{ type: 'text', text: '🤖 Hiện tại không có kết nối API. Hãy thử hỏi bằng các từ khóa liên quan đến chặng hiện tại nhé! 🔌' }] });
@@ -174,9 +175,9 @@ module.exports = async (req, res) => {
   } catch (err) {
     console.error('API Handler Error:', err);
     try {
-      const keywordResult = tryKeywordMatch(req.body);
-      if (keywordResult) {
-        res.status(200).json(keywordResult);
+      const catchKwResult = tryKeywordMatch(req.body);
+      if (catchKwResult) {
+        res.status(200).json(catchKwResult);
         return;
       }
     } catch(e) {}
