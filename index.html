@@ -1400,6 +1400,7 @@
       for (let i = 1; i <= 5; i++) {
         const el = document.getElementById('ss-' + i);
         const btn = el.closest('button');
+        btn.style.display = ''; // Đặt lại hiển thị mặc định
         if (isDone(i)) {
           el.className = 'station-status-done'; el.innerText = '✅ Hoàn thành';
           btn.classList.add('done');
@@ -1409,6 +1410,7 @@
         } else {
           el.className = 'station-status-lock'; el.innerText = '🔒 Khóa';
           btn.classList.remove('unlocked', 'done');
+          btn.style.display = 'none'; // Ẩn các chặng bị khóa (chặng 4 và 5)
         }
       }
       // Phần thưởng chặng 5
