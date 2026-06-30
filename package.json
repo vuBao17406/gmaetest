@@ -2,10 +2,10 @@
   "name": "gdpt-game",
   "version": "1.0.0",
   "description": "GDPT1951 - Game truy tìm mật mã LOTUS-X",
-  "main": "server.js",
+  "main": "local-server.js",
   "scripts": {
-    "local": "node server.js",
-    "dev": "node server.js"
+    "local": "node local-server.js",
+    "dev": "node local-server.js"
   },
   "engines": {
     "node": ">=18.0.0"
