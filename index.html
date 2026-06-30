@@ -1472,6 +1472,7 @@
       if (st === 1 || st === 2) {
         document.getElementById('article-title').innerText = STATION_NAMES[st].toUpperCase();
         document.getElementById('article-team').innerText = APP.team;
+        renderArticle(st);
         goScreen('scr-article');
       } else {
         APP.histories[st] = [];
