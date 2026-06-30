@@ -175,16 +175,28 @@ async function handleGemini(geminiApiKey, clientPayload) {
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer(async (req, res) => {
-  // 1. Serve frontend (index.html)
+  // 1. Serve frontend and static files
   const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   if (req.method === 'GET' && !parsedUrl.pathname.startsWith('/api/')) {
-    const filePath = path.join(__dirname, 'index.html');
+    let filePath = path.join(__dirname, parsedUrl.pathname === '/' ? 'index.html' : parsedUrl.pathname);
+    if (!fs.existsSync(filePath)) {
+      filePath = path.join(__dirname, 'index.html');
+    }
+    
+    const ext = path.extname(filePath).toLowerCase();
+    let contentType = 'text/html; charset=utf-8';
+    if (ext === '.jpg' || ext === '.jpeg') contentType = 'image/jpeg';
+    else if (ext === '.png') contentType = 'image/png';
+    else if (ext === '.css') contentType = 'text/css';
+    else if (ext === '.js') contentType = 'application/javascript';
+    else if (ext === '.json') contentType = 'application/json';
+    
     fs.readFile(filePath, (err, content) => {
       if (err) {
         res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
-        res.end('Error loading index.html');
+        res.end('Error loading file');
       } else {
-        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.writeHead(200, { 'Content-Type': contentType });
         res.end(content);
       }
     });

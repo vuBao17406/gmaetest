@@ -1010,8 +1010,8 @@
         <span id="article-team" style="font-size:11px;color:var(--gold);"></span>
       </div>
 
-      <div class="article-body" style="padding: 20px; overflow-y: auto; flex: 1;">
-        <div id="article-content-container" class="article-content" style="background: rgba(2, 12, 24, 0.7); border: 1px solid rgba(0, 200, 255, 0.2); border-radius: 12px; padding: 20px; text-align: center;">
+      <div class="article-body" style="padding: 10px; overflow-y: auto; flex: 1;">
+        <div id="article-content-container" class="article-content" style="padding-bottom: 40px; text-align: center;">
         </div>
       </div>
     </div>
@@ -1457,7 +1457,7 @@
         imgCol.style.cssText = 'width: 100%; display: flex; justify-content: center; margin-bottom: 8px;';
         const img = document.createElement('img');
         img.src = block.image || '';
-        img.style.cssText = 'max-width: 100%; border-radius: 8px; object-fit: cover;';
+        img.style.cssText = 'max-width: 100%; border-radius: 12px; object-fit: cover; border: 2px solid rgba(0, 200, 255, .5); box-shadow: 0 0 30px rgba(0, 200, 255, .4);';
         if (block.image) {
           imgCol.appendChild(img);
         }
