@@ -180,6 +180,9 @@ const server = http.createServer(async (req, res) => {
   if (req.method === 'GET' && !parsedUrl.pathname.startsWith('/api/')) {
     let filePath = path.join(__dirname, parsedUrl.pathname === '/' ? 'index.html' : parsedUrl.pathname);
     if (!fs.existsSync(filePath)) {
+      filePath = path.join(__dirname, 'public', parsedUrl.pathname);
+    }
+    if (!fs.existsSync(filePath)) {
       filePath = path.join(__dirname, 'index.html');
     }
     
