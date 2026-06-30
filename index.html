@@ -1141,7 +1141,7 @@
       <p style="color:var(--cyan);font-size:11px;letter-spacing:2px;margin-bottom:12px;">
         🎁 PHẦN THƯỞNG CHẶNG 5 — MÃ NGUỒN LOTUS-X
       </p>
-      <img src="./public/reward.jpg" alt="Mã nguồn LOTUS-X" style="max-width:100%; border-radius: 8px;">
+      <img src="e:\New folder\gmaetest\public\reward.jpg" alt="Mã nguồn LOTUS-X">
       <p>Chạm để đóng</p>
     </div>
   </div>
@@ -1271,7 +1271,6 @@
         } else {
           db.ref("passcodes").set(PASSCODES);
         }
-        saveLocal();
       });
 
       // 2. Sync and seed answers
@@ -1282,7 +1281,6 @@
         } else {
           db.ref("answers").set(ANSWERS);
         }
-        saveLocal();
       });
 
       // 3. Sync results
@@ -1299,7 +1297,6 @@
         if (document.getElementById('scr-admin').classList.contains('active')) {
           renderAdmin();
         }
-        saveLocal();
       });
 
       // 4. Sync chatRules
@@ -1315,7 +1312,6 @@
         if (document.getElementById('scr-admin').classList.contains('active')) {
           renderAdminChatRules();
         }
-        saveLocal();
       });
     }
 
