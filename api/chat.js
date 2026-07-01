@@ -55,8 +55,6 @@ function tryKeywordMatch(clientPayload) {
         text = "🤖 Năm 250 TCN, ám ảnh bởi sự tàn khốc của chiến tranh, Vua A Dục (Ashoka) quyết định buông gươm, quy y Phật giáo và cho dựng một trụ đá vĩ đại tại đất thiêng Sarnath. Ông muốn đây là biểu tượng của lòng từ bi thay vì uy quyền máu lửa.\n\nDưới bàn tay tài hoa của các nghệ nhân, khối sa thạch nguyên khối biến thành một kiệt tác: đỉnh cột khắc bốn con sư tử dũng mãnh nhìn ra bốn hướng để truyền bá Chánh pháp, thân cột mài nhẵn như gương khắc sắc lệnh kêu gọi muôn dân sống hòa hợp, ngừng sát sinh.\n\nNgày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị minh quân khẽ mỉm cười thanh thản. Ông biết mình vừa để lại cho hậu thế một ngọn hải đăng vĩnh cửu về hòa bình và tình thương. 🌸";
       } else if (query.includes('mạch') || query.includes('mach') || query.includes('mica') || query.includes('đè') || query.includes('vẽ') || query.includes('vị trí')) {
         text = "🤖 LOTUS-X gợi ý: Hãy dùng sơ đồ mạch điện và đè tấm mica lên (hoặc vẽ các đường lạ trên mạch) để tìm ra các con số. Chú ý: các con số này hiện ra nhưng chưa đúng vị trí nhé! 🤫";
-      } else if (query.includes('5 tờ giấy') || query.includes('5 mảnh giấy') || query.includes('kí tự') || query.includes('ký tự') || query.includes('đs')) {
-        text = "🤖 LOTUS-X gợi ý: Xuyên suốt hành trình trò chơi lớn mỗi trạm sẽ nhận một mảnh giấy trên mảnh giấy đó chứa những kí tự chưa đúng vị trí và có gợi ý theo dạng đúng sai và vị trí đúng sai của của chữ các đội chơi liên kết 5 tờ giấy lại để tìm đáp án cuối đáp án gồm 5 kí tự cùng nhập ở chỗ phần thưởng chặng 5 và mở ra liên kết đáp án và ảnh con chip đó lại sẽ ra được thử thách cần phải làm";
       }
       // Không khớp từ khóa → text vẫn null → sẽ gọi API AI
       break;
