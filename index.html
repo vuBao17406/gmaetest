@@ -1652,33 +1652,41 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       document.getElementById('chat-body').appendChild(typing);
       document.getElementById('chat-body').scrollTop = 99999;
 
+      let apiMessages = [...APP.histories[st]];
       if (customReply) {
-        // Dùng custom rule — không gọi AI
-        await new Promise(r => setTimeout(r, 400)); // hiệu ứng nhỏ
-        document.getElementById('typing')?.remove();
-        APP.histories[st].push({ role: 'assistant', content: customReply });
-        addMsg(customReply, 'bot');
-      } else {
-        try {
-          const res = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              model: 'claude-sonnet-4-20250514',
-              max_tokens: 1000,
-              system: PROMPTS[st],
-              messages: APP.histories[st]
-            })
-          });
-          const data = await res.json();
-          const reply = data.content?.[0]?.text || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
-          APP.histories[st].push({ role: 'assistant', content: reply });
-          document.getElementById('typing')?.remove();
-          addMsg(reply, 'bot');
-        } catch (e) {
-          document.getElementById('typing')?.remove();
-          addMsg('⚠️ Mất kết nối! Kiểm tra internet.', 'bot');
+        // Gắn thêm system prompt ẩn vào câu hỏi của user để AI biết phải trả lời ngắn gọn
+        apiMessages[apiMessages.length - 1] = {
+          role: 'user',
+          content: text + `\n\n[Hệ thống yêu cầu (ẩn): Hãy phản hồi hoặc chào hỏi tự nhiên, phân tích tình huống 1 cách ngắn gọn (tối đa 2-3 câu). Không được đưa ra đáp án, vì đáp án sẽ được hệ thống nối vào sau câu trả lời của bạn.]`
+        };
+      }
+
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 1000,
+            system: PROMPTS[st],
+            messages: apiMessages
+          })
+        });
+        const data = await res.json();
+        let reply = data.content?.[0]?.text || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
+        
+        if (customReply) {
+          reply = reply + "\n\n" + customReply;
         }
+
+        APP.histories[st].push({ role: 'assistant', content: reply });
+        document.getElementById('typing')?.remove();
+        addMsg(reply, 'bot');
+      } catch (e) {
+        document.getElementById('typing')?.remove();
+        let errorReply = '⚠️ Mất kết nối! Kiểm tra internet.';
+        if (customReply) errorReply = errorReply + "\n\n" + customReply;
+        addMsg(errorReply, 'bot');
       }
       btn.disabled = false; btn.innerText = 'GỬI';
     }
