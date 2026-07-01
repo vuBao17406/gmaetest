@@ -2107,8 +2107,29 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
           if (file) {
             const reader = new FileReader();
             reader.onload = (evt) => {
-              ARTICLES[st].blocks[idx].image = evt.target.result;
-              renderAdminArticles();
+              const img = new Image();
+              img.onload = () => {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                const max_dim = 800;
+                if (width > max_dim || height > max_dim) {
+                  if (width > height) {
+                    height = Math.round(height * max_dim / width);
+                    width = max_dim;
+                  } else {
+                    width = Math.round(width * max_dim / height);
+                    height = max_dim;
+                  }
+                }
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                ARTICLES[st].blocks[idx].image = canvas.toDataURL('image/jpeg', 0.7);
+                renderAdminArticles();
+              };
+              img.src = evt.target.result;
             };
             reader.readAsDataURL(file);
           }
@@ -2189,7 +2210,9 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
     function saveLocal() {
       try {
         localStorage.setItem('gdpt_data', JSON.stringify({ ANSWERS, RESULTS, PASSCODES, CHAT_RULES, ARTICLES, REWARD_PW }));
-      } catch (e) { }
+      } catch (e) {
+        alert('❌ Không thể lưu dữ liệu (Local)! Bộ nhớ đã đầy hoặc ảnh quá lớn. Vui lòng giảm dung lượng ảnh hoặc số lượng ảnh.');
+      }
     }
 
     function loadLocal() {
@@ -2197,7 +2220,7 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
         const d = JSON.parse(localStorage.getItem('gdpt_data') || '{}');
         if (d.ANSWERS) ANSWERS = { ...ANSWERS, ...d.ANSWERS };
         if (d.RESULTS) RESULTS = { ...RESULTS, ...d.RESULTS };
-        if (d.PASSCODES) PASSCODES = { ...PASSCODES, ...d.PASSCODES };
+        if (d.PASSCODES && !isFirebaseConnected) PASSCODES = { ...PASSCODES, ...d.PASSCODES };
         if (d.REWARD_PW !== undefined) REWARD_PW = d.REWARD_PW;
         if (d.ARTICLES) {
           for (let i = 1; i <= 2; i++) {
