@@ -1657,7 +1657,7 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
         // Gắn thêm system prompt ẩn vào câu hỏi của user để AI biết phải trả lời tự nhiên
         apiMessages[apiMessages.length - 1] = {
           role: 'user',
-          content: text + `\n\n(Hệ thống: Hãy phản hồi người chơi một cách tự nhiên, một chút hài hước, nhiều phong cách khác nhau, theo đúng vai trò của bạn. TRONG câu trả lời của bạn, BẮT BUỘC phải chứa đoạn văn sau đây (phải giữ đúng nguyên văn, không được thay đổi từ ngữ): "${customReply}")`
+          content: text + `\n\n(Ghi chú hệ thống: Hãy trả lời linh hoạt, sáng tạo và tự nhiên nhất theo đúng tính cách của bạn. Tuyệt đối không dùng những mẫu câu rập khuôn hay cách xưng hô cứng nhắc như "Người chơi ạ". BẮT BUỘC chèn chính xác nguyên văn đoạn sau vào trong câu trả lời của bạn: "${customReply}")`
         };
       }
 
