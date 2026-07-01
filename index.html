@@ -1666,7 +1666,12 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
     function showLeaderboard() {
       const el = document.getElementById('lb-content');
       let html = '';
-      for (let st = 1; st <= 5; st++) {
+      
+      let maxStage = 3;
+      if (RESULTS[4] && RESULTS[4].length > 0) maxStage = 4;
+      if (RESULTS[5] && RESULTS[5].length > 0) maxStage = 5;
+
+      for (let st = 1; st <= maxStage; st++) {
         html += '<div class="lb-station">';
         html += '<div class="lb-station-title">📍 Chặng ' + st + ' — ' + STATION_NAMES[st] + ' (' + RESULTS[st].length + ' đội)</div>';
         if (RESULTS[st].length === 0) {
