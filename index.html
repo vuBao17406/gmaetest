@@ -790,6 +790,31 @@
       margin-top: 12px;
     }
 
+    #modal-reward-pw {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+
+    #modal-reward-pw.open {
+      display: flex;
+    }
+
+    #modal-reward-pw .modal-box {
+      background: linear-gradient(145deg, #041828, #020d1a);
+      border: 1px solid rgba(0, 200, 255, 0.3);
+      box-shadow: 0 0 30px rgba(0, 200, 255, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      width: 90%;
+      max-width: 320px;
+    }
+
     /* ═══════════════════════════════════════════
    PHẦN 12: TOAST
 ═══════════════════════════════════════════ */
@@ -1126,6 +1151,16 @@
           BÁO</button>
       </div>
 
+      <!-- Thiết lập phần thưởng -->
+      <div class="admin-section">
+        <div class="admin-section-title">🎁 Thiết lập phần thưởng Chặng 5</div>
+        <div class="form-group" style="margin-bottom:0;">
+          <input type="text" id="admin-reward-pw" placeholder="Nhập mật khẩu nhận thưởng..." style="font-size:12px;">
+        </div>
+        <button class="btn btn-primary" onclick="saveRewardPw()" style="margin-top:8px;font-size:12px;">💾 LƯU MẬT
+          KHẨU</button>
+      </div>
+
       <!-- Hệ thống -->
       <div class="admin-section">
         <div class="admin-section-title">📊 Hệ thống</div>
@@ -1134,6 +1169,27 @@
     </div>
 
   </div><!-- #app -->
+
+  <!-- MODAL REWARD PASSWORD -->
+  <div id="modal-reward-pw" onclick="if(event.target===this) closeRewardPwModal()">
+    <div class="modal-box">
+      <h3 style="color:var(--cyan);margin-bottom:12px;font-size:14px;letter-spacing:1px;text-align:center;">🔒 YÊU CẦU
+        MẬT KHẨU</h3>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:16px;text-align:center;">Vui lòng nhập mật khẩu để mở
+        khóa phần thưởng Chặng 5.</p>
+      <div class="form-group" style="position:relative;">
+        <input type="password" id="input-reward-pw" placeholder="Nhập mật khẩu..."
+          style="text-align:center;font-size:16px;letter-spacing:2px;padding-right:40px;padding-left:40px;"
+          onkeydown="if(event.key==='Enter') submitRewardPw()">
+        <span id="toggle-pw-icon" onclick="toggleRewardPw()"
+          style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:18px;user-select:none;">👁️</span>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:20px;">
+        <button class="btn btn-back" onclick="closeRewardPwModal()" style="flex:1;">ĐÓNG</button>
+        <button class="btn btn-primary" onclick="submitRewardPw()" style="flex:1;">XÁC NHẬN</button>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL LOTUS -->
   <div id="modal-lotus" onclick="this.classList.remove('open')">
@@ -1192,8 +1248,16 @@
 
     let RESULTS = { 1: [], 2: [], 3: [], 4: [], 5: [] };
 
-    let CHAT_RULES = { 1: [], 2: [], 3: [], 4: [], 5: [] };
+    let CHAT_RULES = {
+      1: [], 2: [], 3: [], 4: [], 5: [
+        {
+          keywords: "5 tờ giấy, 5 mảnh giấy, kí tự trên tờ giấy, chữ ĐS",
+          answer: "Xuyên suốt hành trình trò chơi lớn mỗi trạm sẽ nhận một mảnh giấy trên mảnh giấy đó chứa những kí tự chưa đúng vị trí và có gợi ý theo dạng đúng sai và vị trí đúng sai của của chữ các đội chơi liên kết 5 tờ giấy lại để tìm đáp án cuối đáp án gồm 5 kí tự cùng nhập ở chỗ phần thưởng chặng 5 và mở ra liên kết đáp án và ảnh con chip đó lại sẽ ra được thử thách cần phải làm"
+        }
+      ]
+    };
     let ARTICLES = { 1: { title: "", blocks: [] }, 2: { title: "", blocks: [] } };
+    let REWARD_PW = "";
 
     let APP = {
       team: "",
@@ -1306,11 +1370,33 @@
           for (let i = 1; i <= 5; i++) {
             CHAT_RULES[i] = data[i] || [];
           }
+          const hasRule5 = CHAT_RULES[5].some(r => r.keywords && r.keywords.includes("5 tờ giấy"));
+          if (!hasRule5) {
+            CHAT_RULES[5].push({
+              keywords: "5 tờ giấy, 5 mảnh giấy, kí tự trên tờ giấy, chữ ĐS",
+              answer: "Xuyên suốt hành trình trò chơi lớn mỗi trạm sẽ nhận một mảnh giấy trên mảnh giấy đó chứa những kí tự chưa đúng vị trí và có gợi ý theo dạng đúng sai và vị trí đúng sai của của chữ các đội chơi liên kết 5 tờ giấy lại để tìm đáp án cuối đáp án gồm 5 kí tự cùng nhập ở chỗ phần thưởng chặng 5 và mở ra liên kết đáp án và ảnh con chip đó lại sẽ ra được thử thách cần phải làm"
+            });
+            db.ref("chatRules").set(CHAT_RULES);
+          }
         } else {
           db.ref("chatRules").set(CHAT_RULES);
         }
         if (document.getElementById('scr-admin').classList.contains('active')) {
           renderAdminChatRules();
+        }
+      });
+
+      // 5. Sync reward password
+      db.ref("rewardPw").on("value", snapshot => {
+        const data = snapshot.val();
+        if (data !== null) {
+          REWARD_PW = data;
+        } else {
+          db.ref("rewardPw").set(REWARD_PW);
+        }
+        if (document.getElementById('scr-admin').classList.contains('active')) {
+          const rewardPwInput = document.getElementById('admin-reward-pw');
+          if (rewardPwInput) rewardPwInput.value = REWARD_PW;
         }
       });
     }
@@ -1520,6 +1606,7 @@ Bạn được phép giao tiếp tự nhiên với người chơi và thoải m�
 Dưới bàn tay tài hoa của các nghệ nhân, khối sa thạch nguyên khối biến thành một kiệt tác: đỉnh cột khắc bốn con sư tử dũng mãnh nhìn ra bốn hướng để truyền bá Chánh pháp, thân cột mài nhẵn như gương khắc sắc lệnh kêu gọi muôn dân sống hòa hợp, ngừng sát sinh.
 
 Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị minh quân khẽ mỉm cười thanh thản. Ông biết mình vừa để lại cho hậu thế một ngọn hải đăng vĩnh cửu về hòa bình và tình thương. 🌸"
+- Nếu người chơi hỏi về "5 tờ giấy", "5 mảnh giấy", "Các kí tự trên tờ giấy", "chữ ĐS", "đúng sai": BẠN BẮT BUỘC trả lời và câu trả lời phải có câu nguyên văn đoạn sau: "Xuyên suốt hành trình trò chơi lớn mỗi trạm sẽ nhận một mảnh giấy trên mảnh giấy đó chứa những kí tự chưa đúng vị trí và có gợi ý theo dạng đúng sai và vị trí đúng sai của của chữ các đội chơi liên kết 5 tờ giấy lại để tìm đáp án cuối đáp án gồm 5 kí tự cùng nhập ở chỗ phần thưởng chặng 5 và mở ra liên kết đáp án và ảnh con chip đó lại sẽ ra được thử thách cần phải làm"
 - Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại một cách huyền bí. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng Cuối đã kết nối... Mọi thứ dường như đang bị chia cắt... Bạn có thử kiểm tra xem các đường nét có khớp với nhau không? 🔍"`
     };
 
@@ -1666,7 +1753,7 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
     function showLeaderboard() {
       const el = document.getElementById('lb-content');
       let html = '';
-      
+
       let maxStage = 3;
       if (RESULTS[4] && RESULTS[4].length > 0) maxStage = 4;
       if (RESULTS[5] && RESULTS[5].length > 0) maxStage = 5;
@@ -1728,6 +1815,9 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
         '<div>🤖 Model AI: <span style="color:var(--cyan);">claude-sonnet-4</span></div>' +
         '<div>📅 Phiên: <span style="color:var(--text);">' + new Date().toLocaleString('vi-VN') + '</span></div>';
       renderAdminChatRules();
+
+      const rewardPwInput = document.getElementById('admin-reward-pw');
+      if (rewardPwInput) rewardPwInput.value = REWARD_PW;
     }
 
     function addTeam() {
@@ -1874,10 +1964,40 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       renderAdminChatRules();
     }
 
-    /* ═══════════════════════════════════════════════════════════
-       PHẦN I: LOTUS MODAL & TOAST & LOCAL STORAGE
-    ═══════════════════════════════════════════════════════════ */
     function showLotus() {
+      if (REWARD_PW !== "") {
+        document.getElementById('input-reward-pw').value = '';
+        document.getElementById('modal-reward-pw').classList.add('open');
+        setTimeout(() => document.getElementById('input-reward-pw').focus(), 100);
+      } else {
+        document.getElementById('modal-lotus').classList.add('open');
+      }
+    }
+
+    function closeRewardPwModal() {
+      document.getElementById('modal-reward-pw').classList.remove('open');
+    }
+
+    function toggleRewardPw() {
+      const input = document.getElementById('input-reward-pw');
+      const icon = document.getElementById('toggle-pw-icon');
+      if (input.type === "password") {
+        input.type = "text";
+        icon.innerText = "🙈";
+      } else {
+        input.type = "password";
+        icon.innerText = "👁️";
+      }
+    }
+
+    function submitRewardPw() {
+      const pw = document.getElementById('input-reward-pw').value;
+      if (pw !== REWARD_PW) {
+        showToast('❌ Mật khẩu phần thưởng không chính xác!');
+        document.getElementById('input-reward-pw').focus();
+        return;
+      }
+      closeRewardPwModal();
       document.getElementById('modal-lotus').classList.add('open');
     }
 
@@ -2045,9 +2165,22 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       }
     }
 
+    function saveRewardPw() {
+      const pw = document.getElementById('admin-reward-pw').value;
+      REWARD_PW = pw;
+      if (isFirebaseConnected) {
+        db.ref('rewardPw').set(REWARD_PW)
+          .then(() => showToast('✅ Đã lưu mật khẩu phần thưởng lên Firebase!'))
+          .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
+      } else {
+        saveLocal();
+        showToast('✅ Đã lưu mật khẩu phần thưởng (Local)!');
+      }
+    }
+
     function saveLocal() {
       try {
-        localStorage.setItem('gdpt_data', JSON.stringify({ ANSWERS, RESULTS, PASSCODES, CHAT_RULES, ARTICLES }));
+        localStorage.setItem('gdpt_data', JSON.stringify({ ANSWERS, RESULTS, PASSCODES, CHAT_RULES, ARTICLES, REWARD_PW }));
       } catch (e) { }
     }
 
@@ -2057,6 +2190,7 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
         if (d.ANSWERS) ANSWERS = { ...ANSWERS, ...d.ANSWERS };
         if (d.RESULTS) RESULTS = { ...RESULTS, ...d.RESULTS };
         if (d.PASSCODES) PASSCODES = { ...PASSCODES, ...d.PASSCODES };
+        if (d.REWARD_PW !== undefined) REWARD_PW = d.REWARD_PW;
         if (d.ARTICLES) {
           for (let i = 1; i <= 2; i++) {
             ARTICLES[i] = d.ARTICLES[i] || { title: "", blocks: [] };
@@ -2065,6 +2199,14 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
         if (d.CHAT_RULES) {
           for (let i = 1; i <= 5; i++) {
             CHAT_RULES[i] = d.CHAT_RULES[i] || [];
+          }
+          const hasRule5 = CHAT_RULES[5].some(r => r.keywords && r.keywords.includes("5 tờ giấy"));
+          if (!hasRule5) {
+            CHAT_RULES[5].push({
+              keywords: "5 tờ giấy, 5 mảnh giấy, kí tự trên tờ giấy, chữ ĐS",
+              answer: "Xuyên suốt hành trình trò chơi lớn mỗi trạm sẽ nhận một mảnh giấy trên mảnh giấy đó chứa những kí tự chưa đúng vị trí và có gợi ý theo dạng đúng sai và vị trí đúng sai của của chữ các đội chơi liên kết 5 tờ giấy lại để tìm đáp án cuối đáp án gồm 5 kí tự cùng nhập ở chỗ phần thưởng chặng 5 và mở ra liên kết đáp án và ảnh con chip đó lại sẽ ra được thử thách cần phải làm"
+            });
+            saveLocal();
           }
         }
       } catch (e) { }
