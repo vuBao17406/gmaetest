@@ -1654,10 +1654,10 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
 
       let apiMessages = [...APP.histories[st]];
       if (customReply) {
-        // Gắn thêm system prompt ẩn vào câu hỏi của user để AI biết phải trả lời ngắn gọn
+        // Gắn thêm system prompt ẩn vào câu hỏi của user để AI biết phải trả lời tự nhiên
         apiMessages[apiMessages.length - 1] = {
           role: 'user',
-          content: text + `\n\n[Hệ thống yêu cầu (ẩn): Hãy phản hồi hoặc chào hỏi tự nhiên, phân tích tình huống 1 cách ngắn gọn (tối đa 2-3 câu). Không được đưa ra đáp án, vì đáp án sẽ được hệ thống nối vào sau câu trả lời của bạn.]`
+          content: text + `\n\n(Hệ thống: Trả lời người chơi tự nhiên theo đúng vai trò, khéo léo dẫn dắt họ đến manh mối quan trọng. KHÔNG CẦN in ra manh mối, vì hệ thống sẽ tự động nối nó vào cuối câu trả lời của bạn. Nội dung manh mối sắp được nối: "${customReply}")`
         };
       }
 
