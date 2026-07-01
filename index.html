@@ -1657,7 +1657,7 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
         // Gắn thêm system prompt ẩn vào câu hỏi của user để AI biết phải trả lời tự nhiên
         apiMessages[apiMessages.length - 1] = {
           role: 'user',
-          content: text + `\n\n(Hệ thống: Trả lời người chơi tự nhiên theo đúng vai trò, khéo léo dẫn dắt họ đến manh mối quan trọng. KHÔNG CẦN in ra manh mối, vì hệ thống sẽ tự động nối nó vào cuối câu trả lời của bạn. Nội dung manh mối sắp được nối: "${customReply}")`
+          content: text + `\n\n(Hệ thống: Hãy phản hồi người chơi một cách tự nhiên theo đúng vai trò của bạn. TRONG câu trả lời của bạn, BẮT BUỘC phải chứa đoạn văn sau đây (phải giữ đúng nguyên văn, không được thay đổi từ ngữ): "${customReply}")`
         };
       }
 
@@ -1675,7 +1675,8 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
         const data = await res.json();
         let reply = data.content?.[0]?.text || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
         
-        if (customReply) {
+        // Nếu AI không chèn đúng nguyên văn (hoặc bị lỗi offline), hệ thống sẽ tự động nối vào
+        if (customReply && !reply.includes(customReply)) {
           reply = reply + "\n\n" + customReply;
         }
 
