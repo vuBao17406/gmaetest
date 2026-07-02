@@ -1840,13 +1840,13 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
         db.ref("passcodes").set(PASSCODES)
           .then(() => {
             updateTeamDropdown();
-            showToast('✅ Đã lưu đội lên Firebase!');
+            showToast('✅ Lưu thành công!');
           })
           .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
       } else {
         saveLocal();
         updateTeamDropdown();
-        showToast('✅ Đã lưu đội (Local)!');
+        showToast('✅ Lưu thành công!');
       }
     }
 
@@ -1857,11 +1857,11 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       });
       if (isFirebaseConnected) {
         db.ref("answers").set(ANSWERS)
-          .then(() => showToast('✅ Đã lưu đáp án lên Firebase!'))
+          .then(() => showToast('✅ Lưu thành công!'))
           .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
       } else {
         saveLocal();
-        showToast('✅ Đã lưu đáp án (Local)!');
+        showToast('✅ Lưu thành công!');
       }
     }
 
@@ -1952,11 +1952,11 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
 
       if (isFirebaseConnected) {
         db.ref('chatRules').set(CHAT_RULES)
-          .then(() => showToast('✅ Đã lưu chatbot rules lên Firebase!'))
+          .then(() => showToast('✅ Lưu thành công!'))
           .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
       } else {
         saveLocal();
-        showToast('✅ Đã lưu chatbot rules (Local)!');
+        showToast('✅ Lưu thành công!');
       }
       renderAdminChatRules();
     }
@@ -2226,12 +2226,12 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       const cleanArticles = JSON.parse(JSON.stringify(ARTICLES));
       if (isFirebaseConnected) {
         db.ref('articles').set(cleanArticles)
-          .then(() => { renderAdminArticles(); showToast('✅ Đã lưu bài báo lên Firebase!'); })
+          .then(() => { renderAdminArticles(); showToast('✅ Lưu thành công!'); })
           .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
       } else {
         saveLocal();
         renderAdminArticles();
-        showToast('✅ Đã lưu bài báo (Local)!');
+        showToast('✅ Lưu thành công!');
       }
     }
 
@@ -2240,11 +2240,11 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       REWARD_PW = pw;
       if (isFirebaseConnected) {
         db.ref('rewardPw').set(REWARD_PW)
-          .then(() => showToast('✅ Đã lưu mật khẩu phần thưởng lên Firebase!'))
+          .then(() => showToast('✅ Lưu thành công!'))
           .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
       } else {
         saveLocal();
-        showToast('✅ Đã lưu mật khẩu phần thưởng (Local)!');
+        showToast('✅ Lưu thành công!');
       }
     }
 
