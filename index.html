@@ -2021,7 +2021,11 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
     function renderAdminArticles() {
       const st = parseInt(document.getElementById('admin-article-station')?.value || '1');
       const articleData = ARTICLES[st] || { title: "", blocks: [] };
-      const blocks = articleData.blocks || [];
+      let blocks = articleData.blocks || [];
+      if (!Array.isArray(blocks)) {
+        blocks = Object.values(blocks);
+        articleData.blocks = blocks;
+      }
       const container = document.getElementById('admin-article-blocks');
       container.innerHTML = '';
 
@@ -2126,8 +2130,40 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
-                ARTICLES[st].blocks[idx].image = canvas.toDataURL('image/jpeg', 0.7);
-                renderAdminArticles();
+                
+                canvas.toBlob((blob) => {
+                  const formData = new FormData();
+                  formData.append('image', blob, 'image.jpg');
+                  
+                  fileInput.disabled = true;
+                  let originalText = fileRow.querySelector('.upload-status');
+                  if (!originalText) {
+                    originalText = document.createElement('span');
+                    originalText.className = 'upload-status';
+                    originalText.style.cssText = 'font-size:11px; color:var(--gold); margin-left:10px;';
+                    fileRow.appendChild(originalText);
+                  }
+                  originalText.innerText = 'Đang tải lên ImgBB...';
+
+                  fetch('https://api.imgbb.com/1/upload?key=24c55e2d3c21c10414f04f4ce9437a55', {
+                    method: 'POST',
+                    body: formData
+                  })
+                  .then(res => res.json())
+                  .then(data => {
+                    if (data && data.data && data.data.url) {
+                      ARTICLES[st].blocks[idx].image = data.data.url;
+                      renderAdminArticles();
+                    } else {
+                      alert('Lỗi tải ảnh lên ImgBB!');
+                    }
+                  })
+                  .catch(err => alert('Lỗi mạng: ' + err.message))
+                  .finally(() => { 
+                    fileInput.disabled = false; 
+                    if (originalText) originalText.innerText = '';
+                  });
+                }, 'image/jpeg', 0.8);
               };
               img.src = evt.target.result;
             };
@@ -2173,7 +2209,11 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       const titleInput = document.getElementById('art-main-title');
       if (titleInput) ARTICLES[st].title = titleInput.value;
 
-      const blocks = ARTICLES[st].blocks || [];
+      let blocks = ARTICLES[st].blocks || [];
+      if (!Array.isArray(blocks)) {
+        blocks = Object.values(blocks);
+        ARTICLES[st].blocks = blocks;
+      }
       blocks.forEach((block, idx) => {
         const txtInput = document.getElementById('art-txt-' + idx);
         if (txtInput) block.content = txtInput.value;
@@ -2183,8 +2223,9 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
     function saveArticles() {
       const st = parseInt(document.getElementById('admin-article-station')?.value || '1');
       collectArticleEdits(st);
+      const cleanArticles = JSON.parse(JSON.stringify(ARTICLES));
       if (isFirebaseConnected) {
-        db.ref('articles').set(ARTICLES)
+        db.ref('articles').set(cleanArticles)
           .then(() => { renderAdminArticles(); showToast('✅ Đã lưu bài báo lên Firebase!'); })
           .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
       } else {
