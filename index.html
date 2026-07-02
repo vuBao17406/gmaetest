@@ -2024,8 +2024,9 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       let blocks = articleData.blocks || [];
       if (!Array.isArray(blocks)) {
         blocks = Object.values(blocks);
-        articleData.blocks = blocks;
       }
+      blocks = blocks.filter(b => b);
+      articleData.blocks = blocks;
       const container = document.getElementById('admin-article-blocks');
       container.innerHTML = '';
 
@@ -2212,8 +2213,9 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       let blocks = ARTICLES[st].blocks || [];
       if (!Array.isArray(blocks)) {
         blocks = Object.values(blocks);
-        ARTICLES[st].blocks = blocks;
       }
+      blocks = blocks.filter(b => b);
+      ARTICLES[st].blocks = blocks;
       blocks.forEach((block, idx) => {
         const txtInput = document.getElementById('art-txt-' + idx);
         if (txtInput) block.content = txtInput.value;
