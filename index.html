@@ -928,7 +928,7 @@
 ══════════════════════════════════════════ -->
     <div id="scr-login" class="screen active">
       <div class="login-logo">
-        <img src="logo-doan-thanh-nien-removebg-preview.png" alt="Logo Đoàn Thanh Niên">
+        <img src="logo-doan-thanh-nien-removebg-preview.jpg" alt="Logo Đoàn Thanh Niên">
       </div>
       <div class="login-title">
         <h1>A DỤC 42</h1>
@@ -2129,11 +2129,11 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
-                
+
                 canvas.toBlob((blob) => {
                   const formData = new FormData();
                   formData.append('image', blob, 'image.jpg');
-                  
+
                   fileInput.disabled = true;
                   let originalText = fileRow.querySelector('.upload-status');
                   if (!originalText) {
@@ -2148,20 +2148,20 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
                     method: 'POST',
                     body: formData
                   })
-                  .then(res => res.json())
-                  .then(data => {
-                    if (data && data.data && data.data.url) {
-                      ARTICLES[st].blocks[idx].image = data.data.url;
-                      renderAdminArticles();
-                    } else {
-                      alert('Lỗi tải ảnh lên ImgBB!');
-                    }
-                  })
-                  .catch(err => alert('Lỗi mạng: ' + err.message))
-                  .finally(() => { 
-                    fileInput.disabled = false; 
-                    if (originalText) originalText.innerText = '';
-                  });
+                    .then(res => res.json())
+                    .then(data => {
+                      if (data && data.data && data.data.url) {
+                        ARTICLES[st].blocks[idx].image = data.data.url;
+                        renderAdminArticles();
+                      } else {
+                        alert('Lỗi tải ảnh lên ImgBB!');
+                      }
+                    })
+                    .catch(err => alert('Lỗi mạng: ' + err.message))
+                    .finally(() => {
+                      fileInput.disabled = false;
+                      if (originalText) originalText.innerText = '';
+                    });
                 }, 'image/jpeg', 0.8);
               };
               img.src = evt.target.result;
