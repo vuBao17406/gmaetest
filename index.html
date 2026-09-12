@@ -1004,7 +1004,7 @@
         </button>
 
         <button id="btn-reward" class="btn btn-reward" onclick="showLotus()">
-          🎁 PHẦN THƯỞNG CHẶNG 5 — MÃ NGUỒN LOTUS-X
+          🎁 PHẦN THƯỞNG TRẠM 5 — MÃ NGUỒN LOTUS-X
         </button>
       </div>
 
@@ -1035,7 +1035,7 @@
       </div>
 
       <div class="answer-section">
-        <label>🔑 NỘP ĐÁP ÁN CHẶNG</label>
+        <label>🔑 NỘP ĐÁP ÁN TRẠM</label>
         <div class="answer-row">
           <input type="text" id="ans-input" placeholder="Nhập đáp án..." onkeydown="if(event.key==='Enter')submitAns()">
           <button class="btn btn-submit" onclick="submitAns()"
@@ -1429,26 +1429,29 @@
       for (let i = 1; i <= 5; i++) {
         const el = document.getElementById('ss-' + i);
         const btn = el.closest('button');
-        btn.style.display = ''; // Đặt lại hiển thị mặc định
         if (isDone(i)) {
+          btn.style.display = '';
           el.className = 'station-status-done'; el.innerText = '✅ Hoàn thành';
           btn.classList.add('done');
-        } else if (i === 1 || i === 2 || i === 3 || isDone(i - 1)) {
+          btn.classList.remove('unlocked');
+        } else if (i === 1 || isDone(i - 1)) {
+          btn.style.display = '';
           el.className = 'station-status-open'; el.innerText = '▶ Đang mở';
           btn.classList.add('unlocked');
+          btn.classList.remove('done');
         } else {
           el.className = 'station-status-lock'; el.innerText = '🔒 Khóa';
           btn.classList.remove('unlocked', 'done');
-          btn.style.display = 'none'; // Ẩn các chặng bị khóa (chặng 4 và 5)
+          btn.style.display = 'none'; // Chỉ mở trạm tiếp theo sau khi giải xong trạm trước
         }
       }
-      // Phần thưởng chặng 5
+      // Phần thưởng trạm 5
       document.getElementById('btn-reward').style.display = isDone(5) ? 'block' : 'none';
     }
 
 
     function goStation(st) {
-      const canEnter = st === 1 || st === 2 || st === 3 || isDone(st - 1);
+      const canEnter = st === 1 || isDone(st - 1);
       if (!canEnter) { showToast("🔒 Cần hoàn thành trạm " + (st - 1) + " trước!"); return; }
       APP.station = st;
 
@@ -1629,7 +1632,7 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       const correct = ANSWERS[st].toLowerCase().trim();
       if (!correct) { fb.style.color = 'var(--gold)'; fb.innerText = '⚠ BTC chưa cài đáp án chặng này.'; return; }
       if (ans === correct) {
-        fb.style.color = 'var(--green)'; fb.innerText = '✅ CHÍNH XÁC! Hoàn thành chặng ' + st + '!';
+        fb.style.color = 'var(--green)'; fb.innerText = '✅ CHÍNH XÁC! Hoàn thành trạm ' + st + '!';
         if (!RESULTS[st].some(r => r.team === APP.team)) {
           const now = new Date();
           RESULTS[st].push({ team: APP.team, time: now.toLocaleTimeString('vi-VN'), ts: now.getTime() });
@@ -1674,10 +1677,10 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       const el = document.getElementById('lb-content');
       let html = '';
 
-      let maxStage = 3;
-      if (RESULTS[4] && RESULTS[4].length > 0) maxStage = 4;
-      if (RESULTS[5] && RESULTS[5].length > 0) maxStage = 5;
-      if (RESULTS[6] && RESULTS[6].length > 0) maxStage = 6;
+      let maxStage = 1;
+      for (let s = 1; s <= 6; s++) {
+        if (RESULTS[s] && RESULTS[s].length > 0) maxStage = s;
+      }
 
       for (let st = 1; st <= maxStage; st++) {
         html += '<div class="lb-station">';
