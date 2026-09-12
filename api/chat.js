@@ -20,11 +20,20 @@ function tryKeywordMatch(clientPayload) {
   let text = null;
 
   switch (station) {
-    case 1:
-      if (query.includes('chip') || query.includes('con chip') || query.includes('giáo sư') || query.includes('giao su') || query.includes('lotus-x') || query.includes('ý nghĩa') || query.includes('y nghia') || query.includes('nguồn gốc') || query.includes('nguon goc')) {
+    case 1: {
+      const isPaperOrPuzzle = query.includes('giấy') || query.includes('giay') ||
+        query.includes('kí tự') || query.includes('ki tu') || query.includes('ký tự') || query.includes('ky tu') ||
+        query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') ||
+        query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') ||
+        query.includes('manh mối') || query.includes('manh moi') || query.includes('gợi ý') || query.includes('goi y');
+
+      if (isPaperOrPuzzle) {
+        text = "🤖 LOTUS-X gợi ý: Những kí tự rời rạc trên trang giấy phẳng lặng ấy chưa thể tự cất lời đâu... Hãy thử tìm một vật thể hình trụ tròn quen thuộc luôn đồng hành trong ba lô của bạn – như một chai nước chẳng hạn – rồi để mảnh giấy ôm trọn lấy thân nó xem điều bất ngờ gì sẽ xuất hiện! 🌀💧";
+      } else if (query.includes('chip') || query.includes('con chip') || query.includes('giáo sư') || query.includes('giao su') || query.includes('lotus-x') || query.includes('nguồn gốc') || query.includes('nguon goc') || query.includes('xuất xứ') || query.includes('xuat xu')) {
         text = "[PROF_IMG] Ah, câu hỏi tuyệt vời! 😄 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨";
       }
       break;
+    }
 
     case 2:
       // Chặng 2 xử lý tự nhiên qua AI hoặc admin rules
