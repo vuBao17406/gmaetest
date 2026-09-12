@@ -21,15 +21,11 @@ function tryKeywordMatch(clientPayload) {
 
   switch (station) {
     case 1:
-      if (query.includes('giải mã') || query.includes('gợi ý') || query.includes('giúp') || query.includes('đáp án') || query.includes('cách làm') || query.includes('mật mã') || query.includes('khóa') || query.includes('trợ giúp')) {
-        text = "🤖 Chặng 1 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
-      }
+      // Chặng 1 xử lý tự nhiên qua AI hoặc admin rules
       break;
 
     case 2:
-      if (query.includes('giải mã') || query.includes('gợi ý') || query.includes('giúp') || query.includes('đáp án') || query.includes('cách làm') || query.includes('mật mã') || query.includes('khóa') || query.includes('trợ giúp')) {
-        text = "🤖 Chặng 2 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
-      }
+      // Chặng 2 xử lý tự nhiên qua AI hoặc admin rules
       break;
 
     case 3:

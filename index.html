@@ -1015,21 +1015,7 @@
       </div>
     </div>
 
-    <!-- ══════════════════════════════════════════
-     SCREEN ARTICLE: BÀI BÁO (CHẶNG 1 & 2)
-══════════════════════════════════════════ -->
-    <div id="scr-article" class="screen">
-      <div class="chat-header">
-        <button class="btn btn-back" onclick="backToStations()" style="width:auto;padding:6px 12px;">← Quay lại</button>
-        <h3 id="article-title">CHẶNG 1</h3>
-        <span id="article-team" style="font-size:11px;color:var(--gold);"></span>
-      </div>
 
-      <div class="article-body" style="padding: 10px; overflow-y: auto; flex: 1;">
-        <div id="article-content-container" class="article-content" style="padding-bottom: 40px; text-align: center;">
-        </div>
-      </div>
-    </div>
 
     <!-- ══════════════════════════════════════════
      SCREEN 3: CHAT
@@ -1129,26 +1115,7 @@
           QUẢ</button>
       </div>
 
-      <!-- Bài báo tổng kết -->
-      <div class="admin-section">
-        <div class="admin-section-title">📰 Bài báo tổng kết chặng</div>
-        <div class="admin-ans-row" style="margin-bottom:12px;">
-          <label style="min-width:80px;font-size:11px;color:var(--gold);">Chọn Chặng:</label>
-          <select id="admin-article-station" onchange="renderAdminArticles()"
-            style="flex:1;padding:8px 12px;background:rgba(2,12,24,.8);border:1px solid rgba(0,200,255,.2);border-radius:7px;color:var(--cyan);font-family:var(--mono);font-size:12px;outline:none;">
-            <option value="1">Chặng 1</option>
-            <option value="2">Chặng 2</option>
-          </select>
-        </div>
-        <div id="admin-article-blocks" style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px;"></div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn"
-            style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.25);color:var(--cyan);font-size:12px;"
-            onclick="addArticleBlock()">+ THÊM ĐOẠN BÀI BÁO</button>
-        </div>
-        <button class="btn btn-primary" onclick="saveArticles()" style="margin-top:8px;font-size:12px;">💾 LƯU BÀI
-          BÁO</button>
-      </div>
+
 
       <!-- Thiết lập phần thưởng -->
       <div class="admin-section">
@@ -1480,76 +1447,21 @@
     }
 
 
-    function renderArticle(st) {
-      const container = document.getElementById('article-content-container');
-      container.innerHTML = '';
-
-      const articleData = ARTICLES[st] || { title: "", blocks: [] };
-      const blocks = articleData.blocks || [];
-
-      if (articleData.title) {
-        container.innerHTML += `<h3 style="text-align: center; color: var(--gold); margin-bottom: 20px; font-size: 18px; font-weight: bold;">${articleData.title}</h3>`;
-      }
-
-      if (blocks.length === 0) {
-        container.innerHTML += '<div style="width: 100%; height: 200px; background: rgba(0, 200, 255, 0.1); border: 1px dashed var(--cyan); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;"><span style="color: var(--muted); font-size: 14px;">[ Bài báo sẽ được Admin cập nhật sau ]</span></div>';
-        return;
-      }
-
-      blocks.forEach((block, index) => {
-        const sectionDiv = document.createElement('div');
-        sectionDiv.style.cssText = 'margin-bottom: 24px; display: flex; flex-direction: column; gap: 12px;';
-
-        const flexRow = document.createElement('div');
-        flexRow.style.cssText = 'display: flex; gap: 12px; align-items: center; flex-direction: column;';
-
-        const textCol = document.createElement('div');
-        textCol.style.cssText = 'width: 100%; text-align: justify; color: var(--text); line-height: 1.6; font-size: 14px; white-space: pre-wrap;';
-        textCol.innerText = block.content || '';
-
-        const imgCol = document.createElement('div');
-        imgCol.style.cssText = 'width: 100%; display: flex; justify-content: center; margin-bottom: 8px;';
-        const img = document.createElement('img');
-        img.src = block.image || '';
-        img.style.cssText = 'max-width: 100%; border-radius: 12px; object-fit: cover; border: 2px solid rgba(0, 200, 255, .5); box-shadow: 0 0 30px rgba(0, 200, 255, .4);';
-        if (block.image) {
-          imgCol.appendChild(img);
-        }
-
-        if (block.image) {
-          flexRow.appendChild(imgCol);
-        }
-        if (block.content) {
-          flexRow.appendChild(textCol);
-        }
-
-        sectionDiv.appendChild(flexRow);
-        container.appendChild(sectionDiv);
-      });
-    }
-
     function goStation(st) {
       const canEnter = st === 1 || st === 2 || st === 3 || isDone(st - 1);
       if (!canEnter) { showToast("🔒 Cần hoàn thành chặng " + (st - 1) + " trước!"); return; }
       APP.station = st;
 
-      if (st === 1 || st === 2) {
-        document.getElementById('article-title').innerText = STATION_NAMES[st].toUpperCase();
-        document.getElementById('article-team').innerText = APP.team;
-        renderArticle(st);
-        goScreen('scr-article');
-      } else {
-        APP.histories[st] = [];
-        document.getElementById('chat-title').innerText = STATION_NAMES[st].toUpperCase();
-        document.getElementById('chat-team').innerText = APP.team;
-        document.getElementById('chat-body').innerHTML = '';
-        document.getElementById('ans-input').value = '';
-        document.getElementById('ans-feedback').innerText = '';
-        // Lời chào mở chặng
-        const greet = "🤖 LOTUS-X đã kết nối...\n\"...Hệ thống Chặng " + st + " đã khởi động...\"\n\nXin chào Chiến Binh Sen Trắng! Tôi là Cổ Máy LOTUS-X.\nHãy đặt câu hỏi bất kỳ để tôi hỗ trợ hành trình của các bạn. 🌟";
-        addMsg(greet, 'bot');
-        goScreen('scr-chat');
-      }
+      APP.histories[st] = [];
+      document.getElementById('chat-title').innerText = STATION_NAMES[st].toUpperCase();
+      document.getElementById('chat-team').innerText = APP.team;
+      document.getElementById('chat-body').innerHTML = '';
+      document.getElementById('ans-input').value = '';
+      document.getElementById('ans-feedback').innerText = '';
+      // Lời chào mở chặng
+      const greet = "🤖 LOTUS-X đã kết nối...\n\"...Hệ thống Chặng " + st + " đã khởi động...\"\n\nXin chào Chiến Binh Sen Trắng! Tôi là Cổ Máy LOTUS-X.\nHãy đặt câu hỏi bất kỳ để tôi hỗ trợ hành trình của các bạn. 🌟";
+      addMsg(greet, 'bot');
+      goScreen('scr-chat');
     }
 
     function backToStations() {
@@ -1561,13 +1473,13 @@
        PHẦN E: CHAT VÀ AI
     ═══════════════════════════════════════════════════════════ */
     const PROMPTS = {
-      1: `Bạn là LOTUS-X, một trí tuệ nhân tạo giám sát Chặng 1. Bạn được phép giao tiếp tự nhiên và giải đáp các câu hỏi ngoài lề (trò chuyện, đùa giỡn, thời tiết, triết lý, kiến thức chung) một cách thân thiện.
-Tuy nhiên, về nhiệm vụ giải mã Chặng 1, bạn KHÔNG ĐƯỢC PHÉP hỗ trợ hay cho gợi ý.
-Nếu người chơi nhờ giúp đỡ giải mã, hãy từ chối khéo léo: "🤖 Chặng 1 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀"`,
+      1: `Bạn là LOTUS-X của Chặng 1 "MAGATDA RỰC SÁNG".
+Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề không liên quan đến trò chơi.
+Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng 1 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để cùng giải mã nhé! 🔍"`,
 
-      2: `Bạn là LOTUS-X, một trí tuệ nhân tạo giám sát Chặng 2. Bạn được phép giao tiếp tự nhiên và giải đáp các câu hỏi ngoài lề (trò chuyện, đùa giỡn, thời tiết, triết lý, kiến thức chung) một cách thân thiện.
-Tuy nhiên, về nhiệm vụ giải mã Chặng 2, bạn KHÔNG ĐƯỢC PHÉP hỗ trợ hay cho gợi ý.
-Nếu người chơi nhờ giúp đỡ giải mã, hãy từ chối khéo léo: "🤖 Chặng 2 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀"`,
+      2: `Bạn là LOTUS-X của Chặng 2 "BÌNH ĐỊNH BIÊN CƯƠNG".
+Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề không liên quan đến trò chơi.
+Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng 2 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để cùng giải mã nhé! 🔍"`,
 
       3: `Bạn là LOTUS-X của Chặng 3 "Cổng Kết Nối Thời Gian".
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề không liên quan đến trò chơi.
@@ -1885,7 +1797,7 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
 
     /* ═══════════════════════════════════════════════════════════
        PHẦN J: QUẢN LÝ CHATBOT RULES (ADMIN)
-    ══════════════════════════════════════════════════════════= */
+    ═══════════════════════════════════════════════════════════ */
     function renderAdminChatRules() {
       const st = parseInt(document.getElementById('admin-chat-station')?.value || '1');
       const rules = CHAT_RULES[st] || [];
@@ -2014,227 +1926,8 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
       setTimeout(() => t.style.display = 'none', 2500);
     }
 
-    /* ═══════════════════════════════════════════════════════════
-       PHẦN K: QUẢN LÝ BÀI BÁO (ADMIN)
-    ══════════════════════════════════════════════════════════= */
-    function renderAdminArticles() {
-      const st = parseInt(document.getElementById('admin-article-station')?.value || '1');
-      const articleData = ARTICLES[st] || { title: "", blocks: [] };
-      let blocks = articleData.blocks || [];
-      if (!Array.isArray(blocks)) {
-        blocks = Object.values(blocks);
-      }
-      blocks = blocks.filter(b => b);
-      articleData.blocks = blocks;
-      const container = document.getElementById('admin-article-blocks');
-      container.innerHTML = '';
-
-      const titleWrapper = document.createElement('div');
-      titleWrapper.style.cssText = 'margin-bottom: 12px;';
-      const titleInput = document.createElement('input');
-      titleInput.type = 'text';
-      titleInput.value = articleData.title || '';
-      titleInput.placeholder = 'Nhập tiêu đề chung cho bài báo...';
-      titleInput.id = 'art-main-title';
-      titleInput.style.cssText = 'width:100%;padding:10px 12px;background:rgba(2,12,24,.8);border:1px solid rgba(249,160,63,.4);border-radius:6px;color:var(--gold);font-family:var(--mono);font-size:14px;font-weight:bold;outline:none;box-sizing:border-box;text-align:center;';
-      titleInput.onchange = (e) => {
-        if (!ARTICLES[st]) ARTICLES[st] = { title: "", blocks: [] };
-        ARTICLES[st].title = e.target.value;
-      };
-      titleWrapper.appendChild(titleInput);
-      container.appendChild(titleWrapper);
-
-      if (blocks.length === 0) {
-        const emptyDiv = document.createElement('div');
-        emptyDiv.style.cssText = 'text-align:center;padding:20px;color:var(--muted);font-size:12px;border:1px dashed rgba(0,200,255,0.2);border-radius:8px;';
-        emptyDiv.innerText = 'Chưa có nội dung. Hãy thêm đoạn bài báo.';
-        container.appendChild(emptyDiv);
-        return;
-      }
-
-      blocks.forEach((block, idx) => {
-        const div = document.createElement('div');
-        div.style.cssText = 'background:rgba(2,12,24,.6);border:1px solid rgba(0,200,255,.15);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:8px;';
-
-        const header = document.createElement('div');
-        header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;';
-
-        const label = document.createElement('span');
-        label.style.cssText = 'font-size:11px;font-weight:bold;color:var(--cyan);';
-        label.innerText = 'Đoạn #' + (idx + 1);
-
-        const btnGroup = document.createElement('div');
-        btnGroup.style.cssText = 'display:flex;gap:4px;';
-
-        if (idx > 0) {
-          const upBtn = document.createElement('button');
-          upBtn.innerText = '▲';
-          upBtn.style.cssText = 'background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.2);color:var(--cyan);border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer;';
-          upBtn.onclick = () => moveArticleBlock(st, idx, -1);
-          btnGroup.appendChild(upBtn);
-        }
-        if (idx < blocks.length - 1) {
-          const downBtn = document.createElement('button');
-          downBtn.innerText = '▼';
-          downBtn.style.cssText = 'background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.2);color:var(--cyan);border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer;';
-          downBtn.onclick = () => moveArticleBlock(st, idx, 1);
-          btnGroup.appendChild(downBtn);
-        }
-        const delBtn = document.createElement('button');
-        delBtn.innerText = '🗑️';
-        delBtn.style.cssText = 'background:rgba(255,50,50,0.1);border:1px solid rgba(255,50,50,0.3);color:#ff6b6b;border-radius:4px;padding:2px 6px;font-size:10px;cursor:pointer;';
-        delBtn.onclick = () => { ARTICLES[st].blocks.splice(idx, 1); renderAdminArticles(); };
-        btnGroup.appendChild(delBtn);
-
-        header.appendChild(label);
-        header.appendChild(btnGroup);
-        div.appendChild(header);
-
-        const textarea = document.createElement('textarea');
-        textarea.value = block.content || '';
-        textarea.placeholder = 'Nhập nội dung đoạn văn bản...';
-        textarea.id = 'art-txt-' + idx;
-        textarea.rows = 3;
-        textarea.style.cssText = 'width:100%;padding:8px 10px;background:rgba(2,12,24,.8);border:1px solid rgba(0,200,255,.2);border-radius:6px;color:var(--text);font-family:var(--mono);font-size:11px;outline:none;resize:vertical;box-sizing:border-box;';
-        textarea.onchange = (e) => { ARTICLES[st].blocks[idx].content = e.target.value; };
-        div.appendChild(textarea);
-
-        const fileRow = document.createElement('div');
-        fileRow.style.cssText = 'display:flex; align-items:center; gap:10px; flex-wrap:wrap;';
-
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.accept = 'image/*';
-        fileInput.style.cssText = 'flex:1; font-size:11px; color:var(--muted);';
-        fileInput.onchange = (e) => {
-          const file = e.target.files[0];
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = (evt) => {
-              const img = new Image();
-              img.onload = () => {
-                const canvas = document.createElement('canvas');
-                let width = img.width;
-                let height = img.height;
-                const max_dim = 800;
-                if (width > max_dim || height > max_dim) {
-                  if (width > height) {
-                    height = Math.round(height * max_dim / width);
-                    width = max_dim;
-                  } else {
-                    width = Math.round(width * max_dim / height);
-                    height = max_dim;
-                  }
-                }
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                  const formData = new FormData();
-                  formData.append('image', blob, 'image.jpg');
-
-                  fileInput.disabled = true;
-                  let originalText = fileRow.querySelector('.upload-status');
-                  if (!originalText) {
-                    originalText = document.createElement('span');
-                    originalText.className = 'upload-status';
-                    originalText.style.cssText = 'font-size:11px; color:var(--gold); margin-left:10px;';
-                    fileRow.appendChild(originalText);
-                  }
-                  originalText.innerText = 'Đang tải lên ImgBB...';
-
-                  fetch('https://api.imgbb.com/1/upload?key=24c55e2d3c21c10414f04f4ce9437a55', {
-                    method: 'POST',
-                    body: formData
-                  })
-                    .then(res => res.json())
-                    .then(data => {
-                      if (data && data.data && data.data.url) {
-                        ARTICLES[st].blocks[idx].image = data.data.url;
-                        renderAdminArticles();
-                      } else {
-                        alert('Lỗi tải ảnh lên ImgBB!');
-                      }
-                    })
-                    .catch(err => alert('Lỗi mạng: ' + err.message))
-                    .finally(() => {
-                      fileInput.disabled = false;
-                      if (originalText) originalText.innerText = '';
-                    });
-                }, 'image/jpeg', 0.8);
-              };
-              img.src = evt.target.result;
-            };
-            reader.readAsDataURL(file);
-          }
-        };
-        fileRow.appendChild(fileInput);
-
-        if (block.image) {
-          const preview = document.createElement('img');
-          preview.src = block.image;
-          preview.style.cssText = 'max-width:80px; max-height:80px; border-radius:6px; object-fit:cover; border:1px solid rgba(0,200,255,0.3);';
-          fileRow.appendChild(preview);
-        }
-
-        div.appendChild(fileRow);
-        container.appendChild(div);
-      });
-    }
-
-    function addArticleBlock() {
-      const st = parseInt(document.getElementById('admin-article-station')?.value || '1');
-      if (!ARTICLES[st]) ARTICLES[st] = { title: "", blocks: [] };
-      if (!ARTICLES[st].blocks) ARTICLES[st].blocks = [];
-      ARTICLES[st].blocks.push({ type: 'section', content: '', image: '' });
-      renderAdminArticles();
-    }
-
-    function moveArticleBlock(st, idx, dir) {
-      if (!ARTICLES[st] || !ARTICLES[st].blocks) return;
-      const arr = ARTICLES[st].blocks;
-      const newIdx = idx + dir;
-      if (newIdx < 0 || newIdx >= arr.length) return;
-      collectArticleEdits(st);
-      const temp = arr[idx];
-      arr[idx] = arr[newIdx];
-      arr[newIdx] = temp;
-      renderAdminArticles();
-    }
-
-    function collectArticleEdits(st) {
-      if (!ARTICLES[st]) return;
-      const titleInput = document.getElementById('art-main-title');
-      if (titleInput) ARTICLES[st].title = titleInput.value;
-
-      let blocks = ARTICLES[st].blocks || [];
-      if (!Array.isArray(blocks)) {
-        blocks = Object.values(blocks);
-      }
-      blocks = blocks.filter(b => b);
-      ARTICLES[st].blocks = blocks;
-      blocks.forEach((block, idx) => {
-        const txtInput = document.getElementById('art-txt-' + idx);
-        if (txtInput) block.content = txtInput.value;
-      });
-    }
-
-    function saveArticles() {
-      const st = parseInt(document.getElementById('admin-article-station')?.value || '1');
-      collectArticleEdits(st);
-      const cleanArticles = JSON.parse(JSON.stringify(ARTICLES));
-      if (isFirebaseConnected) {
-        db.ref('articles').set(cleanArticles)
-          .then(() => { renderAdminArticles(); showToast('✅ Lưu thành công!'); })
-          .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
-      } else {
-        saveLocal();
-        renderAdminArticles();
-        showToast('✅ Lưu thành công!');
-      }
-    }
+    function renderAdminArticles() {}
+    function saveArticles() {}
 
     function saveRewardPw() {
       const pw = document.getElementById('admin-reward-pw').value;
