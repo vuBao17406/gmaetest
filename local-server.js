@@ -44,8 +44,8 @@ function tryKeywordMatch(clientPayload) {
 
   switch (station) {
     case 1:
-      if (query.includes('giải mã') || query.includes('gợi ý') || query.includes('giúp') || query.includes('đáp án') || query.includes('cách làm') || query.includes('mật mã') || query.includes('khóa') || query.includes('trợ giúp')) {
-        responseText = "🤖 Chặng 1 không cần sử dụng chatbot. Các bạn hãy nỗ lực tự giải mã nhé! 🚀";
+      if (query.includes('chip') || query.includes('con chip') || query.includes('giáo sư') || query.includes('giao su') || query.includes('lotus-x') || query.includes('ý nghĩa') || query.includes('y nghia') || query.includes('nguồn gốc') || query.includes('nguon goc')) {
+        responseText = "[PROF_IMG] Ah, câu hỏi tuyệt vời! 😄 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨";
       }
       break;
     case 2:

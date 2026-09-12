@@ -21,7 +21,9 @@ function tryKeywordMatch(clientPayload) {
 
   switch (station) {
     case 1:
-      // Chặng 1 xử lý tự nhiên qua AI hoặc admin rules
+      if (query.includes('chip') || query.includes('con chip') || query.includes('giáo sư') || query.includes('giao su') || query.includes('lotus-x') || query.includes('ý nghĩa') || query.includes('y nghia') || query.includes('nguồn gốc') || query.includes('nguon goc')) {
+        text = "[PROF_IMG] Ah, câu hỏi tuyệt vời! 😄 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨";
+      }
       break;
 
     case 2:
