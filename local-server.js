@@ -31,10 +31,10 @@ loadEnv();
 // (khi null → sẽ fallback sang API AI)
 // ═══════════════════════════════════════════════════════════
 function tryKeywordMatch(clientPayload) {
-  const station = clientPayload.system && clientPayload.system.includes('Chặng 1') ? 1 :
-    clientPayload.system && clientPayload.system.includes('Chặng 2') ? 2 :
-      clientPayload.system && clientPayload.system.includes('Chặng 3') ? 3 :
-        clientPayload.system && clientPayload.system.includes('Chặng 4') ? 4 : 5;
+  const station = (clientPayload.system && (clientPayload.system.includes('1') || clientPayload.system.includes('KHỞI CHÈO'))) ? 1 :
+    (clientPayload.system && (clientPayload.system.includes('2') || clientPayload.system.includes('VỮNG TAY'))) ? 2 :
+      (clientPayload.system && (clientPayload.system.includes('3') || clientPayload.system.includes('ĐỒNG TÂM'))) ? 3 :
+        (clientPayload.system && (clientPayload.system.includes('4') || clientPayload.system.includes('BỨT PHÁ'))) ? 4 : 5;
 
   const messages = clientPayload.messages || [];
   const lastMessage = messages[messages.length - 1];

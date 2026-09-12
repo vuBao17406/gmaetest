@@ -8,10 +8,10 @@
 // ═══════════════════════════════════════════════════════════
 function tryKeywordMatch(clientPayload) {
   const sys = clientPayload.system || '';
-  const station = sys.includes('Chặng 1') ? 1 :
-    sys.includes('Chặng 2') ? 2 :
-      sys.includes('Chặng 3') ? 3 :
-        sys.includes('Chặng 4') ? 4 : 5;
+  const station = (sys.includes('1') || sys.includes('KHỞI CHÈO')) ? 1 :
+    (sys.includes('2') || sys.includes('VỮNG TAY')) ? 2 :
+      (sys.includes('3') || sys.includes('ĐỒNG TÂM')) ? 3 :
+        (sys.includes('4') || sys.includes('BỨT PHÁ')) ? 4 : 5;
 
   const messages = clientPayload.messages || [];
   const lastMsg = messages[messages.length - 1];

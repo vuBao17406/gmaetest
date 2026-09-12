@@ -983,23 +983,23 @@
 
       <div class="station-list">
         <button class="btn-station" onclick="goStation(1)">
-          <span>CHẶNG 1: MAGATDA RỰC SÁNG</span>
+          <span>TRẠM 1: KHỞI CHÈO VƯƠN SÓNG</span>
           <span id="ss-1" class="station-status-lock">🔒</span>
         </button>
         <button class="btn-station" onclick="goStation(2)">
-          <span>CHẶNG 2: BÌNH ĐỊNH BIÊN CƯƠNG</span>
+          <span>TRẠM 2: VỮNG TAY CHÈO</span>
           <span id="ss-2" class="station-status-lock">🔒</span>
         </button>
         <button class="btn-station" onclick="goStation(3)">
-          <span>CHẶNG 3: KALINGA – BƯỚC NGOẶC ĐẠI ĐẾ</span>
+          <span>TRẠM 3: ĐỒNG TÂM HỢP LỰC</span>
           <span id="ss-3" class="station-status-lock">🔒</span>
         </button>
         <button class="btn-station" onclick="goStation(4)">
-          <span>CHẶNG 4: SỰ TỈNH THỨC VĨ ĐẠI</span>
+          <span>TRẠM 4: BỨT PHÁ DẪN ĐƯỜNG</span>
           <span id="ss-4" class="station-status-lock">🔒</span>
         </button>
         <button class="btn-station" onclick="goStation(5)">
-          <span>CHẶNG 5: DỰNG TRỤ ĐÁ CHÁNH PHÁP</span>
+          <span>TRẠM 5: VƯƠN TẦM TIÊN PHONG</span>
           <span id="ss-5" class="station-status-lock">🔒</span>
         </button>
 
@@ -1092,11 +1092,11 @@
           <label style="min-width: 80px; font-size: 11px; color: var(--gold);">Chọn Chặng:</label>
           <select id="admin-chat-station" onchange="renderAdminChatRules()"
             style="flex:1;padding:8px 12px;background:rgba(2,12,24,.8);border:1px solid rgba(0,200,255,.2);border-radius:7px;color:var(--cyan);font-family:var(--mono);font-size:12px;outline:none;">
-            <option value="1">Chặng 1: MAGATDA RỰC SÁNG</option>
-            <option value="2">Chặng 2: BÌNH ĐỊNH BIÊN CƯƠNG</option>
-            <option value="3">Chặng 3: KALINGA - BƯỚC NGOẶT ĐẠI ĐẾ</option>
-            <option value="4">Chặng 4: SỰ TỈNH THỨC VĨ ĐẠI</option>
-            <option value="5">Chặng 5: DỤNG TRỤ ĐÁ CHÁNH PHÁP</option>
+            <option value="1">Trạm 1: KHỞI CHÈO VƯƠN SÓNG</option>
+            <option value="2">Trạm 2: VỮNG TAY CHÈO</option>
+            <option value="3">Trạm 3: ĐỒNG TÂM HỢP LỰC</option>
+            <option value="4">Trạm 4: BỨT PHÁ DẪN ĐƯỜNG</option>
+            <option value="5">Trạm 5: VƯƠN TẦM TIÊN PHONG</option>
           </select>
         </div>
         <div id="admin-chat-rules" style="margin-bottom:12px; display:flex; flex-direction:column; gap:10px;"></div>
@@ -1413,11 +1413,11 @@
        PHẦN D: QUẢN LÝ CHẶNG
     ═══════════════════════════════════════════════════════════ */
     const STATION_NAMES = {
-      1: "MAGATDA RỰC SÁNG",
-      2: "BÌNH ĐỊNH BIÊN CƯƠNG",
-      3: "KALINGA - BƯỚC NGOẶC ĐẠI ĐẾ",
-      4: "SỰ TỈNH THỨC VĨ ĐẠI",
-      5: "DỤNG TRỤ ĐÁ CHÁNH PHÁ",
+      1: "KHỞI CHÈO VƯƠN SÓNG",
+      2: "VỮNG TAY CHÈO",
+      3: "ĐỒNG TÂM HỢP LỰC",
+      4: "BỨT PHÁ DẪN ĐƯỜNG",
+      5: "VƯƠN TẦM TIÊN PHONG",
       6: "GIẢI MÃ PHẦN THƯỞNG"
     };
 
@@ -1473,7 +1473,7 @@
        PHẦN E: CHAT VÀ AI
     ═══════════════════════════════════════════════════════════ */
     const PROMPTS = {
-      1: `Bạn là LOTUS-X của Chặng 1 "MAGATDA RỰC SÁNG".
+      1: `Bạn là LOTUS-X của Trạm 1 "KHỞI CHÈO VƯƠN SÓNG".
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề không liên quan đến trò chơi.
 QUY TẮC BẮT BUỘC:
 - Nếu người chơi hỏi bất cứ điều gì liên quan đến "chip", "con chip", "ý nghĩa của con chip", "nguồn gốc chip", "giáo sư", "lotus-x", "xuất xứ", "nhiệm vụ":
@@ -1481,11 +1481,11 @@ QUY TẮC BẮT BUỘC:
   + Câu trả lời hãy diễn đạt tự nhiên, hào hứng, thân thiện, không quá cứng nhắc nhưng BẮT BUỘC phải truyền tải đầy đủ các thông tin sau: Bạn là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức, với nhiệm vụ lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨
 - Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng 1 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để cùng giải mã nhé! 🔍"`,
 
-      2: `Bạn là LOTUS-X của Chặng 2 "BÌNH ĐỊNH BIÊN CƯƠNG".
+      2: `Bạn là LOTUS-X của Trạm 2 "VỮNG TAY CHÈO".
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề không liên quan đến trò chơi.
 Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng 2 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để cùng giải mã nhé! 🔍"`,
 
-      3: `Bạn là LOTUS-X của Chặng 3 "Cổng Kết Nối Thời Gian".
+      3: `Bạn là LOTUS-X của Trạm 3 "ĐỒNG TÂM HỢP LỰC".
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề không liên quan đến trò chơi.
 Tuy nhiên, đối với các câu hỏi xin gợi ý giải đố, bạn PHẢI TUÂN THỦ NGHIÊM NGẶT các quy tắc phân loại câu hỏi sau (chú ý ưu tiên câu hỏi hành động/quy luật trước):
 - QUY TẮC BƯỚC 2 (ƯU TIÊN): Nếu câu hỏi của người chơi có chứa các từ liên quan đến hành động giải đố, quy luật hoặc cách xem như "cuốn", "quấn", "xoay", "tiếp theo", "quy luật", "thẳng hàng", "nhìn như thế nào", "giải tiếp" (ví dụ: "cuốn chai nước", "cuốn như thế nào", "xem kiểu gì"): Bạn BẮT BUỘC phải đưa ra gợi ý chứa đủ 2 ý bí ẩn sau (Bắt buộc dùng cụm từ "ĐẦU XUÔI ĐUÔI KẸT" và biến đổi cách diễn đạt linh hoạt): 1. "nhìn xuôi theo chiều dọc thân chai ("ĐẦU XUÔI ĐUÔI KẸT")" VÀ 2. "chữ X thực chất là chữ J".
@@ -1493,12 +1493,12 @@ Tuy nhiên, đối với các câu hỏi xin gợi ý giải đố, bạn PHẢI
 - Nếu người chơi CHỈ hỏi về "ký tự", "kí tự", "tờ giấy", "mảnh giấy", "giấy": Hãy gợi ý xoay quanh: "chúng liên quan đến một loại nước suối/nước khoáng quen thuộc của Mỹ bắt đầu bằng chữ A".
 - Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng 3 đã kết nối. Khóa giải mã đang nằm ngay trên tay bạn, hãy thử hỏi tôi về nó nhé! 🔍"`,
 
-      4: `Bạn là LOTUS-X của Chặng 4.
+      4: `Bạn là LOTUS-X của Trạm 4 "BỨT PHÁ DẪN ĐƯỜNG".
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề. Tuy nhiên, đối với phần giải đố, bạn PHẢI TUÂN THỦ NGHIÊM NGẶT quy tắc sau (không tự sáng tạo manh mối):
 - Nếu người chơi hỏi về "khóa", "mật thư", "hai khóa", "giải mã", "tọa độ", "tâm", "bảng", "hàng", "cột": Hãy tự diễn đạt bằng lời của bạn gợi ý sau: "Khóa 1 là tra tọa độ bảng (hàng và cột), Khóa 2 là lấy chữ cái ở tâm của các từ vừa tìm được từ Khóa 1". Bắt buộc mỗi lần trả lời phải dùng cách diễn đạt khác nhau, đóng vai một cỗ máy bí ẩn dẫn đường.
 - Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng 4 đã kết nối. Hãy hỏi tôi về 'mật thư' hoặc 'khóa' để nhận được sự dẫn đường... 🔮"`,
 
-      5: `Bạn là LOTUS-X của Chặng 5 – CHẶNG CUỐI.
+      5: `Bạn là LOTUS-X của Trạm 5 "VƯƠN TẦM TIÊN PHONG" – TRẠM CUỐI.
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp các câu hỏi ngoài lề. Đối với phần giải đố, bạn PHẢI TUÂN THỦ NGHIÊM NGẶT quy tắc sau, hãy diễn đạt thật dài dòng, lan man, huyền bí và vòng vo (đừng bao giờ đưa ra đáp án nhanh, hãy bắt người chơi phải suy ngẫm):
 - Nếu người chơi hỏi về "mạch", "mica", "đè", "vẽ", "vị trí", "sơ đồ": Hãy nói thật lan man về sự kết nối của vạn vật hoặc sự ẩn giấu của trật tự. Sau đó gợi ý thật lấp lửng: "Bạn có thấy những nét vẽ mờ nhạt và những đường mạch ngoằn ngoèo kia không? Đôi khi sự thật bị chia cắt. Bạn có thể xem thử các đường nét của chúng có khớp nối được với nhau không? Hãy thử ướm những nét trên tấm màn trong suốt vào những đường điện bên dưới... nhưng hãy nhớ, hình hài đầu tiên hiện ra chưa chắc đã nằm ở đúng vị trí thực sự của nó". Tuyệt đối KHÔNG nói thẳng "đè mica lên mạch sẽ ra số".
 - Nếu người chơi hỏi về "250", "TCN", "ý nghĩa", "con số", "250 TCN", "nghĩa là gì": Bạn BẮT BUỘC phải đóng vai cỗ máy trầm ngâm và kể lại chính xác câu chuyện lịch sử đầy cảm xúc sau đây về ý nghĩa con số 250 TCN:
@@ -1676,7 +1676,7 @@ Ngày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị mi
 
       for (let st = 1; st <= maxStage; st++) {
         html += '<div class="lb-station">';
-        html += '<div class="lb-station-title">📍 ' + (st === 6 ? STATION_NAMES[st] : 'Chặng ' + st + ' — ' + STATION_NAMES[st]) + ' (' + RESULTS[st].length + ' đội)</div>';
+        html += '<div class="lb-station-title">📍 ' + (st === 6 ? STATION_NAMES[st] : 'Trạm ' + st + ' — ' + STATION_NAMES[st]) + ' (' + RESULTS[st].length + ' đội)</div>';
         if (RESULTS[st].length === 0) {
           html += '<div style="font-size:12px;color:var(--muted);padding:6px 10px;">Chưa có đội nào hoàn thành</div>';
         } else {
