@@ -32,9 +32,9 @@ loadEnv();
 // ═══════════════════════════════════════════════════════════
 function tryKeywordMatch(clientPayload) {
   const station = clientPayload.system && clientPayload.system.includes('Chặng 1') ? 1 :
-                  clientPayload.system && clientPayload.system.includes('Chặng 2') ? 2 :
-                  clientPayload.system && clientPayload.system.includes('Chặng 3') ? 3 :
-                  clientPayload.system && clientPayload.system.includes('Chặng 4') ? 4 : 5;
+    clientPayload.system && clientPayload.system.includes('Chặng 2') ? 2 :
+      clientPayload.system && clientPayload.system.includes('Chặng 3') ? 3 :
+        clientPayload.system && clientPayload.system.includes('Chặng 4') ? 4 : 5;
 
   const messages = clientPayload.messages || [];
   const lastMessage = messages[messages.length - 1];
@@ -97,22 +97,45 @@ async function handleGroq(groqApiKey, clientPayload) {
     messages.push({ role: msg.role, content: msg.content });
   }
 
-  const groqPayload = {
-    model: 'llama-3.3-70b-versatile',
-    max_tokens: clientPayload.max_tokens || 1000,
-    messages: messages
-  };
+  const groqModels = ['openai/gpt-oss-120b', 'qwen/qwen3.8-27b', 'llama-3.3-70b-versatile', 'openai/gpt-oss-20b'];
+  for (const model of groqModels) {
+    try {
+      const groqPayload = {
+        model: model,
+        max_tokens: clientPayload.max_tokens || 1000,
+        messages: messages
+      };
 
-  const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${groqApiKey}`
+        },
+        body: JSON.stringify(groqPayload)
+      });
+
+      if (groqResponse.ok) {
+        return groqResponse;
+      }
+    } catch (e) {
+      console.error(`[Groq ${model} Error]`, e);
+    }
+  }
+
+  // Cuối cùng thử model mặc định
+  return fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${groqApiKey}`
     },
-    body: JSON.stringify(groqPayload)
+    body: JSON.stringify({
+      model: 'openai/gpt-oss-120b',
+      max_tokens: clientPayload.max_tokens || 1000,
+      messages: messages
+    })
   });
-
-  return groqResponse;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -185,7 +208,7 @@ const server = http.createServer(async (req, res) => {
     if (!fs.existsSync(filePath)) {
       filePath = path.join(__dirname, 'index.html');
     }
-    
+
     const ext = path.extname(filePath).toLowerCase();
     let contentType = 'text/html; charset=utf-8';
     if (ext === '.jpg' || ext === '.jpeg') contentType = 'image/jpeg';
@@ -193,7 +216,7 @@ const server = http.createServer(async (req, res) => {
     else if (ext === '.css') contentType = 'text/css';
     else if (ext === '.js') contentType = 'application/javascript';
     else if (ext === '.json') contentType = 'application/json';
-    
+
     fs.readFile(filePath, (err, content) => {
       if (err) {
         res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
@@ -217,9 +240,9 @@ const server = http.createServer(async (req, res) => {
 
         const clientPayload = JSON.parse(body);
 
-        const geminiApiKey     = process.env.GEMINI_API_KEY;
-        const anthropicApiKey  = process.env.ANTHROPIC_API_KEY;
-        const groqApiKey       = process.env.GROQ_API_KEY;
+        const geminiApiKey = process.env.GEMINI_API_KEY;
+        const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
+        const groqApiKey = process.env.GROQ_API_KEY;
         const openrouterApiKey = process.env.OPENROUTER_API_KEY;
 
         const isValid = k => k && !k.startsWith('your_') && k !== '';
@@ -301,7 +324,7 @@ const server = http.createServer(async (req, res) => {
       } catch (err) {
         console.error('Server Error:', err);
         let fallbackPayload = {};
-        try { fallbackPayload = JSON.parse(body); } catch(e) {}
+        try { fallbackPayload = JSON.parse(body); } catch (e) { }
         const catchKwResult = tryKeywordMatch(fallbackPayload);
         if (catchKwResult) {
           res.writeHead(200, { 'Content-Type': 'application/json' });

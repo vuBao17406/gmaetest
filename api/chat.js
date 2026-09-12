@@ -88,16 +88,23 @@ module.exports = async (req, res) => {
       if (clientPayload.system) messages.push({ role: 'system', content: clientPayload.system });
       for (const m of (clientPayload.messages || [])) messages.push({ role: m.role, content: m.content });
 
-      const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqApiKey}` },
-        body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: clientPayload.max_tokens || 1000, messages })
-      });
-      const data = await groqRes.json();
-      if (groqRes.ok) {
-        const text = data.choices?.[0]?.message?.content || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
-        res.status(200).json({ content: [{ type: 'text', text }] });
-        return;
+      const groqModels = ['openai/gpt-oss-120b', 'qwen/qwen3.8-27b', 'llama-3.3-70b-versatile', 'openai/gpt-oss-20b'];
+      for (const model of groqModels) {
+        try {
+          const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqApiKey}` },
+            body: JSON.stringify({ model, max_tokens: clientPayload.max_tokens || 1000, messages })
+          });
+          const data = await groqRes.json();
+          if (groqRes.ok && data.choices?.[0]?.message?.content) {
+            const text = data.choices[0].message.content;
+            res.status(200).json({ content: [{ type: 'text', text }] });
+            return;
+          }
+        } catch (err) {
+          console.error(`[Groq ${model} Error]`, err);
+        }
       }
     }
 
