@@ -28,7 +28,13 @@ function tryKeywordMatch(clientPayload) {
         query.includes('manh mối') || query.includes('manh moi') || query.includes('gợi ý') || query.includes('goi y');
 
       if (isPaperOrPuzzle) {
-        text = "🤖 LOTUS-X gợi ý: Những kí tự rời rạc trên trang giấy phẳng lặng ấy chưa thể tự cất lời đâu... Hãy thử tìm một vật thể hình trụ tròn quen thuộc luôn đồng hành trong ba lô của bạn – như một chai nước chẳng hạn – rồi để mảnh giấy ôm trọn lấy thân nó xem điều bất ngờ gì sẽ xuất hiện! 🌀💧";
+        const paperHints = [
+          "🤖 LOTUS-X gợi ý: Những kí tự rời rạc trên trang giấy phẳng lặng ấy chưa thể tự cất lời đâu... Hãy thử tìm một vật thể hình trụ tròn quen thuộc luôn đồng hành trong ba lô của bạn – một thứ mang dấu ấn của chữ 'A' – rồi để mảnh giấy ôm trọn lấy thân nó xem điều kỳ diệu gì sẽ xuất hiện! 🌀✨",
+          "🤖 LOTUS-X gợi ý: Đôi khi chân lý không nằm trên một mặt phẳng. Mảnh giấy bí ẩn kia đang tìm kiếm một điểm tựa hình trụ tròn trong hành trang của các bạn... Có một vật dụng quen thuộc mang biểu tượng chữ 'A' đang đợi trang giấy quấn quanh lấy nó đấy. Thử xem nhé! 🔮🔍",
+          "🤖 LOTUS-X gợi ý: Tờ giấy ấy mang một mật mã bị phân tách. Nó cần được uốn cong quanh một vật thể hình trụ quen thuộc luôn ở bên bạn – thứ gì đó bắt đầu bằng chữ 'A' thì phải... Hãy để chúng hòa làm một xem trật tự mới có mở ra không! 🌀💫",
+          "🤖 LOTUS-X gợi ý: Bí mật đang ẩn giấu ngay trong chiếc ba lô đồng hành cùng bạn! Hãy chú ý đến một vật dụng thân hình trụ tròn có liên quan mật thiết đến chữ 'A'. Nếu bạn để những dòng kí tự này bao bọc xung quanh nó, điều bất ngờ sẽ tự khắc sáng tỏ... 🧩✨"
+        ];
+        text = paperHints[Math.floor(Math.random() * paperHints.length)];
       } else if (query.includes('chip') || query.includes('con chip') || query.includes('giáo sư') || query.includes('giao su') || query.includes('lotus-x') || query.includes('nguồn gốc') || query.includes('nguon goc') || query.includes('xuất xứ') || query.includes('xuat xu')) {
         text = "[PROF_IMG] Ah, câu hỏi tuyệt vời! 😄 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨";
       }
