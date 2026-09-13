@@ -68,16 +68,31 @@ function tryKeywordMatch(clientPayload) {
       break;
     }
 
-    case 3:
-      if (query.includes('cuốn') || query.includes('quấn') || query.includes('cách giải tiếp') || query.includes('tiếp theo') || query.includes('quy luật') || query.includes('thẳng hàng')) {
-        text = "🤖 LOTUS-X gợi ý: Khi tờ giấy đã ôm trọn lấy thân chai, hãy để ánh mắt xuôi theo chiều dọc. Nhớ câu 'Đầu XUÔI đuôi thì KẸT'... Và đừng quên một giao ước ngầm: 'X' chỉ là lớp mặt nạ của 'J'. 🧩";
-      } else if (query.includes('chai') || query.includes('nước') || query.includes('aquafina')) {
-        text = "🤖 LOTUS-X gợi ý: Hãy thử dùng tờ giấy và 'cuốn' quanh chai nước xem có điều gì kỳ diệu xảy ra không nhé! 🌀";
-      } else if (query.includes('giấy') || query.includes('tờ giấy') || query.includes('mảnh giấy') || query.includes('kí tự') || query.includes('ký tự')) {
-        text = "🤖 LOTUS-X gợi ý: ĐÓ LÀ MỘT LOẠI NƯỚC CỦA NƯỚC MỸ BẮT ĐẦU LÀ TỪ A... BẠN XEM THỬ CÓ GIÚP ÍCH GÌ KHÔNG NHÉ! 💧";
+    case 3: {
+      const isChipOrPuzzle = 
+        query.includes('chip') ||
+        query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') ||
+        query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') ||
+        query.includes('làm gì') || query.includes('lam gi') ||
+        query.includes('ý nghĩa') || query.includes('y nghia') ||
+        query.includes('số') || query.includes('so') ||
+        query.includes('đường nét') || query.includes('duong net') || query.includes('nét') || query.includes('net') ||
+        query.includes('trùng') || query.includes('trung') ||
+        query.includes('manh mối') || query.includes('manh moi') || query.includes('gợi ý') || query.includes('goi y') ||
+        query.includes('giúp') || query.includes('giup') || query.includes('đáp án') || query.includes('dap an') ||
+        query.includes('mật mã') || query.includes('mat ma');
+
+      if (isChipOrPuzzle) {
+        const chipHints = [
+          "🤖 LOTUS-X gợi ý: Cổ máy nhận thấy một sự cộng hưởng quen thuộc... Con chip trên tay bạn dường như không phải kẻ cô độc, nó mang một tần số tương đồng với vật phẩm bạn từng thu thập được từ điểm xuất phát của hành trình. Thử đặt hai người bạn đồng hành ấy cạnh nhau, đối chiếu từng nét khắc của các con số... Nơi nào có sự giao thoa và nét chung giữa cả hai, nơi đó trật tự mới sẽ hiện hữu! ⚡🔢",
+          "🤖 LOTUS-X gợi ý: Đôi khi chìa khóa của hiện tại lại ẩn giấu trong ký ức của chặng đầu tiên. Linh kiện bí ẩn này đang tìm kiếm người anh em song sinh của nó từ Trạm 1... Hãy thử so sánh các con số trên thân hai con chip, tìm ra những nét vẽ đồng điệu cùng xuất hiện trên cả hai xem hình hài con số bí ẩn nào sẽ thành hình nhé! 🧩🔍",
+          "🤖 LOTUS-X gợi ý: Một mảnh ghép đơn lẻ không thể tạo nên lời giải. Vật phẩm mới này có một sợi dây liên kết vô hình với con chip ban đầu mà bạn đã mang theo... Hãy quan sát thật kỹ các ký hiệu số trên cả hai: chỉ những đường nét trùng khớp và cùng tồn tại giữa chúng mới là sự thật, hãy chắt lọc những điểm chung ấy lại xem sao! 🔮✨",
+          "🤖 LOTUS-X gợi ý: 'ĐỒNG TÂM HỢP LỰC' không chỉ là câu khẩu hiệu, mà là quy luật để kích hoạt! Con chip thứ hai này đang chờ được hội ngộ với bảo vật từ Trạm 1... Đặt chúng song hành và để ánh mắt tìm kiếm những nét tương đồng giữa các con số. Khi gạn lọc những đường nét giao thoa của hai bên, một con số hoàn toàn mới sẽ khai mở trước mắt bạn! 💫💡"
+        ];
+        text = chipHints[Math.floor(Math.random() * chipHints.length)];
       }
-      // Không khớp từ khóa → text vẫn null → sẽ gọi API AI
       break;
+    }
 
     case 4:
       if (query.includes('khóa') || query.includes('mật thư') || query.includes('hai khóa') || query.includes('giải mã') || query.includes('tọa độ') || query.includes('tâm') || query.includes('bảng') || query.includes('hàng') || query.includes('cột')) {
