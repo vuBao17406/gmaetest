@@ -115,12 +115,31 @@ function tryKeywordMatch(clientPayload) {
       break;
     }
 
-    case 4:
-      if (query.includes('khóa') || query.includes('mật thư') || query.includes('hai khóa') || query.includes('giải mã') || query.includes('tọa độ') || query.includes('tâm') || query.includes('bảng') || query.includes('hàng') || query.includes('cột')) {
-        responseText = "🤖 LOTUS-X gợi ý: KHÓA THỨ 1 LÀ TỌA ĐỘ BẢNG HÀNG CỘT, KHÓA THỨ 2 LẤY TÂM CỦA NHỮNG TỪ GIẢI RA Ở KHÓA 1. 🔮";
+    case 4: {
+      const isVideoOrPuzzle =
+        query.includes('video') || query.includes('clip') || query.includes('phim') ||
+        query.includes('chạy') || query.includes('chay') ||
+        query.includes('số') || query.includes('so') ||
+        query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') ||
+        query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') ||
+        query.includes('ý nghĩa') || query.includes('y nghia') ||
+        query.includes('đứng yên') || query.includes('dung yen') ||
+        query.includes('mật thư') || query.includes('mat thu') || query.includes('mật mã') || query.includes('mat ma') ||
+        query.includes('đáp án') || query.includes('dap an') || query.includes('gợi ý') || query.includes('goi y') ||
+        query.includes('manh mối') || query.includes('manh moi') || query.includes('giúp') || query.includes('giup');
+
+      if (isVideoOrPuzzle) {
+        const videoHints = [
+          "🤖 LOTUS-X gợi ý: Giữa một dòng chảy cuồn cuộn không ngừng, thứ khiến mắt bạn hoa lên chưa chắc đã là sự thật... Đừng mải mê đuổi theo những gì đang lướt qua quá nhanh. Hãy tập trung tìm kiếm sự tĩnh lặng kiên định, những kẻ bất biến không hề dao động giữa cơn bão số ấy! 🌀👁️",
+          "🤖 LOTUS-X gợi ý: 'BỨT PHÁ DẪN ĐƯỜNG' đòi hỏi một đôi mắt sắc bén và một tâm trí tĩnh tại. Dòng chuyển động liên hồi chỉ là bức màn đánh lừa thị giác... Nếu bạn quan sát thật sâu, sẽ thấy có những ký tự từ chối cuốn theo dòng chảy, âm thầm bám trụ tại vị trí của mình. Đó chính là những viên ngọc sáng! 🔮✨",
+          "🤖 LOTUS-X gợi ý: Mọi thứ dường như đang trôi đi vội vã trong thước phim ấy... Nhưng chân lý thì luôn đứng yên một chỗ. Hãy để mắt bạn lọc bỏ hết những gì xê dịch, chỉ giữ lại những dấu hiệu bất động ngoan cường qua từng giây phút. Chúng đang chờ bạn gọi tên đấy! ⏳🔢",
+          "🤖 LOTUS-X gợi ý: Bí mật không thuộc về kẻ chạy nhanh nhất, mà thuộc về điểm tựa vững chãi nhất. Đừng cố đếm những chuyển động hỗn loạn! Hãy tĩnh tâm, khóa chặt ánh nhìn vào những tọa độ không hề thay đổi giữa muôn vàn sự biến thiên... Trật tự đích thực đang ngự trị ở nơi tĩnh lặng ấy! 💫🎯"
+        ];
+        responseText = videoHints[Math.floor(Math.random() * videoHints.length)];
       }
-      // Không khớp từ khóa → responseText vẫn null → sẽ gọi API AI
       break;
+    }
+
     case 5:
       if (query.includes('250') || query.includes('tcn') || query.includes('ý nghĩa') || query.includes('y nghia')) {
         responseText = "🤖 Năm 250 TCN, ám ảnh bởi sự tàn khốc của chiến tranh, Vua A Dục (Ashoka) quyết định buông gươm, quy y Phật giáo và cho dựng một trụ đá vĩ đại tại đất thiêng Sarnath. Ông muốn đây là biểu tượng của lòng từ bi thay vì uy quyền máu lửa.\n\nDưới bàn tay tài hoa của các nghệ nhân, khối sa thạch nguyên khối biến thành một kiệt tác: đỉnh cột khắc bốn con sư tử dũng mãnh nhìn ra bốn hướng để truyền bá Chánh pháp, thân cột mài nhẵn như gương khắc sắc lệnh kêu gọi muôn dân sống hòa hợp, ngừng sát sinh.\n\nNgày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị minh quân khẽ mỉm cười thanh thản. Ông biết mình vừa để lại cho hậu thế một ngọn hải đăng vĩnh cửu về hòa bình và tình thương. 🌸";
