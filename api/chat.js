@@ -41,9 +41,32 @@ function tryKeywordMatch(clientPayload) {
       break;
     }
 
-    case 2:
-      // Chặng 2 xử lý tự nhiên qua AI hoặc admin rules
+    case 2: {
+      const isCircuitOrPuzzle = 
+        query.includes('mạch') || query.includes('mach') ||
+        query.includes('sơ đồ') || query.includes('so do') ||
+        query.includes('đường nét') || query.includes('duong net') || query.includes('nét') || query.includes('net') ||
+        query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') ||
+        query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') ||
+        query.includes('ý nghĩa') || query.includes('y nghia') ||
+        query.includes('bản vẽ') || query.includes('ban ve') ||
+        query.includes('tờ') || query.includes('to') || query.includes('giấy') || query.includes('giay') ||
+        query.includes('2 nhóm') || query.includes('hai nhóm') || query.includes('hai nhom') ||
+        query.includes('manh mối') || query.includes('manh moi') || query.includes('gợi ý') || query.includes('goi y') ||
+        query.includes('giúp') || query.includes('giup') || query.includes('đáp án') || query.includes('dap an') ||
+        query.includes('mật mã') || query.includes('mat ma');
+
+      if (isCircuitOrPuzzle) {
+        const circuitHints = [
+          "🤖 LOTUS-X gợi ý: Đôi khi một nửa sự thật chỉ là những đường nét đứt đoạn... Các bạn có nhận thấy hai luồng năng lượng từ hai nhóm đang tìm về một cội nguồn không? Thử để hai trang sơ đồ tìm thấy nhau, xếp chồng thật khít lên nhau dưới ánh sáng xem dòng điện bí mật sẽ dẫn lối về đâu nhé! ⚡🔍",
+          "🤖 LOTUS-X gợi ý: Những đường mạch riêng lẻ kia chưa thể thắp sáng câu trả lời đâu. Sức mạnh của 'VỮNG TAY CHÈO' nằm ở sự đồng lòng – khi hai mảnh ghép của hai nhóm hòa làm một, đặt đè khớp từng nét vẽ lên nhau, những khoảng trống sẽ được lấp đầy... Thử xem sao nhé! 🌀✨",
+          "🤖 LOTUS-X gợi ý: Đừng vội tìm kiếm lời giải trên một bản vẽ đơn độc! Hãy nhớ các bạn có hai nửa hành trình... Thử đem hai tấm sơ đồ áp sát vào nhau, để lớp này phủ lên lớp kia một cách chuẩn xác xem điều kỳ diệu nào sẽ hiện ra qua từng nét giao thoa! 🔌💡",
+          "🤖 LOTUS-X gợi ý: Mạch điện chỉ thực sự thông suốt khi cả hai nhánh cùng hợp nhất. Hãy lấy sơ đồ của nhóm 1 và nhóm 2, nhẹ nhàng đặt chồng đè lên nhau, căn chỉnh cho các góc và đường nét tương thích... Đáp án đang ẩn mình ngay giữa sự giao thoa ấy! 🧩⚡"
+        ];
+        text = circuitHints[Math.floor(Math.random() * circuitHints.length)];
+      }
       break;
+    }
 
     case 3:
       if (query.includes('cuốn') || query.includes('quấn') || query.includes('cách giải tiếp') || query.includes('tiếp theo') || query.includes('quy luật') || query.includes('thẳng hàng')) {
