@@ -58,10 +58,10 @@ function tryKeywordMatch(clientPayload) {
 
       if (isCircuitOrPuzzle) {
         const circuitHints = [
-          "🤖 LOTUS-X gợi ý: Đôi khi một nửa sự thật chỉ là những đường nét đứt đoạn... Các bạn có nhận thấy hai luồng năng lượng từ hai nhóm đang tìm về một cội nguồn không? Thử để hai trang sơ đồ tìm thấy nhau, xếp chồng thật khít lên nhau dưới ánh sáng xem dòng điện bí mật sẽ dẫn lối về đâu nhé! ⚡🔍",
-          "🤖 LOTUS-X gợi ý: Những đường mạch riêng lẻ kia chưa thể thắp sáng câu trả lời đâu. Sức mạnh của 'VỮNG TAY CHÈO' nằm ở sự đồng lòng – khi hai mảnh ghép của hai nhóm hòa làm một, đặt đè khớp từng nét vẽ lên nhau, những khoảng trống sẽ được lấp đầy... Thử xem sao nhé! 🌀✨",
-          "🤖 LOTUS-X gợi ý: Đừng vội tìm kiếm lời giải trên một bản vẽ đơn độc! Hãy nhớ các bạn có hai nửa hành trình... Thử đem hai tấm sơ đồ áp sát vào nhau, để lớp này phủ lên lớp kia một cách chuẩn xác xem điều kỳ diệu nào sẽ hiện ra qua từng nét giao thoa! 🔌💡",
-          "🤖 LOTUS-X gợi ý: Mạch điện chỉ thực sự thông suốt khi cả hai nhánh cùng hợp nhất. Hãy lấy sơ đồ của nhóm 1 và nhóm 2, nhẹ nhàng đặt chồng đè lên nhau, căn chỉnh cho các góc và đường nét tương thích... Đáp án đang ẩn mình ngay giữa sự giao thoa ấy! 🧩⚡"
+          "🤖 LOTUS-X gợi ý: Một bản vẽ đơn độc chỉ là những đường nét đứt gãy chưa hoàn chỉnh... Hãy nhớ rằng các bạn đang nắm giữ hai nửa của cùng một nguồn năng lượng. Thử đưa hai trang giấy về cùng một góc nhìn dưới ánh sáng xem, liệu những khoảng trống có tự tìm thấy câu trả lời? ⚡🔍",
+          "🤖 LOTUS-X gợi ý: Dòng điện không bao giờ có thể thông suốt nếu chỉ đi một nhánh. Hai nhóm đang mang hai mảnh ghép của một chỉnh thể... Khi hai tầm nhìn được hòa quyện làm một và soi rọi dưới ánh sáng, những nét vẽ dường như sẽ tự tìm về đúng vị trí của nó! 🌀✨",
+          "🤖 LOTUS-X gợi ý: Đôi khi đáp án không nằm ở việc giải từng phần, mà nằm ở sự giao thoa. Hãy thử tìm điểm tương đồng giữa hai bản vẽ của hai nhóm rồi để chúng hợp nhất tại cùng một vị trí... Ánh sáng sẽ là chiếc cầu nối bí mật! 🔌💡",
+          "🤖 LOTUS-X gợi ý: Sức mạnh của 'VỮNG TAY CHÈO' là sự đồng lòng của cả hai phía. Hai mảnh giấy rời rạc đang chờ đợi một cuộc gặp gỡ trọn vẹn... Thử để chúng cùng xuất hiện tại một tọa độ dưới luồng sáng xem điều kỳ diệu nào sẽ được thắp lên! 🧩⚡"
         ];
         text = circuitHints[Math.floor(Math.random() * circuitHints.length)];
       }
