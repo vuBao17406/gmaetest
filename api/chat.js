@@ -119,14 +119,51 @@ function tryKeywordMatch(clientPayload) {
       break;
     }
 
-    case 5:
-      if (query.includes('250') || query.includes('tcn') || query.includes('ý nghĩa') || query.includes('y nghia')) {
-        text = "🤖 Năm 250 TCN, ám ảnh bởi sự tàn khốc của chiến tranh, Vua A Dục (Ashoka) quyết định buông gươm, quy y Phật giáo và cho dựng một trụ đá vĩ đại tại đất thiêng Sarnath. Ông muốn đây là biểu tượng của lòng từ bi thay vì uy quyền máu lửa.\n\nDưới bàn tay tài hoa của các nghệ nhân, khối sa thạch nguyên khối biến thành một kiệt tác: đỉnh cột khắc bốn con sư tử dũng mãnh nhìn ra bốn hướng để truyền bá Chánh pháp, thân cột mài nhẵn như gương khắc sắc lệnh kêu gọi muôn dân sống hòa hợp, ngừng sát sinh.\n\nNgày khánh thành, nhìn trụ đá sừng sững dưới hoàng hôn, vị minh quân khẽ mỉm cười thanh thản. Ông biết mình vừa để lại cho hậu thế một ngọn hải đăng vĩnh cửu về hòa bình và tình thương. 🌸";
-      } else if (query.includes('mạch') || query.includes('mach') || query.includes('mica') || query.includes('đè') || query.includes('vẽ') || query.includes('vị trí')) {
-        text = "🤖 LOTUS-X gợi ý: Hãy dùng sơ đồ mạch điện và đè tấm mica lên (hoặc vẽ các đường lạ trên mạch) để tìm ra các con số. Chú ý: các con số này hiện ra nhưng chưa đúng vị trí nhé! 🤫";
+    case 5: {
+      const isPaperQuery =
+        query.includes('mảnh giấy') || query.includes('manh giay') ||
+        query.includes('4 mảnh') || query.includes('bon manh') ||
+        query.includes('tờ giấy') || query.includes('to giay') ||
+        query.includes('4 tờ') || query.includes('bon to') ||
+        query.includes('a4') || query.includes('tờ a4') ||
+        query.includes('kí tự') || query.includes('ki tu') || query.includes('ký tự') || query.includes('ky tu') ||
+        query.includes('đúng sai') || query.includes('dung sai') ||
+        query.includes('vị trí') || query.includes('vi tri') ||
+        query.includes('kho báu') || query.includes('kho bau') ||
+        query.includes('phần thưởng') || query.includes('phan thuong');
+
+      const isLetterQuery =
+        query.includes('mật thư') || query.includes('mat thu') ||
+        query.includes('bạch văn') || query.includes('bach van') ||
+        query.includes('cách giải') || query.includes('cach giai') ||
+        query.includes('giải sao') || query.includes('giai sao') ||
+        query.includes('giải như thế nào') || query.includes('giai nhu the nao') ||
+        query.includes('làm sao') || query.includes('lam sao') ||
+        query.includes('ý nghĩa') || query.includes('y nghia') ||
+        query.includes('đáp án') || query.includes('dap an') ||
+        query.includes('gợi ý') || query.includes('goi y') ||
+        query.includes('manh mối') || query.includes('manh moi') ||
+        query.includes('giúp') || query.includes('giup');
+
+      if (isPaperQuery) {
+        const paperHints = [
+          "🤖 LOTUS-X gợi ý: Bốn trang giấy từ bốn chặng đường không đơn thuần là những con số ngẫu nhiên. Chúng chính là chiếc la bàn đo lường độ chuẩn xác! Mỗi ký hiệu đang thầm thì cho bạn biết có bao nhiêu 'sự thật' đã xuất hiện, và có bao nhiêu con số đã tìm đúng 'tọa độ định mệnh' của mình... Hãy liên kết cả 4 mảnh ghép để giải mã vị trí tối thượng! 📜🧭",
+          "🤖 LOTUS-X gợi ý: Đừng nhìn các ký hiệu trên 4 mảnh giấy như những phép tính rời rạc! Chúng là những lời phán quyết: cái nào đúng, cái nào sai, và có bao nhiêu con số đang ngự trị chuẩn xác ở ngôi thứ của nó. Hãy dùng tư duy loại trừ để gom nhặt những con số đứng đúng vị trí nhất dẫn lối tới kho báu! 🧩✨",
+          "🤖 LOTUS-X gợi ý: 4 mảnh giấy là 4 manh mối của trò chơi thử thách trí tuệ tối thượng. Những con số bí ẩn kia biểu thị cho tỷ lệ chuẩn xác và số lượng vị trí đã được sắp đặt đúng đắn... Đối chiếu dữ kiện đúng – sai và vị trí của từng tờ, chìa khóa kho báu cuối cùng sẽ lộ diện trước mắt bạn! 🔮🗝️",
+          "🤖 LOTUS-X gợi ý: Hãy liên kết cả 4 tờ giấy lại với nhau! Mỗi tờ mang một gợi ý về độ đúng sai cùng số lượng con số đã vào đúng vị trí hàng ngũ. Khi bạn tìm ra quy luật vị trí đích thực từ 4 gợi ý ấy, cánh cổng mở ra mã nguồn kho báu tại Trạm Phần Thưởng sẽ khai mở! 🌟🔓"
+        ];
+        text = paperHints[Math.floor(Math.random() * paperHints.length)];
+      } else if (isLetterQuery) {
+        const letterHints = [
+          "🤖 LOTUS-X gợi ý: Đôi khi để tìm thấy đích đến, con người ta lại phải bắt đầu từ điểm kết thúc... Hãy thử đảo ngược dòng chảy thời gian, để ánh mắt lội ngược từ cuối dòng trở về điểm khởi nguyên xem bức màn bí ẩn có hé lộ không nhé! 🌀🔄",
+          "🤖 LOTUS-X gợi ý: Bản mật thư này mang quy luật của một dòng nước chảy ngược. Đừng nhìn nó theo thói quen đọc thông thường từ trước ra sau... Thử đọc từ đuôi ngược về đầu, soi chiếu như qua một chiếc gương phản chiếu xem lời giải đáp có tự sáng tỏ! 🔮🪞",
+          "🤖 LOTUS-X gợi ý: 'VƯƠN TẦM TIÊN PHONG' là hành trình vượt qua lối mòn tư duy. Những con chữ trên bản mật thư dường như đang quay lưng lại với bạn... Hãy thử bước lùi lại một nhịp, đọc ngược từng ký tự từ điểm kết thúc trở về ban đầu để thấu tỏ thông điệp ẩn giấu! ⚡📜",
+          "🤖 LOTUS-X gợi ý: Bí mật của mật thư Trạm 5 nằm ở trật tự bị đảo lộn. Nơi câu chữ kết thúc chính là nơi ý niệm bắt đầu... Hãy thử đổi chiều góc nhìn, duyệt từ phía sau ra phía trước xem thanh âm thực sự nào sẽ vang lên! 🎯🔍"
+        ];
+        text = letterHints[Math.floor(Math.random() * letterHints.length)];
       }
-      // Không khớp từ khóa → text vẫn null → sẽ gọi API AI
       break;
+    }
   }
 
   if (text) {
