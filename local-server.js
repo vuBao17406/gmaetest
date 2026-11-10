@@ -75,31 +75,35 @@ function tryKeywordMatch(clientPayload) {
     }
 
     case 2: {
-      const isCircuitOrPuzzle = 
-        query.includes('mạch') || query.includes('mach') ||
-        query.includes('sơ đồ') || query.includes('so do') ||
-        query.includes('đường nét') || query.includes('duong net') || query.includes('nét') || query.includes('net') ||
+      const isLogicOrProbability = 
+        query.includes('mảnh') || query.includes('manh') ||
+        query.includes('giấy') || query.includes('giay') ||
+        query.includes('tờ') || query.includes('to') ||
+        query.includes('số') || query.includes('so') ||
+        query.includes('kí tự') || query.includes('ki tu') || query.includes('ký tự') || query.includes('ky tu') ||
+        query.includes('xác suất') || query.includes('xac suat') || query.includes('xác xuất') || query.includes('xac xuat') ||
+        query.includes('loại trừ') || query.includes('loai tru') ||
+        query.includes('đúng') || query.includes('dung') || query.includes('sai') ||
+        query.includes('vị trí') || query.includes('vi tri') ||
         query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') ||
         query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') ||
         query.includes('ý nghĩa') || query.includes('y nghia') ||
-        query.includes('bản vẽ') || query.includes('ban ve') ||
-        query.includes('tờ') || query.includes('to') || query.includes('giấy') || query.includes('giay') ||
-        query.includes('2 nhóm') || query.includes('hai nhóm') || query.includes('hai nhom') ||
         query.includes('manh mối') || query.includes('manh moi') || query.includes('gợi ý') || query.includes('goi y') ||
         query.includes('giúp') || query.includes('giup') || query.includes('đáp án') || query.includes('dap an') ||
         query.includes('mật mã') || query.includes('mat ma');
 
-      if (isCircuitOrPuzzle) {
-        const circuitHints = [
-          "🤖 LOTUS-X gợi ý: Một bản vẽ đơn độc chỉ là những đường nét đứt gãy chưa hoàn chỉnh... Hãy nhớ rằng các bạn đang nắm giữ hai nửa của cùng một nguồn năng lượng. Thử đưa hai trang giấy về cùng một góc nhìn dưới ánh sáng xem, liệu những khoảng trống có tự tìm thấy câu trả lời? ⚡🔍",
-          "🤖 LOTUS-X gợi ý: Dòng điện không bao giờ có thể thông suốt nếu chỉ đi một nhánh. Hai nhóm đang mang hai mảnh ghép của một chỉnh thể... Khi hai tầm nhìn được hòa quyện làm một và soi rọi dưới ánh sáng, những nét vẽ dường như sẽ tự tìm về đúng vị trí của nó! 🌀✨",
-          "🤖 LOTUS-X gợi ý: Đôi khi đáp án không nằm ở việc giải từng phần, mà nằm ở sự giao thoa. Hãy thử tìm điểm tương đồng giữa hai bản vẽ của hai nhóm rồi để chúng hợp nhất tại cùng một vị trí... Ánh sáng sẽ là chiếc cầu nối bí mật! 🔌💡",
-          "🤖 LOTUS-X gợi ý: Sức mạnh của 'TRÍ MỞ - HỌC TẬP TỐT' là sự đồng lòng của cả hai phía. Hai mảnh giấy rời rạc đang chờ đợi một cuộc gặp gỡ trọn vẹn... Thử để chúng cùng xuất hiện tại một tọa độ dưới luồng sáng xem điều kỳ diệu nào sẽ được thắp lên! 🧩⚡"
+      if (isLogicOrProbability) {
+        const logicHints = [
+          "🤖 LOTUS-X gợi ý: Đừng nhìn bốn mảnh giấy ấy như những con số vô định, chúng thực chất là những chiếc la bàn đo lường độ chân thực... Mỗi dòng mật mã đang thầm thì cho bạn biết có bao nhiêu phần tử đã chính xác, và có bao nhiêu con số đã vào đúng ngôi vị của mình. Hãy đối chiếu các khả năng và dùng tư duy loại suy để tìm ra con số chân thật duy nhất nhé! 🧭🔢",
+          "🤖 LOTUS-X gợi ý: 'TRÍ MỞ' chính là chìa khóa để nhìn thấu quy luật ẩn giấu. Bốn trang mật bản không bắt bạn phải tính toán phức tạp, mà là một cuộc đấu trí về khả năng và sự sàng lọc... Từng con số biểu thị cho mức độ đúng – sai và trật tự vị trí. Khi bạn phân tích từng khả năng và loại bỏ dần những điều mâu thuẫn, chân tướng cuối cùng sẽ tự khắc hiển lộ! 🧩💡",
+          "🤖 LOTUS-X gợi ý: Bí mật nằm ở việc cân nhắc mọi kịch bản có thể xảy ra! Những ký hiệu kỳ lạ kia chính là lời phản hồi về độ chuẩn xác: có bao nhiêu con số đã hiện diện và bao nhiêu con số đã đứng đúng hàng ngũ... Đặt bốn mảnh ghép cạnh nhau, liên kết các dữ kiện để gạn lọc xác suất cao nhất, con số chiến thắng đang chờ bạn gọi tên! 🔮✨",
+          "🤖 LOTUS-X gợi ý: Bốn mảnh giấy là bốn manh mối của một bàn cờ suy luận logic đỉnh cao. Mỗi dữ kiện trao cho bạn tỷ lệ của sự thật – đúng bao nhiêu và sai vị trí như thế nào. Đừng đoán mò bừa bãi! Hãy để tư duy xác suất và phép loại trừ dẫn lối, nơi giao nhau của cả bốn gợi ý chính là con số tối thượng! 🌟🎯"
         ];
-        responseText = circuitHints[Math.floor(Math.random() * circuitHints.length)];
+        responseText = logicHints[Math.floor(Math.random() * logicHints.length)];
       }
       break;
     }
+
     case 3: {
       const isChipOrPuzzle = 
         query.includes('chip') ||
