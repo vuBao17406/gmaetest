@@ -8,10 +8,10 @@
 // ═══════════════════════════════════════════════════════════
 function tryKeywordMatch(clientPayload) {
   const sys = clientPayload.system || '';
-  const station = (sys.includes('1') || sys.includes('KHỞI CHÈO')) ? 1 :
-    (sys.includes('2') || sys.includes('VỮNG TAY')) ? 2 :
-      (sys.includes('3') || sys.includes('ĐỒNG TÂM')) ? 3 :
-        (sys.includes('4') || sys.includes('BỨT PHÁ')) ? 4 : 5;
+  const station = (sys.includes('1') || sys.includes('TÂM SÁNG') || sys.includes('KHỞI CHÈO')) ? 1 :
+    (sys.includes('2') || sys.includes('TRÍ MỞ') || sys.includes('VỮNG TAY')) ? 2 :
+      (sys.includes('3') || sys.includes('BỀN CHÍ') || sys.includes('ĐỒNG TÂM')) ? 3 :
+        (sys.includes('4') || sys.includes('SỨ MỆNH') || sys.includes('BỨT PHÁ')) ? 4 : 5;
 
   const messages = clientPayload.messages || [];
   const lastMsg = messages[messages.length - 1];
@@ -61,7 +61,7 @@ function tryKeywordMatch(clientPayload) {
           "🤖 LOTUS-X gợi ý: Một bản vẽ đơn độc chỉ là những đường nét đứt gãy chưa hoàn chỉnh... Hãy nhớ rằng các bạn đang nắm giữ hai nửa của cùng một nguồn năng lượng. Thử đưa hai trang giấy về cùng một góc nhìn dưới ánh sáng xem, liệu những khoảng trống có tự tìm thấy câu trả lời? ⚡🔍",
           "🤖 LOTUS-X gợi ý: Dòng điện không bao giờ có thể thông suốt nếu chỉ đi một nhánh. Hai nhóm đang mang hai mảnh ghép của một chỉnh thể... Khi hai tầm nhìn được hòa quyện làm một và soi rọi dưới ánh sáng, những nét vẽ dường như sẽ tự tìm về đúng vị trí của nó! 🌀✨",
           "🤖 LOTUS-X gợi ý: Đôi khi đáp án không nằm ở việc giải từng phần, mà nằm ở sự giao thoa. Hãy thử tìm điểm tương đồng giữa hai bản vẽ của hai nhóm rồi để chúng hợp nhất tại cùng một vị trí... Ánh sáng sẽ là chiếc cầu nối bí mật! 🔌💡",
-          "🤖 LOTUS-X gợi ý: Sức mạnh của 'VỮNG TAY CHÈO' là sự đồng lòng của cả hai phía. Hai mảnh giấy rời rạc đang chờ đợi một cuộc gặp gỡ trọn vẹn... Thử để chúng cùng xuất hiện tại một tọa độ dưới luồng sáng xem điều kỳ diệu nào sẽ được thắp lên! 🧩⚡"
+          "🤖 LOTUS-X gợi ý: Sức mạnh của 'TRÍ MỞ - HỌC TẬP TỐT' là sự đồng lòng của cả hai phía. Hai mảnh giấy rời rạc đang chờ đợi một cuộc gặp gỡ trọn vẹn... Thử để chúng cùng xuất hiện tại một tọa độ dưới luồng sáng xem điều kỳ diệu nào sẽ được thắp lên! 🧩⚡"
         ];
         text = circuitHints[Math.floor(Math.random() * circuitHints.length)];
       }
@@ -87,7 +87,7 @@ function tryKeywordMatch(clientPayload) {
           "🤖 LOTUS-X gợi ý: Cổ máy nhận thấy một sự cộng hưởng quen thuộc... Con chip trên tay bạn dường như không phải kẻ cô độc, nó mang một tần số tương đồng với vật phẩm bạn từng thu thập được từ điểm xuất phát của hành trình. Thử đặt hai người bạn đồng hành ấy cạnh nhau, đối chiếu từng nét khắc của các con số... Nơi nào có sự giao thoa và nét chung giữa cả hai, nơi đó trật tự mới sẽ hiện hữu! ⚡🔢",
           "🤖 LOTUS-X gợi ý: Đôi khi chìa khóa của hiện tại lại ẩn giấu trong ký ức của chặng đầu tiên. Linh kiện bí ẩn này đang tìm kiếm người anh em song sinh của nó từ Trạm 1... Hãy thử so sánh các con số trên thân hai con chip, tìm ra những nét vẽ đồng điệu cùng xuất hiện trên cả hai xem hình hài con số bí ẩn nào sẽ thành hình nhé! 🧩🔍",
           "🤖 LOTUS-X gợi ý: Một mảnh ghép đơn lẻ không thể tạo nên lời giải. Vật phẩm mới này có một sợi dây liên kết vô hình với con chip ban đầu mà bạn đã mang theo... Hãy quan sát thật kỹ các ký hiệu số trên cả hai: chỉ những đường nét trùng khớp và cùng tồn tại giữa chúng mới là sự thật, hãy chắt lọc những điểm chung ấy lại xem sao! 🔮✨",
-          "🤖 LOTUS-X gợi ý: 'ĐỒNG TÂM HỢP LỰC' không chỉ là câu khẩu hiệu, mà là quy luật để kích hoạt! Con chip thứ hai này đang chờ được hội ngộ với bảo vật từ Trạm 1... Đặt chúng song hành và để ánh mắt tìm kiếm những nét tương đồng giữa các con số. Khi gạn lọc những đường nét giao thoa của hai bên, một con số hoàn toàn mới sẽ khai mở trước mắt bạn! 💫💡"
+          "🤖 LOTUS-X gợi ý: 'BỀN CHÍ - THỂ LỰC TỐT' không chỉ là câu khẩu hiệu, mà là quy luật để kích hoạt! Con chip thứ hai này đang chờ được hội ngộ với bảo vật từ Trạm 1... Đặt chúng song hành và để ánh mắt tìm kiếm những nét tương đồng giữa các con số. Khi gạn lọc những đường nét giao thoa của hai bên, một con số hoàn toàn mới sẽ khai mở trước mắt bạn! 💫💡"
         ];
         text = chipHints[Math.floor(Math.random() * chipHints.length)];
       }
@@ -110,7 +110,7 @@ function tryKeywordMatch(clientPayload) {
       if (isVideoOrPuzzle) {
         const videoHints = [
           "🤖 LOTUS-X gợi ý: Giữa một dòng chảy cuồn cuộn không ngừng, thứ khiến mắt bạn hoa lên chưa chắc đã là sự thật... Đừng mải mê đuổi theo những gì đang lướt qua quá nhanh. Hãy tập trung tìm kiếm sự tĩnh lặng kiên định, những kẻ bất biến không hề dao động giữa cơn bão số ấy! 🌀👁️",
-          "🤖 LOTUS-X gợi ý: 'BỨT PHÁ DẪN ĐƯỜNG' đòi hỏi một đôi mắt sắc bén và một tâm trí tĩnh tại. Dòng chuyển động liên hồi chỉ là bức màn đánh lừa thị giác... Nếu bạn quan sát thật sâu, sẽ thấy có những ký tự từ chối cuốn theo dòng chảy, âm thầm bám trụ tại vị trí của mình. Đó chính là những viên ngọc sáng! 🔮✨",
+          "🤖 LOTUS-X gợi ý: 'SỨ MỆNH - TÌNH NGUYỆN' đòi hỏi một đôi mắt sắc bén và một tâm trí tĩnh tại. Dòng chuyển động liên hồi chỉ là bức màn đánh lừa thị giác... Nếu bạn quan sát thật sâu, sẽ thấy có những ký tự từ chối cuốn theo dòng chảy, âm thầm bám trụ tại vị trí của mình. Đó chính là những viên ngọc sáng! 🔮✨",
           "🤖 LOTUS-X gợi ý: Mọi thứ dường như đang trôi đi vội vã trong thước phim ấy... Nhưng chân lý thì luôn đứng yên một chỗ. Hãy để mắt bạn lọc bỏ hết những gì xê dịch, chỉ giữ lại những dấu hiệu bất động ngoan cường qua từng giây phút. Chúng đang chờ bạn gọi tên đấy! ⏳🔢",
           "🤖 LOTUS-X gợi ý: Bí mật không thuộc về kẻ chạy nhanh nhất, mà thuộc về điểm tựa vững chãi nhất. Đừng cố đếm những chuyển động hỗn loạn! Hãy tĩnh tâm, khóa chặt ánh nhìn vào những tọa độ không hề thay đổi giữa muôn vàn sự biến thiên... Trật tự đích thực đang ngự trị ở nơi tĩnh lặng ấy! 💫🎯"
         ];
@@ -157,7 +157,7 @@ function tryKeywordMatch(clientPayload) {
         const letterHints = [
           "🤖 LOTUS-X gợi ý: Đôi khi để tìm thấy đích đến, con người ta lại phải bắt đầu từ điểm kết thúc... Hãy thử đảo ngược dòng chảy thời gian, để ánh mắt lội ngược từ cuối dòng trở về điểm khởi nguyên xem bức màn bí ẩn có hé lộ không nhé! 🌀🔄",
           "🤖 LOTUS-X gợi ý: Bản mật thư này mang quy luật của một dòng nước chảy ngược. Đừng nhìn nó theo thói quen đọc thông thường từ trước ra sau... Thử đọc từ đuôi ngược về đầu, soi chiếu như qua một chiếc gương phản chiếu xem lời giải đáp có tự sáng tỏ! 🔮🪞",
-          "🤖 LOTUS-X gợi ý: 'VƯƠN TẦM TIÊN PHONG' là hành trình vượt qua lối mòn tư duy. Những con chữ trên bản mật thư dường như đang quay lưng lại với bạn... Hãy thử bước lùi lại một nhịp, đọc ngược từng ký tự từ điểm kết thúc trở về ban đầu để thấu tỏ thông điệp ẩn giấu! ⚡📜",
+          "🤖 LOTUS-X gợi ý: 'KẾT NỐI - HỘI NHẬP TỐT' là hành trình vượt qua lối mòn tư duy. Những con chữ trên bản mật thư dường như đang quay lưng lại với bạn... Hãy thử bước lùi lại một nhịp, đọc ngược từng ký tự từ điểm kết thúc trở về ban đầu để thấu tỏ thông điệp ẩn giấu! ⚡📜",
           "🤖 LOTUS-X gợi ý: Bí mật của mật thư Trạm 5 nằm ở trật tự bị đảo lộn. Nơi câu chữ kết thúc chính là nơi ý niệm bắt đầu... Hãy thử đổi chiều góc nhìn, duyệt từ phía sau ra phía trước xem thanh âm thực sự nào sẽ vang lên! 🎯🔍"
         ];
         text = letterHints[Math.floor(Math.random() * letterHints.length)];

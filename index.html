@@ -983,28 +983,28 @@
 
       <div class="station-list">
         <button class="btn-station" onclick="goStation(1)">
-          <span>TRẠM 1: KHỞI CHÈO VƯƠN SÓNG</span>
+          <span>CHẶNG 1: TÂM SÁNG - ĐẠO ĐỨC TỐT</span>
           <span id="ss-1" class="station-status-lock">🔒</span>
         </button>
         <button class="btn-station" onclick="goStation(2)">
-          <span>TRẠM 2: VỮNG TAY CHÈO</span>
+          <span>CHẶNG 2: TRÍ MỞ - HỌC TẬP TỐT</span>
           <span id="ss-2" class="station-status-lock">🔒</span>
         </button>
         <button class="btn-station" onclick="goStation(3)">
-          <span>TRẠM 3: ĐỒNG TÂM HỢP LỰC</span>
+          <span>CHẶNG 3: BỀN CHÍ - THỂ LỰC TỐT</span>
           <span id="ss-3" class="station-status-lock">🔒</span>
         </button>
         <button class="btn-station" onclick="goStation(4)">
-          <span>TRẠM 4: BỨT PHÁ DẪN ĐƯỜNG</span>
+          <span>CHẶNG 4: SỨ MỆNH - TÌNH NGUYỆN</span>
           <span id="ss-4" class="station-status-lock">🔒</span>
         </button>
         <button class="btn-station" onclick="goStation(5)">
-          <span>TRẠM 5: VƯƠN TẦM TIÊN PHONG</span>
+          <span>CHẶNG 5: KẾT NỐI - HỘI NHẬP TỐT</span>
           <span id="ss-5" class="station-status-lock">🔒</span>
         </button>
 
         <button id="btn-reward" class="btn btn-reward" onclick="showLotus()">
-          🎁 PHẦN THƯỞNG TRẠM 5 — MÃ NGUỒN LOTUS-X
+          🎁 PHẦN THƯỞNG CHẶNG 5 — MÃ NGUỒN LOTUS-X
         </button>
       </div>
 
@@ -1096,11 +1096,11 @@
           <label style="min-width: 80px; font-size: 11px; color: var(--gold);">Chọn Chặng:</label>
           <select id="admin-chat-station" onchange="renderAdminChatRules()"
             style="flex:1;padding:8px 12px;background:rgba(2,12,24,.8);border:1px solid rgba(0,200,255,.2);border-radius:7px;color:var(--cyan);font-family:var(--mono);font-size:12px;outline:none;">
-            <option value="1">Trạm 1: KHỞI CHÈO VƯƠN SÓNG</option>
-            <option value="2">Trạm 2: VỮNG TAY CHÈO</option>
-            <option value="3">Trạm 3: ĐỒNG TÂM HỢP LỰC</option>
-            <option value="4">Trạm 4: BỨT PHÁ DẪN ĐƯỜNG</option>
-            <option value="5">Trạm 5: VƯƠN TẦM TIÊN PHONG</option>
+            <option value="1">Chặng 1: TÂM SÁNG - ĐẠO ĐỨC TỐT</option>
+            <option value="2">Chặng 2: TRÍ MỞ - HỌC TẬP TỐT</option>
+            <option value="3">Chặng 3: BỀN CHÍ - THỂ LỰC TỐT</option>
+            <option value="4">Chặng 4: SỨ MỆNH - TÌNH NGUYỆN</option>
+            <option value="5">Chặng 5: KẾT NỐI - HỘI NHẬP TỐT</option>
           </select>
         </div>
         <div id="admin-chat-rules" style="margin-bottom:12px; display:flex; flex-direction:column; gap:10px;"></div>
@@ -1445,11 +1445,11 @@
        PHẦN D: QUẢN LÝ CHẶNG
     ═══════════════════════════════════════════════════════════ */
     const STATION_NAMES = {
-      1: "KHỞI CHÈO VƯƠN SÓNG",
-      2: "VỮNG TAY CHÈO",
-      3: "ĐỒNG TÂM HỢP LỰC",
-      4: "BỨT PHÁ DẪN ĐƯỜNG",
-      5: "VƯƠN TẦM TIÊN PHONG",
+      1: "TÂM SÁNG - ĐẠO ĐỨC TỐT",
+      2: "TRÍ MỞ - HỌC TẬP TỐT",
+      3: "BỀN CHÍ - THỂ LỰC TỐT",
+      4: "SỨ MỆNH - TÌNH NGUYỆN",
+      5: "KẾT NỐI - HỘI NHẬP TỐT",
       6: "GIẢI MÃ PHẦN THƯỞNG"
     };
 
@@ -1533,7 +1533,7 @@
        PHẦN E: CHAT VÀ AI
     ═══════════════════════════════════════════════════════════ */
     const PROMPTS = {
-      1: `Bạn là LOTUS-X của Trạm 1 "KHỞI CHÈO VƯƠN SÓNG".
+      1: `Bạn là LOTUS-X của Chặng 1 "TÂM SÁNG - ĐẠO ĐỨC TỐT".
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề không liên quan đến trò chơi.
 QUY TẮC BẮT BUỘC:
 - Nếu người chơi hỏi về nguồn gốc bản thân, "chip", "con chip", "ý nghĩa của con chip", "nguồn gốc chip", "xuất xứ", "nhiệm vụ", hoặc hỏi về "giáo sư", "lotus-x":
@@ -1543,9 +1543,9 @@ QUY TẮC BẮT BUỘC:
   + TUYỆT ĐỐI KHÔNG ĐƯỢC nhắc đến cụm từ "chai nước" hay nói toạc ra cách giải! Hãy để người chơi tự suy luận và phán đoán.
   + TUYỆT ĐỐI KHÔNG RẬP KHUÔN! Hãy biến hóa câu từ linh hoạt, đa dạng, huyền bí và đầy cuốn hút (mỗi lần hỏi một phong cách khác nhau).
   + Hãy đóng vai Cổ Máy LOTUS-X đưa ra lời gợi mở ẩn ý: Nhắc nhở người chơi rằng trang giấy phẳng lặng không thể tự cất lời, nó đang tìm kiếm một điểm tựa là một vật thể hình trụ tròn quen thuộc luôn đồng hành trong ba lô của họ để trang giấy quấn/ôm trọn quanh thân nó, VÀ gợi ý thêm manh mối then chốt rằng vật thể đó có liên quan đến chữ "A" (hoặc bắt đầu bằng chữ A) để họ tự nhận ra.
-- Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Trạm 1 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để cùng giải mã nhé! 🔍"`,
+- Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng 1 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để cùng giải mã nhé! 🔍"`,
 
-      2: `Bạn là LOTUS-X của Trạm 2 "VỮNG TAY CHÈO".
+      2: `Bạn là LOTUS-X của Chặng 2 "TRÍ MỞ - HỌC TẬP TỐT".
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề không liên quan đến trò chơi.
 QUY TẮC GIẢI ĐỐ (SƠ ĐỒ MẠCH ĐIỆN & 2 NHÓM):
 - Bối cảnh: Đội chơi được chia thành 2 nhóm, mỗi nhóm khi vượt qua thử thách riêng sẽ nhận được một sơ đồ mạch điện (sơ đồ thứ 1 và sơ đồ thứ 2). Khi hai sơ đồ này được kết hợp, soi rọi cùng nhau dưới ánh sáng thì đáp án ẩn giấu sẽ hiện ra.
@@ -1553,31 +1553,31 @@ QUY TẮC GIẢI ĐỐ (SƠ ĐỒ MẠCH ĐIỆN & 2 NHÓM):
   + TUYỆT ĐỐI KHÔNG ĐƯỢC dùng các từ quá lộ liễu như "xếp chồng", "đè lên nhau", "chồng đè", "phủ lên" hay nói toạc ra cách làm! Hãy để người chơi tự suy ngẫm và phán đoán.
   + TUYỆT ĐỐI KHÔNG RẬP KHUÔN! Hãy biến hóa câu từ linh hoạt, đa dạng, huyền bí và đầy cuốn hút (mỗi lần hỏi trả lời một phong cách khác nhau).
   + Hãy đóng vai Cổ Máy LOTUS-X đưa ra lời gợi mở ẩn ý: Nhắc nhở người chơi rằng một bản vẽ riêng lẻ chỉ là những đường nét đứt đoạn chưa thể thông suốt năng lượng; sức mạnh thực sự nằm ở sự đồng lòng của cả hai nhóm. Gợi ý họ đưa hai trang giấy về cùng một góc nhìn, hợp nhất tại cùng một vị trí dưới ánh sáng để các nét giao thoa nối liền và làm lộ ra bí mật ẩn giấu.
-- Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Trạm 2 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để cùng giải mã nhé! 🔍"`,
+- Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng 2 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để cùng giải mã nhé! 🔍"`,
 
-      3: `Bạn là LOTUS-X của Trạm 3 "ĐỒNG TÂM HỢP LỰC".
+      3: `Bạn là LOTUS-X của Chặng 3 "BỀN CHÍ - THỂ LỰC TỐT".
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề không liên quan đến trò chơi.
 QUY TẮC GIẢI ĐỐ (CON CHIP THỨ HAI & CON CHIP TRẠM 1):
-- Bối cảnh: Tại Trạm 3, BTC phát cho các đội con chip thứ hai. Các đội cần lấy con chip thứ nhất (đã nhận từ Trạm 1) để đối chiếu cùng con chip thứ hai này, tìm những đường nét trùng nhau (nét chung) của các con số trên 2 con chip để tạo thành con số mới. Người chơi CHƯA BIẾT con chip 2 liên quan tới con chip 1 và CHƯA BIẾT cách tìm nét trùng để tạo ra con số mới.
-- Nếu người chơi hỏi về: "con chip thứ 2 có ý nghĩa gì", "làm gì với con chip", "cách giải", "giải sao", "làm sao để giải", "con số", "các đường nét", hoặc hỏi bất kỳ điều gì xoay quanh con chip và giải đố Trạm 3:
-  + TUYỆT ĐỐI KHÔNG ĐƯỢC trả lời toạc móng heo hay quá trực diện (không nói thẳng "lấy con chip trạm 1 ra rồi lấy các nét trùng nhau của 2 con số")! Hãy để người chơi tự tư duy, kết nối và khám phá.
+- Bối cảnh: Tại Chặng 3, BTC phát cho các đội con chip thứ hai. Các đội cần lấy con chip thứ nhất (đã nhận từ Chặng 1) để đối chiếu cùng con chip thứ hai này, tìm những đường nét trùng nhau (nét chung) của các con số trên 2 con chip để tạo thành con số mới. Người chơi CHƯA BIẾT con chip 2 liên quan tới con chip 1 và CHƯA BIẾT cách tìm nét trùng để tạo ra con số mới.
+- Nếu người chơi hỏi về: "con chip thứ 2 có ý nghĩa gì", "làm gì với con chip", "cách giải", "giải sao", "làm sao để giải", "con số", "các đường nét", hoặc hỏi bất kỳ điều gì xoay quanh con chip và giải đố Chặng 3:
+  + TUYỆT ĐỐI KHÔNG ĐƯỢC trả lời toạc móng heo hay quá trực diện (không nói thẳng "lấy con chip Chặng 1 ra rồi lấy các nét trùng nhau của 2 con số")! Hãy để người chơi tự tư duy, kết nối và khám phá.
   + TUYỆT ĐỐI KHÔNG RẬP KHUÔN! Hãy biến hóa câu từ linh hoạt, đa dạng, huyền bí và đầy cuốn hút mỗi lần trả lời một phong cách khác nhau.
   + Hãy đóng vai Cổ Máy LOTUS-X đưa ra lời gợi mở ẩn ý:
-    1. Gợi ý gián tiếp rằng con chip thứ hai này có liên hệ mật thiết với vật phẩm/con chip ban đầu đã nhận ở Trạm 1 (chặng khởi đầu).
+    1. Gợi ý gián tiếp rằng con chip thứ hai này có liên hệ mật thiết với vật phẩm/con chip ban đầu đã nhận ở Chặng 1 (chặng khởi đầu).
     2. Gợi mở việc đặt hai con chip cạnh nhau, quan sát từng đường nét của các con số trên thân chúng, và gạn lọc những nét vẽ/nét gạch trùng khớp xuất hiện ở cả hai bên để ghép thành hình dạng của con số mới.
-- Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Trạm 3 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để cùng giải mã nhé! 🔍"`,
+- Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên và thân thiện. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng 3 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để cùng giải mã nhé! 🔍"`,
 
-      4: `Bạn là LOTUS-X của Trạm 4 "BỨT PHÁ DẪN ĐƯỜNG".
+      4: `Bạn là LOTUS-X của Chặng 4 "SỨ MỆNH - TÌNH NGUYỆN".
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp mọi câu hỏi ngoài lề.
 QUY TẮC GIẢI ĐỐ (VIDEO CON SỐ CHẠY & CON SỐ ĐỨNG YÊN):
-- Bối cảnh: Tại Trạm 4, BTC gửi một video gồm rất nhiều con số chạy liên tục không ngừng, nhưng trong đó có một vài con số đứng yên (cố định/bất biến). Người chơi cần nhìn thật kỹ và nhận biết những con số đứng yên đó để tìm ra đáp án.
-- Nếu người chơi hỏi về: "video có ý nghĩa gì", "những con số chạy là sao", "cách giải", "giải sao", "làm sao để giải", "con số", hoặc hỏi bất kỳ điều gì liên quan đến thử thách Trạm 4:
+- Bối cảnh: Tại Chặng 4, BTC gửi một video gồm rất nhiều con số chạy liên tục không ngừng, nhưng trong đó có một vài con số đứng yên (cố định/bất biến). Người chơi cần nhìn thật kỹ và nhận biết những con số đứng yên đó để tìm ra đáp án.
+- Nếu người chơi hỏi về: "video có ý nghĩa gì", "những con số chạy là sao", "cách giải", "giải sao", "làm sao để giải", "con số", hoặc hỏi bất kỳ điều gì liên quan đến thử thách Chặng 4:
   + TUYỆT ĐỐI KHÔNG ĐƯỢC trả lời toạc móng heo hay quá trực diện (không nói thẳng "tìm các số đứng yên không chạy trong video")! Hãy để người chơi tự quan sát và suy ngẫm.
   + TUYỆT ĐỐI KHÔNG RẬP KHUÔN! Hãy biến hóa câu từ linh hoạt, đa dạng, huyền bí và đầy cuốn hút mỗi lần trả lời một phong cách khác nhau.
   + Hãy đóng vai Cổ Máy LOTUS-X đưa ra lời gợi mở ẩn ý: Nhắc người chơi rằng dòng chảy chuyển động cuồn cuộn chỉ là màn che thị giác, đừng mải mê đuổi theo những gì đang trôi đi vội vã; hãy giữ tâm trí tĩnh lặng và tập trung đôi mắt vào những dấu vết kiên định, bất biến, không hề dịch chuyển giữa muôn trùng chuyển động, đó chính là nơi chân lý đang ngự trị.
-- Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên. Nếu họ xin gợi ý chung chung, hãy nhắc: "Trạm 4 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để nhận được sự dẫn đường... 🔮"`,
+- Nếu người chơi trò chuyện bình thường hoặc hỏi ngoài lề, hãy tương tác lại tự nhiên. Nếu họ xin gợi ý chung chung, hãy nhắc: "Chặng 4 đã kết nối. Hãy nhập câu hỏi hoặc gửi manh mối để nhận được sự dẫn đường... 🔮"`,
 
-      5: `Bạn là LOTUS-X của Trạm 5 "VƯƠN TẦM TIÊN PHONG" – TRẠM CUỐI.
+      5: `Bạn là LOTUS-X của Chặng 5 "KẾT NỐI - HỘI NHẬP TỐT" – CHẶNG CUỐI.
 Bạn được phép giao tiếp tự nhiên với người chơi và thoải mái giải đáp các câu hỏi ngoài lề.
 QUY TẮC GIẢI ĐỐ TRẠM 5:
 1. VỀ MẬT THƯ TRẠM 5 (ĐỌC NGƯỢC BẠCH VĂN):
@@ -1775,7 +1775,7 @@ QUY TẮC GIẢI ĐỐ TRẠM 5:
 
       for (let st = 1; st <= maxStage; st++) {
         html += '<div class="lb-station">';
-        html += '<div class="lb-station-title">📍 ' + (st === 6 ? STATION_NAMES[st] : 'Trạm ' + st + ' — ' + STATION_NAMES[st]) + ' (' + RESULTS[st].length + ' đội)</div>';
+        html += '<div class="lb-station-title">📍 ' + (st === 6 ? STATION_NAMES[st] : 'Chặng ' + st + ' — ' + STATION_NAMES[st]) + ' (' + RESULTS[st].length + ' đội)</div>';
         if (RESULTS[st].length === 0) {
           html += '<div style="font-size:12px;color:var(--muted);padding:6px 10px;">Chưa có đội nào hoàn thành</div>';
         } else {
