@@ -21,6 +21,8 @@ function tryKeywordMatch(clientPayload) {
 
   switch (station) {
     case 1: {
+      const isChipOrProf = (query.includes('chip') || query.includes('con chip') || query.includes('giáo sư') || query.includes('giao su') || query.includes('lotus-x') || query.includes('nguồn gốc') || query.includes('nguon goc') || query.includes('xuất xứ') || query.includes('xuat xu')) && !query.includes('màu') && !query.includes('sắp xếp') && !query.includes('thứ tự');
+
       const isColorOrPuzzle = 
         query.includes('màu') || query.includes('mau') ||
         query.includes('số') || query.includes('so') ||
@@ -29,23 +31,26 @@ function tryKeywordMatch(clientPayload) {
         query.includes('sắp xếp') || query.includes('sap xep') ||
         query.includes('thứ tự') || query.includes('thu tu') ||
         query.includes('ghép') || query.includes('ghep') ||
-        query.includes('video') || query.includes('clip') || query.includes('câu chuyện') || query.includes('cau chuyen') ||
+        query.includes('video') || query.includes('clip') || query.includes('phim') || query.includes('câu chuyện') || query.includes('cau chuyen') ||
         query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') ||
         query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') ||
+        query.includes('làm thế nào') || query.includes('lam the nao') ||
+        query.includes('hướng dẫn') || query.includes('huong dan') ||
         query.includes('ý nghĩa') || query.includes('y nghia') ||
         query.includes('manh mối') || query.includes('manh moi') || query.includes('gợi ý') || query.includes('goi y') ||
-        query.includes('giúp') || query.includes('giup') || query.includes('đáp án') || query.includes('dap an');
+        query.includes('giúp') || query.includes('giup') || query.includes('đáp án') || query.includes('dap an') ||
+        query.includes('mật mã') || query.includes('mat ma');
 
-      if (isColorOrPuzzle) {
+      if (isChipOrProf) {
+        text = "[PROF_IMG] Ah, câu hỏi tuyệt vời! 😄 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨";
+      } else if (isColorOrPuzzle) {
         const colorHints = [
-          "🤖 LOTUS-X gợi ý: Mỗi con số mang trên mình một màu áo riêng biệt, nhưng chúng không hề tồn tại ngẫu nhiên... Hãy nhớ lại câu chuyện về những vùng đất mà bước chân các bạn đã từng in dấu qua lăng kính của thước phim ban đầu. Nơi ấy có một dòng chảy sắc màu gồm bốn nhịp điệu... Hãy để trật tự của những gam màu dẫn lối cho vị trí của từng con số nhé! 🌈✨",
-          "🤖 LOTUS-X gợi ý: Những con số rực rỡ kia đang chờ đợi một chiếc chìa khóa định hình trật tự. Đừng vội ghép nối bừa bãi! Hành trình các bạn đã đi qua trong câu chuyện video chính là tấm bản đồ... Có một dải màu bí mật ẩn hiện qua từng dấu mốc. Khi các bạn sắp đặt những con số đồng điệu theo đúng nhịp bước của dải màu ấy, cánh cửa giải mã sẽ tự khắc mở ra! 🎬🔢",
-          "🤖 LOTUS-X gợi ý: 'TÂM SÁNG' cần một đôi mắt tinh tường để kết nối quá khứ và hiện tại. Màu sắc trên từng con số là linh hồn của những điểm chạm mà các bạn đã trải qua... Hãy hồi tưởng lại thước phim mở đầu, nơi bốn sắc thái khác biệt đã lần lượt xuất hiện theo dòng tự sự. Trình tự của câu chuyện ấy chính là trật tự đích thực của những con số! 🔮🧭",
-          "🤖 LOTUS-X gợi ý: Bí mật không nằm ở giá trị lớn nhỏ của các con số, mà nằm ở sắc thái mà chúng khoác lên mình. Thước phim hành trình ban đầu không chỉ để chiêm ngưỡng – nó khắc họa một chuỗi màu sắc dẫn đường gồm bốn miền giao thoa... Hãy sắp xếp các con số theo đúng dòng chảy sắc màu của câu chuyện, điều kỳ diệu sẽ xuất hiện! 🌟🎨"
+          "🤖 LOTUS-X gợi ý: Mỗi sắc thái trên từng con số là một mảnh linh hồn của hành trình. Hãy nhắm mắt lại và hồi tưởng về những miền đất các bạn đã từng dừng chân trong câu chuyện khởi nguyên... Nơi nào bước chân đi qua trước, nơi nào ghé lại sau, chính dòng tự sự ấy sẽ âm thầm sắp đặt vị trí cho những điều bí ẩn. 🌿✨",
+          "🤖 LOTUS-X gợi ý: Vạn vật đều tuân theo nhịp điệu của thời gian. Đừng vội nhìn vào những con số đơn lẻ, hãy nhìn vào chiếc áo sắc màu mà chúng đang khoác lên... Câu chuyện dẫn đường lúc mở màn không đơn thuần là hình ảnh, nó là sợi chỉ vô hình nối liền các miền ký ức theo một trật tự bất biến. 🔮🧭",
+          "🤖 LOTUS-X gợi ý: 'TÂM SÁNG' là biết tìm ra sự kết nối giữa hiện tại và khởi nguồn. Bốn gam màu ấy chính là bốn dấu mốc trên chuyến hải trình mà các bạn đã chứng kiến... Khi các bạn để các con số xuôi theo dòng chảy của câu chuyện năm xưa, ánh sáng chân lý sẽ tự khắc bừng lên! 🌊💫",
+          "🤖 LOTUS-X gợi ý: Bí mật không nằm ở con số lớn hay nhỏ, mà ẩn giấu trong gam màu của từng vùng đất các bạn đã đi qua. Hãy để câu chuyện của người dẫn đường làm chiếc la bàn chỉ lối; điểm bắt đầu ở đâu, qua những miền đất nào, và dừng lại ở đâu... trật tự thực sự nằm trọn vẹn trong chuyến phiêu lưu ấy! 🎯🗺️"
         ];
         text = colorHints[Math.floor(Math.random() * colorHints.length)];
-      } else if (query.includes('chip') || query.includes('con chip') || query.includes('giáo sư') || query.includes('giao su') || query.includes('lotus-x') || query.includes('nguồn gốc') || query.includes('nguon goc') || query.includes('xuất xứ') || query.includes('xuat xu')) {
-        text = "[PROF_IMG] Ah, câu hỏi tuyệt vời! 😄 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨";
       }
       break;
     }
