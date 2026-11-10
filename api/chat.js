@@ -186,6 +186,7 @@ function tryKeywordMatch(clientPayload) {
   }
 
   if (text) {
+    text = text.replace(/\*+/g, '');
     return { content: [{ type: 'text', text }] };
   }
   return null; // Không khớp từ khóa → fallback sang API AI
@@ -251,7 +252,8 @@ module.exports = async (req, res) => {
       });
       const data = await orRes.json();
       if (orRes.ok) {
-        const text = data.choices?.[0]?.message?.content || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
+        let text = data.choices?.[0]?.message?.content || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
+        text = text.replace(/\*+/g, '');
         res.status(200).json({ content: [{ type: 'text', text }] });
         return;
       }
@@ -274,7 +276,8 @@ module.exports = async (req, res) => {
       });
       const data = await gemRes.json();
       if (gemRes.ok) {
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
+        let text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
+        text = text.replace(/\*+/g, '');
         res.status(200).json({ content: [{ type: 'text', text }] });
         return;
       }

@@ -210,6 +210,7 @@ function tryKeywordMatch(clientPayload) {
   }
 
   if (responseText) {
+    responseText = responseText.replace(/\*+/g, '');
     return { content: [{ type: 'text', text: responseText }] };
   }
   return null; // Không khớp từ khóa → fallback sang API AI
@@ -383,7 +384,8 @@ const server = http.createServer(async (req, res) => {
           const groqRes = await handleGroq(groqApiKey, clientPayload);
           const data = await groqRes.json();
           if (groqRes.ok) {
-            const text = data.choices?.[0]?.message?.content || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
+            let text = data.choices?.[0]?.message?.content || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
+            text = text.replace(/\*+/g, '');
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ content: [{ type: 'text', text }] }));
             return;
@@ -411,7 +413,8 @@ const server = http.createServer(async (req, res) => {
           const gemRes = await handleGemini(geminiApiKey, clientPayload);
           const data = await gemRes.json();
           if (gemRes.ok) {
-            const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
+            let text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
+            text = text.replace(/\*+/g, '');
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ content: [{ type: 'text', text }] }));
             return;
@@ -433,6 +436,9 @@ const server = http.createServer(async (req, res) => {
           });
           const data = await antRes.json();
           if (antRes.ok) {
+            if (data.content && Array.isArray(data.content)) {
+              data.content.forEach(c => { if (c.type === 'text' && c.text) c.text = c.text.replace(/\*+/g, ''); });
+            }
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(data));
             return;
