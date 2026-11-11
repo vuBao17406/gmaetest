@@ -31,6 +31,7 @@ function tryKeywordMatch(clientPayload) {
         query.includes('sắp xếp') || query.includes('sap xep') ||
         query.includes('thứ tự') || query.includes('thu tu') ||
         query.includes('ghép') || query.includes('ghep') ||
+        query.includes('dãy') || query.includes('day') ||
         query.includes('video') || query.includes('clip') || query.includes('phim') || query.includes('câu chuyện') || query.includes('cau chuyen') ||
         query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') ||
         query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') ||
@@ -45,10 +46,11 @@ function tryKeywordMatch(clientPayload) {
         text = "[PROF_IMG] Ah, câu hỏi tuyệt vời! 😄 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨";
       } else if (isColorOrPuzzle) {
         const colorHints = [
-          "🤖 LOTUS-X gợi ý: Mỗi sắc thái trên từng con số là một mảnh linh hồn của hành trình. Hãy nhắm mắt lại và hồi tưởng về những miền đất các bạn đã từng dừng chân trong câu chuyện khởi nguyên... Nơi nào bước chân đi qua trước, nơi nào ghé lại sau, chính dòng tự sự ấy sẽ âm thầm sắp đặt vị trí cho những điều bí ẩn. 🌿✨",
-          "🤖 LOTUS-X gợi ý: Vạn vật đều tuân theo nhịp điệu của thời gian. Đừng vội nhìn vào những con số đơn lẻ, hãy nhìn vào chiếc áo sắc màu mà chúng đang khoác lên... Câu chuyện dẫn đường lúc mở màn không đơn thuần là hình ảnh, nó là sợi chỉ vô hình nối liền các miền ký ức theo một trật tự bất biến. 🔮🧭",
-          "🤖 LOTUS-X gợi ý: 'TÂM SÁNG' là biết tìm ra sự kết nối giữa hiện tại và khởi nguồn. Bốn gam màu ấy chính là bốn dấu mốc trên chuyến hải trình mà các bạn đã chứng kiến... Khi các bạn để các con số xuôi theo dòng chảy của câu chuyện năm xưa, ánh sáng chân lý sẽ tự khắc bừng lên! 🌊💫",
-          "🤖 LOTUS-X gợi ý: Bí mật không nằm ở con số lớn hay nhỏ, mà ẩn giấu trong gam màu của từng vùng đất các bạn đã đi qua. Hãy để câu chuyện của người dẫn đường làm chiếc la bàn chỉ lối; điểm bắt đầu ở đâu, qua những miền đất nào, và dừng lại ở đâu... trật tự thực sự nằm trọn vẹn trong chuyến phiêu lưu ấy! 🎯🗺️"
+          "🤖 LOTUS-X gợi ý: Mỗi con số các bạn vừa mang về từ các thử thách không hề đứng lẻ loi; chiếc áo sắc màu mà chúng khoác lên chính là linh hồn của một miền đất đã từng đi qua. Hãy hồi tưởng lại câu chuyện khởi nguyên lúc mở màn... Dòng thời gian của thước phim ấy đã in dấu từng gam màu theo một nhịp điệu bất biến. Hãy để trật tự của chuyến hành trình dẫn lối cho vị trí của từng con số nhé! 🌿✨",
+          "🤖 LOTUS-X gợi ý: 'TÂM SÁNG' cần một đôi mắt biết kết nối hiện tại với khởi nguồn. Những sắc thái trên từng con số các bạn thu thập được chính là tấm gương phản chiếu những điểm chạm trong thước phim ban đầu... Nơi nào câu chuyện ghé thăm trước, nơi nào đặt chân đến sau? Khi các bạn xếp những con số xuôi theo dòng tự sự của chuyến đi, trật tự chân chính sẽ tự khắc bừng sáng! 🔮🧭",
+          "🤖 LOTUS-X gợi ý: Vạn vật đều có vị trí thuộc về mình khi tìm đúng nhịp đập của thời gian. Đừng nhìn giá trị của các con số một cách khô khan, hãy nhìn vào sắc áo mà người đồng đội đã mang về... Thước phim mở đầu không đơn thuần là hình ảnh, mà là một dòng chảy sắc màu tuần tự dẫn lối. Đặt từng con số hòa cùng nhịp bước của hành trình, mật mã sẽ tự hoàn thiện! 🌊💫",
+          "🤖 LOTUS-X gợi ý: Bí mật của chặng đường này nằm ở sự giao thoa giữa những gì các bạn vừa trải nghiệm và câu chuyện người dẫn đường đã trao gửi. Bốn sắc thái kia tựa như bốn nốt nhạc xuất hiện theo tiến trình thời gian... Điểm khởi đầu ở đâu, qua những miền đất nào, và dừng lại ở đâu? Trật tự của câu chuyện ấy chính là chiếc la bàn định hình hàng ngũ cho những con số! 🎯🗺️",
+          "🤖 LOTUS-X gợi ý: Hãy để tâm trí tĩnh lặng và nhớ lại khúc ca mở màn. Những màu sắc rực rỡ từ các thử thách chính là những mảnh ghép của dòng thời gian trong thước phim khởi đầu... Khi mỗi con số tìm về đúng dấu mốc màu sắc mà chuyến đi đã lần lượt đi qua, dãy số định mệnh sẽ tự động hiện hình trong ánh sáng của chân lý! 🌟✨"
         ];
         text = colorHints[Math.floor(Math.random() * colorHints.length)];
       }
