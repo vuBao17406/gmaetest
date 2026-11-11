@@ -143,26 +143,35 @@ function tryKeywordMatch(clientPayload) {
     }
 
     case 4: {
-      const isVideoOrPuzzle =
-        query.includes('video') || query.includes('clip') || query.includes('phim') ||
-        query.includes('chạy') || query.includes('chay') ||
-        query.includes('số') || query.includes('so') ||
+      const isPaperOrCylinder =
+        query.includes('mảnh') || query.includes('manh') ||
+        query.includes('giấy') || query.includes('giay') ||
+        query.includes('tờ') || query.includes('to') ||
+        query.includes('kí tự') || query.includes('ki tu') || query.includes('ký tự') || query.includes('ky tu') ||
+        query.includes('chữ') || query.includes('chu') ||
+        query.includes('chai') || query.includes('nước') || query.includes('nuoc') ||
+        query.includes('aquafina') ||
+        query.includes('quấn') || query.includes('quan') || query.includes('cuốn') || query.includes('cuon') ||
+        query.includes('tâm') || query.includes('tam') || query.includes('giữa') || query.includes('giua') ||
         query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') ||
         query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') ||
+        query.includes('làm thế nào') || query.includes('lam the nao') ||
         query.includes('ý nghĩa') || query.includes('y nghia') ||
-        query.includes('đứng yên') || query.includes('dung yen') ||
+        query.includes('chỉ') || query.includes('chi') || query.includes('hướng dẫn') || query.includes('huong dan') ||
         query.includes('mật thư') || query.includes('mat thu') || query.includes('mật mã') || query.includes('mat ma') ||
         query.includes('đáp án') || query.includes('dap an') || query.includes('gợi ý') || query.includes('goi y') ||
-        query.includes('manh mối') || query.includes('manh moi') || query.includes('giúp') || query.includes('giup');
+        query.includes('manh mối') || query.includes('manh moi') || query.includes('giúp') || query.includes('giup') ||
+        query.includes('giáo sư') || query.includes('giao su');
 
-      if (isVideoOrPuzzle) {
-        const videoHints = [
-          "🤖 LOTUS-X gợi ý: Giữa một dòng chảy cuồn cuộn không ngừng, thứ khiến mắt bạn hoa lên chưa chắc đã là sự thật... Đừng mải mê đuổi theo những gì đang lướt qua quá nhanh. Hãy tập trung tìm kiếm sự tĩnh lặng kiên định, những kẻ bất biến không hề dao động giữa cơn bão số ấy! 🌀👁️",
-          "🤖 LOTUS-X gợi ý: 'SỨ MỆNH - TÌNH NGUYỆN' đòi hỏi một đôi mắt sắc bén và một tâm trí tĩnh tại. Dòng chuyển động liên hồi chỉ là bức màn đánh lừa thị giác... Nếu bạn quan sát thật sâu, sẽ thấy có những ký tự từ chối cuốn theo dòng chảy, âm thầm bám trụ tại vị trí của mình. Đó chính là những viên ngọc sáng! 🔮✨",
-          "🤖 LOTUS-X gợi ý: Mọi thứ dường như đang trôi đi vội vã trong thước phim ấy... Nhưng chân lý thì luôn đứng yên một chỗ. Hãy để mắt bạn lọc bỏ hết những gì xê dịch, chỉ giữ lại những dấu hiệu bất động ngoan cường qua từng giây phút. Chúng đang chờ bạn gọi tên đấy! ⏳🔢",
-          "🤖 LOTUS-X gợi ý: Bí mật không thuộc về kẻ chạy nhanh nhất, mà thuộc về điểm tựa vững chãi nhất. Đừng cố đếm những chuyển động hỗn loạn! Hãy tĩnh tâm, khóa chặt ánh nhìn vào những tọa độ không hề thay đổi giữa muôn vàn sự biến thiên... Trật tự đích thực đang ngự trị ở nơi tĩnh lặng ấy! 💫🎯"
+      if (isPaperOrCylinder) {
+        const cylinderHints = [
+          "🤖 LOTUS-X gợi ý: Mảnh giấy phẳng lặng trong tay các bạn đang ẩn chứa một mật mã chưa thể đọc được trong không gian hai chiều. Hãy thử để nó uốn lượn quanh một vật hình trụ quen thuộc – người bạn tiếp sức mang lại nguồn nước tinh khiết đồng hành cùng các bạn... Khi các nét chữ khép thành vòng tròn tuần hoàn, trật tự mới sẽ dần hình thành! 🌊🌀",
+          "🤖 LOTUS-X gợi ý: Chân lý không nằm ở một mặt phẳng đơn điệu! Khi uốn cong mảnh mật bản quanh thân một vật phẩm trụ tròn tiếp tế quen thuộc, những ký tự sẽ tự tìm thấy sự giao thoa thẳng hàng... Và trong từng cụm chữ cái, hãy hướng ánh nhìn vào nơi cân bằng nhất – điểm rơi trung tâm chính giữa của mỗi nhịp bước sẽ cất lên tiếng nói đích thực. 🧭✨",
+          "🤖 LOTUS-X gợi ý: Trong hành trình 'SỨ MỆNH', sự kết nối và điểm tựa là chìa khóa. Mảnh giấy bí ẩn cần một thân trụ làm điểm tựa để tạo nên hình thể tròn trịa, tựa như dáng hình của chai nước giải khát các bạn mang theo bên mình... Sau khi những ký tự đã quy tụ ngay ngắn, hãy lắng nghe nhịp tim ở vị trí tâm điểm của từng nhóm ký tự nhé! 🧩💡",
+          "🤖 LOTUS-X gợi ý: Đừng vội đọc những dòng ký tự rời rạc trên trang giấy trải phẳng! Hãy uốn cong nó quanh thân của một vật hình trụ tròn mà các bạn đang nắm giữ. Khi các ký tự tạo thành những hàng lối mới, đừng chọn đầu cũng đừng chọn cuối; chiếc chìa khóa quý giá luôn ẩn mình ở vị trí cân bằng chính giữa của mỗi cụm từ! 🎯🗺️",
+          "🤖 LOTUS-X gợi ý: Bí mật được phong ấn dưới một góc nhìn đa chiều. Khi mảnh giấy được cuộn tròn nương theo thân trụ của người bạn nước uống tinh khiết, những con chữ sẽ gióng thành một thể thống nhất. Hãy để tâm trí tập trung vào điểm trung tâm của từng dãy ký tự đối xứng, thông điệp ẩn giấu sẽ tự khắc bừng sáng! 🌟🔮"
         ];
-        responseText = videoHints[Math.floor(Math.random() * videoHints.length)];
+        responseText = cylinderHints[Math.floor(Math.random() * cylinderHints.length)];
       }
       break;
     }
