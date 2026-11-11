@@ -125,8 +125,7 @@ function tryKeywordMatch(clientPayload) {
         query.includes('tờ') || query.includes('to') ||
         query.includes('kí tự') || query.includes('ki tu') || query.includes('ký tự') || query.includes('ky tu') ||
         query.includes('chữ') || query.includes('chu') ||
-        query.includes('chai') || query.includes('nước') || query.includes('nuoc') ||
-        query.includes('aquafina') ||
+        query.includes('trụ') || query.includes('tru') ||
         query.includes('quấn') || query.includes('quan') || query.includes('cuốn') || query.includes('cuon') ||
         query.includes('tâm') || query.includes('tam') || query.includes('giữa') || query.includes('giua') ||
         query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') ||
@@ -141,11 +140,11 @@ function tryKeywordMatch(clientPayload) {
 
       if (isPaperOrCylinder) {
         const cylinderHints = [
-          "🤖 LOTUS-X gợi ý: Mảnh giấy phẳng lặng trong tay các bạn đang ẩn chứa một mật mã chưa thể đọc được trong không gian hai chiều. Hãy thử để nó uốn lượn quanh một vật hình trụ quen thuộc – người bạn tiếp sức mang lại nguồn nước tinh khiết đồng hành cùng các bạn... Khi các nét chữ khép thành vòng tròn tuần hoàn, trật tự mới sẽ dần hình thành! 🌊🌀",
-          "🤖 LOTUS-X gợi ý: Chân lý không nằm ở một mặt phẳng đơn điệu! Khi uốn cong mảnh mật bản quanh thân một vật phẩm trụ tròn tiếp tế quen thuộc, những ký tự sẽ tự tìm thấy sự giao thoa thẳng hàng... Và trong từng cụm chữ cái, hãy hướng ánh nhìn vào nơi cân bằng nhất – điểm rơi trung tâm chính giữa của mỗi nhịp bước sẽ cất lên tiếng nói đích thực. 🧭✨",
-          "🤖 LOTUS-X gợi ý: Trong hành trình 'SỨ MỆNH', sự kết nối và điểm tựa là chìa khóa. Mảnh giấy bí ẩn cần một thân trụ làm điểm tựa để tạo nên hình thể tròn trịa, tựa như dáng hình của chai nước giải khát các bạn mang theo bên mình... Sau khi những ký tự đã quy tụ ngay ngắn, hãy lắng nghe nhịp tim ở vị trí tâm điểm của từng nhóm ký tự nhé! 🧩💡",
-          "🤖 LOTUS-X gợi ý: Đừng vội đọc những dòng ký tự rời rạc trên trang giấy trải phẳng! Hãy uốn cong nó quanh thân của một vật hình trụ tròn mà các bạn đang nắm giữ. Khi các ký tự tạo thành những hàng lối mới, đừng chọn đầu cũng đừng chọn cuối; chiếc chìa khóa quý giá luôn ẩn mình ở vị trí cân bằng chính giữa của mỗi cụm từ! 🎯🗺️",
-          "🤖 LOTUS-X gợi ý: Bí mật được phong ấn dưới một góc nhìn đa chiều. Khi mảnh giấy được cuộn tròn nương theo thân trụ của người bạn nước uống tinh khiết, những con chữ sẽ gióng thành một thể thống nhất. Hãy để tâm trí tập trung vào điểm trung tâm của từng dãy ký tự đối xứng, thông điệp ẩn giấu sẽ tự khắc bừng sáng! 🌟🔮"
+          "🤖 LOTUS-X gợi ý: Mảnh giấy phẳng lặng trong tay các bạn đang ẩn chứa một mật mã chưa thể đọc được trong không gian hai chiều. Hãy thử để nó uốn lượn, khép mình quanh một hình thể trụ tròn quen thuộc mà các bạn đang có bên mình... Khi các nét chữ khép thành vòng tròn tuần hoàn, trật tự mới sẽ dần hình thành! 🌀✨",
+          "🤖 LOTUS-X gợi ý: Chân lý không nằm ở một mặt phẳng đơn điệu! Khi uốn cong dải mật bản quanh thân một vật hình trụ tròn, những ký tự rời rạc sẽ tự tìm thấy sự giao thoa thẳng hàng... Và trong từng cụm chữ cái, hãy hướng ánh nhìn vào nơi cân bằng nhất – điểm rơi trung tâm chính giữa của mỗi nhịp bước sẽ cất lên tiếng nói đích thực. 🧭💡",
+          "🤖 LOTUS-X gợi ý: Trong hành trình 'SỨ MỆNH', sự kết nối và điểm tựa là chìa khóa. Mảnh giấy bí ẩn cần một đường cong làm điểm tựa để tạo nên hình thể tròn trịa khép kín... Sau khi những con chữ đã quy tụ ngay ngắn quanh thân trụ, hãy lắng nghe nhịp đập ở vị trí tâm điểm, nơi chính giữa của sự đối xứng! 🧩🌟",
+          "🤖 LOTUS-X gợi ý: Đừng vội đọc những dòng ký tự rời rạc trên trang giấy trải phẳng! Hãy uốn cong nó nương theo thân của một vật hình trụ tròn mà các bạn đang nắm giữ. Khi các ký tự tạo thành những hàng lối mới, đừng chọn đầu cũng đừng chọn cuối; chiếc chìa khóa quý giá luôn ẩn mình ở vị trí cân bằng chính giữa của mỗi cụm từ! 🎯🗺️",
+          "🤖 LOTUS-X gợi ý: Bí mật được phong ấn dưới một góc nhìn đa chiều. Khi mảnh giấy được cuộn tròn ôm trọn lấy một hình trụ tròn, những con chữ sẽ gióng thành một thể thống nhất. Hãy để tâm trí tập trung vào điểm trung tâm của từng dãy ký tự đối xứng, thông điệp ẩn giấu sẽ tự khắc bừng sáng! 🌟🔮"
         ];
         text = cylinderHints[Math.floor(Math.random() * cylinderHints.length)];
       }
