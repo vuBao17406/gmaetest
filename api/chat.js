@@ -63,7 +63,9 @@ function tryKeywordMatch(clientPayload) {
         query.includes('giấy') || query.includes('giay') ||
         query.includes('tờ') || query.includes('to') ||
         query.includes('số') || query.includes('so') ||
+        query.includes('chữ số') || query.includes('chu so') ||
         query.includes('kí tự') || query.includes('ki tu') || query.includes('ký tự') || query.includes('ky tu') ||
+        query.includes('kí hiệu') || query.includes('ki hieu') || query.includes('ký hiệu') || query.includes('ky hieu') ||
         query.includes('xác suất') || query.includes('xac suat') || query.includes('xác xuất') || query.includes('xac xuat') ||
         query.includes('loại trừ') || query.includes('loai tru') ||
         query.includes('đúng') || query.includes('dung') || query.includes('sai') ||
@@ -79,10 +81,11 @@ function tryKeywordMatch(clientPayload) {
 
       if (isLogicOrPaper) {
         const subtleStage2Hints = [
-          "🤖 LOTUS-X gợi ý: Trong hành trình 'TRÍ MỞ', không có manh mối nào đứng riêng rẽ. Bốn mảnh mật bản tựa như bốn góc nhìn khác nhau phản chiếu cùng một thực thể... Hãy đặt chúng cạnh nhau, đối chiếu những điểm giao thoa và để lý trí gạt bỏ dần những điều mâu thuẫn; luồng sáng chân thực duy nhất sẽ dần hiển lộ. 🧭✨",
-          "🤖 LOTUS-X gợi ý: Những ký hiệu huyền bí trên bốn trang giấy không phải câu đố để đoán mò, mà là những lời phản hồi thầm lặng cho từng phán đoán của bạn. Hãy nhìn nhận chúng như những bức tranh ghép nhiều chiều... Bằng cách quan sát sự tương thích và loại suy những khả năng bất khả, cánh cửa giải mã sẽ tự khắc mở ra. 🔮💡",
-          "🤖 LOTUS-X gợi ý: Đôi mắt sáng nhìn vào hiện tượng, nhưng tâm trí thông tuệ nhìn vào sự liên kết. Bốn mảnh giấy kia trao cho bạn những manh mối đối chiếu vô cùng chặt chẽ... Đừng giải quyết đơn lẻ từng mảnh, hãy để chúng thử thách lẫn nhau. Điểm chạm chung nơi cả bốn lời gợi mở cùng hướng về chính là đích đến cuối cùng! 🧩🌟",
-          "🤖 LOTUS-X gợi ý: Sự thật luôn ẩn mình sau những màn sương của các giả định. Bốn mảnh ghép đang đóng vai trò là những chiếc la bàn định vị mức độ đồng điệu giữa suy nghĩ của bạn và bí mật cổ xưa... Hãy kiên nhẫn thử nghiệm từng giả thuyết, lắng nghe sự hồi đáp từ bốn góc nhìn, bức màn bí ẩn sẽ được vén lên! 🎯🗺️"
+          "🤖 LOTUS-X gợi ý: Trong hành trình 'TRÍ MỞ', không có manh mối nào đứng riêng rẽ. Bốn trang mật bản tựa như bốn góc nhìn đa chiều của cùng một thực thể bí mật... Hãy đặt chúng cạnh nhau để đối chiếu; các ký hiệu đi kèm chính là chiếc la bàn đo lường mức độ tương thích của từng giả định. Bằng cách loại suy những mâu thuẫn, luồng sáng chân thực duy nhất sẽ dần hiển lộ. 🧭✨",
+          "🤖 LOTUS-X gợi ý: Đừng vội nghĩ đến những phép tính xác suất may rủi! Những ký tự huyền bí trên bốn mảnh giấy là những lời phản hồi thầm lặng về sự hòa hợp: có dấu hiệu chỉ ra điều gì đã an vị trọn vẹn, có dấu hiệu báo rằng điều gì đã hiện diện nhưng vẫn còn lạc bước. Hãy dùng tư duy suy luận để loại trừ dần những khả năng bất khả, dãy bốn chữ số sẽ tự khắc hiện hình. 🔮💡",
+          "🤖 LOTUS-X gợi ý: Đôi mắt sáng nhìn vào hiện tượng, nhưng tâm trí thông tuệ nhìn vào mối liên kết logic. Mỗi mảnh giấy trong tay các bạn trao gửi một mảnh ghép của chân lý... Đừng giải quyết đơn lẻ từng mảnh, hãy để bốn dữ kiện thử thách và gạn lọc lẫn nhau. Điểm chạm chung nơi cả bốn lời gợi mở cùng đồng thuận chính là chìa khóa mở lối! 🧩🌟",
+          "🤖 LOTUS-X gợi ý: Sự thật luôn ẩn mình sau màn sương của những giả thuyết cần được kiểm chứng. Bốn mảnh giấy không trực tiếp trao cho bạn đáp án, mà đóng vai trò như tấm gương phản chiếu độ chính xác của từng khả năng... Hãy kiên nhẫn đối chiếu các hàng ngũ, loại bỏ những điều xung đột, bốn con số định mệnh sẽ lộ diện trong trật tự hoàn hảo! 🎯🗺️",
+          "🤖 LOTUS-X gợi ý: Trí tuệ thức tỉnh khi bạn biết lắng nghe tiếng nói của các dữ kiện. Những ký tự lạ bên cạnh các dãy số không hề ngẫu nhiên; chúng là thước đo phản chiếu mức độ tương đồng giữa phán đoán và sự thật. Hãy để tư duy loại trừ dẫn dắt, gạt bỏ những ảo ảnh không thể cùng tồn tại, mật mã bí mật bốn chữ số sẽ lập tức sáng tỏ! 🌟✨"
         ];
         text = subtleStage2Hints[Math.floor(Math.random() * subtleStage2Hints.length)];
       }
