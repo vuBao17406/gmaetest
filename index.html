@@ -810,10 +810,84 @@
       box-shadow: 0 0 30px rgba(0, 200, 255, 0.2);
       border-radius: 16px;
       padding: 24px;
-      width: 90%;
-      max-width: 320px;
+      width: 92%;
+      max-width: 390px;
     }
 
+    .reward-slots-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .reward-slot-wrap {
+      border-radius: 12px;
+      border: 2px solid var(--cyan);
+      background: rgba(0, 200, 255, 0.08);
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .reward-slot-wrap:focus-within {
+      transform: translateY(-2px);
+    }
+
+    .reward-slot-bar {
+      height: 10px;
+      width: 100%;
+      background: var(--cyan);
+    }
+
+    .reward-slot-input {
+      width: 100%;
+      border: none !important;
+      background: transparent !important;
+      color: #ffffff !important;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 20px !important;
+      font-weight: 700;
+      padding: 12px 4px !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    .reward-slot-input::placeholder {
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .admin-reward-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .admin-reward-item {
+      border-radius: 10px;
+      border: 1.5px solid rgba(0, 200, 255, 0.3);
+      background: rgba(0, 20, 40, 0.65);
+      padding: 10px;
+    }
+
+    .admin-reward-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .admin-reward-head input[type="color"] {
+      width: 30px;
+      height: 22px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+    }
     /* ═══════════════════════════════════════════
    PHẦN 12: TOAST
 ═══════════════════════════════════════════ */
@@ -1123,12 +1197,41 @@
 
       <!-- Thiết lập phần thưởng -->
       <div class="admin-section">
-        <div class="admin-section-title">🎁 Thiết lập phần thưởng Chặng 5</div>
-        <div class="form-group" style="margin-bottom:0;">
-          <input type="text" id="admin-reward-pw" placeholder="Nhập mật khẩu nhận thưởng..." style="font-size:12px;">
+        <div class="admin-section-title">🎁 Thiết lập phần thưởng Chặng 5 (4 Ô Màu)</div>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.4;">
+          Chọn màu sắc đặc trưng và nhập con số tương ứng cho từng ô (để trống cả 4 ô nếu không khóa phần thưởng).
+        </p>
+        <div class="admin-reward-grid">
+          <div class="admin-reward-item" id="admin-reward-card-0">
+            <div class="admin-reward-head">
+              <span>Ô màu 1</span>
+              <input type="color" id="admin-reward-color-0" value="#ff3b3b" oninput="previewAdminRewardColor(0)" title="Chọn màu ô 1">
+            </div>
+            <input type="text" id="admin-reward-slot-0" placeholder="Số ô 1..." style="font-size:13px;text-align:center;font-weight:700;">
+          </div>
+          <div class="admin-reward-item" id="admin-reward-card-1">
+            <div class="admin-reward-head">
+              <span>Ô màu 2</span>
+              <input type="color" id="admin-reward-color-1" value="#00c8ff" oninput="previewAdminRewardColor(1)" title="Chọn màu ô 2">
+            </div>
+            <input type="text" id="admin-reward-slot-1" placeholder="Số ô 2..." style="font-size:13px;text-align:center;font-weight:700;">
+          </div>
+          <div class="admin-reward-item" id="admin-reward-card-2">
+            <div class="admin-reward-head">
+              <span>Ô màu 3</span>
+              <input type="color" id="admin-reward-color-2" value="#ffd600" oninput="previewAdminRewardColor(2)" title="Chọn màu ô 3">
+            </div>
+            <input type="text" id="admin-reward-slot-2" placeholder="Số ô 3..." style="font-size:13px;text-align:center;font-weight:700;">
+          </div>
+          <div class="admin-reward-item" id="admin-reward-card-3">
+            <div class="admin-reward-head">
+              <span>Ô màu 4</span>
+              <input type="color" id="admin-reward-color-3" value="#00e676" oninput="previewAdminRewardColor(3)" title="Chọn màu ô 4">
+            </div>
+            <input type="text" id="admin-reward-slot-3" placeholder="Số ô 4..." style="font-size:13px;text-align:center;font-weight:700;">
+          </div>
         </div>
-        <button class="btn btn-primary" onclick="saveRewardPw()" style="margin-top:8px;font-size:12px;">💾 LƯU MẬT
-          KHẨU</button>
+        <button class="btn btn-primary" onclick="saveRewardPw()" style="margin-top:10px;font-size:12px;">💾 LƯU CẤU HÌNH 4 Ô MÀU</button>
       </div>
 
       <!-- Hệ thống -->
@@ -1143,16 +1246,35 @@
   <!-- MODAL REWARD PASSWORD -->
   <div id="modal-reward-pw" onclick="if(event.target===this) closeRewardPwModal()">
     <div class="modal-box">
-      <h3 style="color:var(--cyan);margin-bottom:12px;font-size:14px;letter-spacing:1px;text-align:center;">🔒 YÊU CẦU
-        MẬT KHẨU</h3>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:16px;text-align:center;">Vui lòng nhập mật khẩu để mở
-        khóa phần thưởng Chặng 5.</p>
-      <div class="form-group" style="position:relative;">
-        <input type="password" id="input-reward-pw" placeholder="Nhập mật khẩu..."
-          style="text-align:center;font-size:16px;letter-spacing:2px;padding-right:40px;padding-left:40px;"
-          onkeydown="if(event.key==='Enter') submitRewardPw()">
-        <span id="toggle-pw-icon" onclick="toggleRewardPw()"
-          style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:18px;user-select:none;">👁️</span>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <h3 style="color:var(--cyan);font-size:14px;letter-spacing:1px;margin:0;">🔒 MẬT MÃ PHẦN THƯỞNG</h3>
+        <span id="toggle-pw-icon" onclick="toggleRewardPw()" title="Ẩn/Hiện số"
+          style="cursor:pointer;font-size:17px;user-select:none;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,0.06);">👁️</span>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:16px;text-align:center;line-height:1.5;">
+        Điền con số từ 4 mảnh giấy màu bạn nhận được vào 4 ô màu tương ứng dưới đây.
+      </p>
+      <div class="reward-slots-grid">
+        <div class="reward-slot-wrap" id="reward-slot-wrap-0">
+          <div class="reward-slot-bar" id="reward-slot-bar-0"></div>
+          <input type="text" inputmode="text" autocomplete="off" class="reward-slot-input" id="input-reward-slot-0" placeholder="?"
+            oninput="onRewardSlotInput(0)" onkeydown="onRewardSlotKeydown(event, 0)">
+        </div>
+        <div class="reward-slot-wrap" id="reward-slot-wrap-1">
+          <div class="reward-slot-bar" id="reward-slot-bar-1"></div>
+          <input type="text" inputmode="text" autocomplete="off" class="reward-slot-input" id="input-reward-slot-1" placeholder="?"
+            oninput="onRewardSlotInput(1)" onkeydown="onRewardSlotKeydown(event, 1)">
+        </div>
+        <div class="reward-slot-wrap" id="reward-slot-wrap-2">
+          <div class="reward-slot-bar" id="reward-slot-bar-2"></div>
+          <input type="text" inputmode="text" autocomplete="off" class="reward-slot-input" id="input-reward-slot-2" placeholder="?"
+            oninput="onRewardSlotInput(2)" onkeydown="onRewardSlotKeydown(event, 2)">
+        </div>
+        <div class="reward-slot-wrap" id="reward-slot-wrap-3">
+          <div class="reward-slot-bar" id="reward-slot-bar-3"></div>
+          <input type="text" inputmode="text" autocomplete="off" class="reward-slot-input" id="input-reward-slot-3" placeholder="?"
+            oninput="onRewardSlotInput(3)" onkeydown="onRewardSlotKeydown(event, 3)">
+        </div>
       </div>
       <div style="display:flex;gap:10px;margin-top:20px;">
         <button class="btn btn-back" onclick="closeRewardPwModal()" style="flex:1;">ĐÓNG</button>
@@ -1221,6 +1343,9 @@
     let CHAT_RULES = { 1: [], 2: [], 3: [], 4: [], 5: [] };
     let ARTICLES = { 1: { title: "", blocks: [] }, 2: { title: "", blocks: [] } };
     let REWARD_PW = "";
+    let REWARD_SLOTS = ["", "", "", ""];
+    let REWARD_COLORS = ["#ff3b3b", "#00c8ff", "#ffd600", "#00e676"];
+    let rewardPwMasked = false;
 
     let APP = {
       team: "",
@@ -1367,17 +1492,45 @@
         }
       });
 
-      // 5. Sync reward password
+      // 5. Sync reward password & 4 colored slots
       db.ref("rewardPw").on("value", snapshot => {
         const data = snapshot.val();
         if (data !== null) {
           REWARD_PW = data;
+          if (REWARD_SLOTS.every(s => s === "") && typeof REWARD_PW === "string" && REWARD_PW.length === 4) {
+            REWARD_SLOTS = REWARD_PW.split("");
+          }
         } else {
           db.ref("rewardPw").set(REWARD_PW);
         }
         if (document.getElementById('scr-admin').classList.contains('active')) {
-          const rewardPwInput = document.getElementById('admin-reward-pw');
-          if (rewardPwInput) rewardPwInput.value = REWARD_PW;
+          renderAdminRewardFields();
+        }
+      });
+
+      db.ref("rewardSlots").on("value", snapshot => {
+        const data = snapshot.val();
+        if (Array.isArray(data) && data.length === 4) {
+          REWARD_SLOTS = data.map(v => (v === null || v === undefined) ? "" : String(v));
+          REWARD_PW = REWARD_SLOTS.join("");
+        } else {
+          db.ref("rewardSlots").set(REWARD_SLOTS);
+        }
+        if (document.getElementById('scr-admin').classList.contains('active')) {
+          renderAdminRewardFields();
+        }
+      });
+
+      db.ref("rewardColors").on("value", snapshot => {
+        const data = snapshot.val();
+        if (Array.isArray(data) && data.length === 4) {
+          REWARD_COLORS = data.map((c, idx) => c || REWARD_COLORS[idx]);
+        } else {
+          db.ref("rewardColors").set(REWARD_COLORS);
+        }
+        applyRewardSlotColors();
+        if (document.getElementById('scr-admin').classList.contains('active')) {
+          renderAdminRewardFields();
         }
       });
     }
@@ -1865,8 +2018,7 @@ QUY TẮC GIẢI ĐỐ TRẠM 5:
         '<div>📅 Phiên: <span style="color:var(--text);">' + new Date().toLocaleString('vi-VN') + '</span></div>';
       renderAdminChatRules();
 
-      const rewardPwInput = document.getElementById('admin-reward-pw');
-      if (rewardPwInput) rewardPwInput.value = REWARD_PW;
+      renderAdminRewardFields();
     }
 
     function addTeam() {
@@ -2013,11 +2165,69 @@ QUY TẮC GIẢI ĐỐ TRẠM 5:
       renderAdminChatRules();
     }
 
+    function hexToRgba(hex, alpha) {
+      const clean = (hex || '#00c8ff').replace('#', '');
+      if (clean.length !== 6) return 'rgba(0, 200, 255, ' + alpha + ')';
+      const r = parseInt(clean.substring(0, 2), 16);
+      const g = parseInt(clean.substring(2, 4), 16);
+      const b = parseInt(clean.substring(4, 6), 16);
+      return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+    }
+
+    function applyRewardSlotColors() {
+      for (let i = 0; i < 4; i++) {
+        const color = REWARD_COLORS[i] || '#00c8ff';
+        const wrap = document.getElementById('reward-slot-wrap-' + i);
+        const bar = document.getElementById('reward-slot-bar-' + i);
+        if (wrap) {
+          wrap.style.borderColor = color;
+          wrap.style.background = hexToRgba(color, 0.14);
+          wrap.style.boxShadow = '0 0 14px ' + hexToRgba(color, 0.25);
+        }
+        if (bar) {
+          bar.style.background = color;
+        }
+      }
+    }
+
+    function previewAdminRewardColor(idx) {
+      const picker = document.getElementById('admin-reward-color-' + idx);
+      const card = document.getElementById('admin-reward-card-' + idx);
+      if (!picker || !card) return;
+      const color = picker.value;
+      card.style.borderColor = color;
+      card.style.background = hexToRgba(color, 0.12);
+    }
+
+    function renderAdminRewardFields() {
+      for (let i = 0; i < 4; i++) {
+        const slotInput = document.getElementById('admin-reward-slot-' + i);
+        const colorInput = document.getElementById('admin-reward-color-' + i);
+        if (slotInput) slotInput.value = REWARD_SLOTS[i] || '';
+        if (colorInput) colorInput.value = REWARD_COLORS[i] || '#00c8ff';
+        previewAdminRewardColor(i);
+      }
+    }
+
+    function hasRewardLock() {
+      return REWARD_SLOTS.some(s => (s || '').trim() !== '') || (REWARD_PW || '').trim() !== '';
+    }
+
     function showLotus() {
-      if (REWARD_PW !== "" && !RESULTS[6].some(r => r.team === APP.team)) {
-        document.getElementById('input-reward-pw').value = '';
+      if (hasRewardLock() && !RESULTS[6].some(r => r.team === APP.team)) {
+        for (let i = 0; i < 4; i++) {
+          const inp = document.getElementById('input-reward-slot-' + i);
+          if (inp) {
+            inp.value = '';
+            inp.type = rewardPwMasked ? 'password' : 'text';
+          }
+        }
+        applyRewardSlotColors();
         document.getElementById('modal-reward-pw').classList.add('open');
-        setTimeout(() => document.getElementById('input-reward-pw').focus(), 100);
+        setTimeout(() => {
+          const first = document.getElementById('input-reward-slot-0');
+          if (first) first.focus();
+        }, 100);
       } else {
         document.getElementById('modal-lotus').classList.add('open');
       }
@@ -2028,24 +2238,75 @@ QUY TẮC GIẢI ĐỐ TRẠM 5:
     }
 
     function toggleRewardPw() {
-      const input = document.getElementById('input-reward-pw');
+      rewardPwMasked = !rewardPwMasked;
       const icon = document.getElementById('toggle-pw-icon');
-      if (input.type === "password") {
-        input.type = "text";
-        icon.innerText = "🙈";
-      } else {
-        input.type = "password";
-        icon.innerText = "👁️";
+      for (let i = 0; i < 4; i++) {
+        const inp = document.getElementById('input-reward-slot-' + i);
+        if (inp) inp.type = rewardPwMasked ? 'password' : 'text';
+      }
+      if (icon) icon.innerText = rewardPwMasked ? '🙈' : '👁️';
+    }
+
+    function onRewardSlotInput(idx) {
+      const inp = document.getElementById('input-reward-slot-' + idx);
+      if (!inp) return;
+      const expected = (REWARD_SLOTS[idx] || '').trim();
+      if (expected.length === 1 && inp.value.length >= 1 && idx < 3) {
+        const next = document.getElementById('input-reward-slot-' + (idx + 1));
+        if (next) next.focus();
+      }
+    }
+
+    function onRewardSlotKeydown(e, idx) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (idx < 3) {
+          const next = document.getElementById('input-reward-slot-' + (idx + 1));
+          if (next) next.focus();
+        } else {
+          submitRewardPw();
+        }
+      } else if (e.key === 'Backspace') {
+        const inp = document.getElementById('input-reward-slot-' + idx);
+        if (inp && inp.value === '' && idx > 0) {
+          const prev = document.getElementById('input-reward-slot-' + (idx - 1));
+          if (prev) prev.focus();
+        }
       }
     }
 
     function submitRewardPw() {
-      const pw = document.getElementById('input-reward-pw').value;
-      if (pw.toLowerCase() !== REWARD_PW.toLowerCase()) {
-        showToast('❌ Mật khẩu phần thưởng không chính xác!');
-        document.getElementById('input-reward-pw').focus();
+      const entered = [];
+      for (let i = 0; i < 4; i++) {
+        const inp = document.getElementById('input-reward-slot-' + i);
+        entered.push((inp ? inp.value : '').trim());
+      }
+
+      const useSlots = REWARD_SLOTS.some(s => (s || '').trim() !== '');
+      let isMatch = false;
+      let firstWrongIdx = 0;
+
+      if (useSlots) {
+        isMatch = true;
+        for (let i = 0; i < 4; i++) {
+          const exp = (REWARD_SLOTS[i] || '').trim().toLowerCase();
+          if (entered[i].toLowerCase() !== exp) {
+            isMatch = false;
+            firstWrongIdx = i;
+            break;
+          }
+        }
+      } else {
+        isMatch = entered.join('').toLowerCase() === (REWARD_PW || '').trim().toLowerCase();
+      }
+
+      if (!isMatch) {
+        showToast('❌ Mật mã ở các ô màu chưa chính xác!');
+        const wrongInp = document.getElementById('input-reward-slot-' + firstWrongIdx);
+        if (wrongInp) wrongInp.focus();
         return;
       }
+
       closeRewardPwModal();
       document.getElementById('modal-lotus').classList.add('open');
 
@@ -2071,21 +2332,36 @@ QUY TẮC GIẢI ĐỐ TRẠM 5:
     function saveArticles() { }
 
     function saveRewardPw() {
-      const pw = document.getElementById('admin-reward-pw').value;
-      REWARD_PW = pw;
+      const newSlots = [];
+      const newColors = [];
+      for (let i = 0; i < 4; i++) {
+        const slotEl = document.getElementById('admin-reward-slot-' + i);
+        const colorEl = document.getElementById('admin-reward-color-' + i);
+        newSlots.push(slotEl ? slotEl.value.trim() : '');
+        newColors.push(colorEl ? colorEl.value : REWARD_COLORS[i]);
+      }
+      REWARD_SLOTS = newSlots;
+      REWARD_COLORS = newColors;
+      REWARD_PW = REWARD_SLOTS.join('');
+      applyRewardSlotColors();
+
       if (isFirebaseConnected) {
-        db.ref('rewardPw').set(REWARD_PW)
-          .then(() => showToast('✅ Lưu thành công!'))
+        Promise.all([
+          db.ref('rewardSlots').set(REWARD_SLOTS),
+          db.ref('rewardColors').set(REWARD_COLORS),
+          db.ref('rewardPw').set(REWARD_PW)
+        ])
+          .then(() => showToast('✅ Lưu cấu hình 4 ô màu thành công!'))
           .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
       } else {
         saveLocal();
-        showToast('✅ Lưu thành công!');
+        showToast('✅ Lưu cấu hình 4 ô màu thành công!');
       }
     }
 
     function saveLocal() {
       try {
-        localStorage.setItem('gdpt_data', JSON.stringify({ ANSWERS, RESULTS, PASSCODES, CHAT_RULES, ARTICLES, REWARD_PW }));
+        localStorage.setItem('gdpt_data', JSON.stringify({ ANSWERS, RESULTS, PASSCODES, CHAT_RULES, ARTICLES, REWARD_PW, REWARD_SLOTS, REWARD_COLORS }));
       } catch (e) {
         alert('❌ Không thể lưu dữ liệu (Local)! Bộ nhớ đã đầy hoặc ảnh quá lớn. Vui lòng giảm dung lượng ảnh hoặc số lượng ảnh.');
       }
@@ -2098,6 +2374,8 @@ QUY TẮC GIẢI ĐỐ TRẠM 5:
         if (d.RESULTS) RESULTS = { ...RESULTS, ...d.RESULTS };
         if (d.PASSCODES && !isFirebaseConnected) PASSCODES = { ...PASSCODES, ...d.PASSCODES };
         if (d.REWARD_PW !== undefined) REWARD_PW = d.REWARD_PW;
+        if (Array.isArray(d.REWARD_SLOTS) && d.REWARD_SLOTS.length === 4) REWARD_SLOTS = d.REWARD_SLOTS;
+        if (Array.isArray(d.REWARD_COLORS) && d.REWARD_COLORS.length === 4) REWARD_COLORS = d.REWARD_COLORS;
         if (d.ARTICLES) {
           for (let i = 1; i <= 2; i++) {
             ARTICLES[i] = d.ARTICLES[i] || { title: "", blocks: [] };
