@@ -21,7 +21,7 @@ function tryKeywordMatch(clientPayload) {
 
 switch (station) {
     case 1: {
-      const isChipOrProf = (query.includes('chip') || query.includes('con chip') || query.includes('giáo sư') || query.includes('giao su') || query.includes('lotus-x') || query.includes('nguồn gốc') || query.includes('nguon goc') || query.includes('xuất xứ') || query.includes('xuat xu')) && !query.includes('màu') && !query.includes('sắp xếp') && !query.includes('thứ tự');
+      const isChipOrProf = (query.includes('chip') || query.includes('con chip') || query.includes('giáo sư') || query.includes('giao su') || query.includes('lotus-x') || query.includes('nguồn gốc') || query.includes('nguon goc') || query.includes('xuất xứ') || query.includes('xuat xu')) && !query.includes('màu') && !query.includes('sắp xếp') && !query.includes('thứ tự') && !query.includes('oa') && !query.includes('viettel') && !query.includes('tammi');
 
       const isColorOrPuzzle = 
         query.includes('màu') || query.includes('mau') ||
@@ -33,6 +33,11 @@ switch (station) {
         query.includes('ghép') || query.includes('ghep') ||
         query.includes('dãy') || query.includes('day') ||
         query.includes('video') || query.includes('clip') || query.includes('phim') || query.includes('câu chuyện') || query.includes('cau chuyen') ||
+        query.includes('bài viết') || query.includes('bai viet') ||
+        query.includes('kênh') || query.includes('kenh') ||
+        query.includes('thông tin') || query.includes('thong tin') ||
+        query.includes('oa') || query.includes('viettel') || query.includes('tammi') ||
+        query.includes('đoàn trường') || query.includes('doan truong') ||
         query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') ||
         query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') ||
         query.includes('làm thế nào') || query.includes('lam the nao') ||
@@ -46,10 +51,10 @@ switch (station) {
         text = "[PROF_IMG] Ah, câu hỏi tuyệt vời! 😄 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨";
       } else if (isColorOrPuzzle) {
         const colorHints = [
-          "🤖 LOTUS-X gợi ý: Trong hành trình 'TÂM SÁNG', không có sắc thái nào xuất hiện một cách tình cờ. Những con số rực rỡ ấy tựa như những nhịp đập ký ức phản chiếu từng miền đất của câu chuyện khởi nguyên... Hãy để tâm trí hồi tưởng lại tiến trình thời gian nơi thước phim mở màn, đối chiếu sự nối tiếp của từng gam màu; trật tự của chuyến hành trình năm xưa sẽ âm thầm định hình hàng ngũ cho các con số. 🌿✨",
-          "🤖 LOTUS-X gợi ý: Vạn vật đều tuân theo dòng chảy của thời gian, và chiếc áo sắc màu trên từng con số cũng không hề đứng lẻ loi. Chúng tựa như linh hồn của những dấu mốc các bạn từng dừng chân trong câu chuyện dẫn đường... Hãy đặt chúng xuôi theo dòng tự sự của ký ức, nơi nào ghé lại trước, nơi nào đi qua sau; luồng sáng chân lý sẽ dần hiển lộ. 🔮🧭",
-          "🤖 LOTUS-X gợi ý: Đôi mắt tinh tường sẽ nhận ra sợi chỉ vô hình nối liền hiện tại và quá khứ. Bốn gam màu các bạn nắm giữ tựa như bốn nốt nhạc vang lên theo nhịp bước của thước phim mở đầu... Hãy để tiến trình của chuyến phiêu lưu làm chiếc la bàn chỉ lối, đưa từng sắc thái hòa chung nhịp điệu thời gian; bức tranh bí mật sẽ tự khắc hoàn nguyên. 🌊💫",
-          "🤖 LOTUS-X gợi ý: Bí mật không nằm ở giá trị lớn nhỏ, mà ẩn giấu trong dòng chảy ký ức của người dẫn đường. Thước phim khởi nguyên không đơn thuần là hình ảnh, mà là bản đồ những dấu mốc sắc màu tuần tự... Khi các bạn đặt từng con số về đúng tọa độ thời gian của câu chuyện ấy, dãy mật mã định mệnh sẽ tỏa sáng trọn vẹn. 🎯🗺️"
+          "🤖 LOTUS-X gợi ý: Trong hành trình 'TÂM SÁNG', không có sắc màu nào đứng riêng rẽ. Những con số rực rỡ thu về sau các thử thách tựa như những nhịp đập ký ức đang tìm kiếm chiếc chìa khóa định hình trật tự... BTC đã âm thầm gửi gắm chiếc chìa khóa ấy trong bài viết trên kênh thông tin mới của đoàn trường là 'OA TUỔI TRẺ VIETTEL TAMMI'. Hãy ghé thăm nơi ấy, lắng đọng cùng thước phim và bài viết để dõi theo dòng chảy của 4 sắc màu; khi đối chiếu từng con số các bạn đang nắm giữ với thứ tự màu sắc ấy, dãy mật mã hoàn chỉnh sẽ tự khắc hiển lộ. 🌿✨",
+          "🤖 LOTUS-X gợi ý: Chiếc chìa khóa mở lối cho những con số mang sắc màu không nằm ở nơi các bạn đang đứng, mà ẩn mình giữa làn sóng thông điệp mới. Hãy hướng tầm mắt về kênh thông tin của đoàn trường mang tên 'OA TUỔI TRẺ VIETTEL TAMMI'... Nơi bài viết mới nhất đang âm thầm cất giấu một chuỗi gồm 4 sắc thái tuần tự. Đối chiếu màu sắc của những con số các bạn đã thu thập được với trật tự xuất hiện nơi bài viết ấy, bức tranh mật mã sẽ hoàn nguyên trọn vẹn. 🔮🧭",
+          "🤖 LOTUS-X gợi ý: Vạn vật đều có trật tự tương sinh, và các con số sau mỗi thử thách cũng đang tìm kiếm người dẫn lối. Hãy tìm về bài viết đặc biệt vừa được BTC đăng tải trên kênh 'OA TUỔI TRẺ VIETTEL TAMMI'... Dòng chảy sắc màu lồng ghép trong đó chính là chiếc la bàn soi sáng thứ tự của 4 gam màu. Đặt từng con số về đúng vị trí màu sắc tương ứng, thông điệp định mệnh của chặng 1 sẽ bừng sáng trước mắt bạn. 🌊💫",
+          "🤖 LOTUS-X gợi ý: Bốn con số mang những sắc màu riêng biệt chính là linh hồn của chặng khởi đầu, nhưng chỉ khi liên kết với bài viết dẫn đường thì bí mật mới thức tỉnh. Tọa độ ấy đang được lưu giữ trong bài viết trên kênh thông tin mới 'OA TUỔI TRẺ VIETTEL TAMMI'... Hãy quan sát thật tinh tường chuỗi 4 màu sắc lồng ghép trong đó, sắp xếp các con số theo đúng vị trí màu sắc dẫn lối; hành trình TÂM SÁNG sẽ chính thức khai thông. 🎯🗺️"
         ];
         text = colorHints[Math.floor(Math.random() * colorHints.length)];
       }
