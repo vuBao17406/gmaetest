@@ -968,19 +968,27 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 120px;
-      height: 120px;
+      width: 136px;
+      height: 136px;
       border-radius: 50%;
-      background: radial-gradient(circle, #062875 0%, #021242 100%);
-      border: 2.5px solid #29d8ff;
-      box-shadow: 0 0 24px rgba(41, 216, 255, 0.6), inset 0 0 18px rgba(41, 216, 255, 0.25);
+      background: #ffffff;
+      border: 3px solid #29d8ff;
+      box-shadow: 0 0 25px rgba(41, 216, 255, 0.75), 0 0 50px rgba(10, 80, 220, 0.4);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       z-index: 2;
       pointer-events: none;
+      overflow: hidden;
+    }
+
+    .sv5t-center-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
     }
 
     .sv5t-center .star {
@@ -1628,10 +1636,7 @@
       </svg>
 
       <div class="sv5t-center">
-        <div class="star">★</div>
-        <div class="txt-top">SINH VIÊN</div>
-        <div class="txt-num">5</div>
-        <div class="txt-bot">TỐT</div>
+        <img src="public/huy_hieu_tap_huan.jpg" alt="Huy hiệu Tập Huấn Đoàn VKU" class="sv5t-center-img" />
       </div>
 
       <div class="sv5t-slot" id="sv5t-slot-1" data-station="1" style="left:50%;top:15%;" onclick="onSv5tSlotTap(1)">
@@ -2691,31 +2696,36 @@ QUY TẮC GIẢI ĐỐ TRẠM 5:
         id: 'hoi_nhap',
         target: 5,
         label: 'Hội nhập tốt',
-        svg: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><line x1="3" y1="12" x2="21" y2="12"/></svg>'
+        color: '#8b5cf6',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M5 8h14"/><path d="M5 16h14"/></svg>'
       },
       {
         id: 'the_luc',
         target: 3,
         label: 'Thể lực tốt',
-        svg: '<svg viewBox="0 0 24 24"><circle cx="14" cy="5" r="2"/><path d="M10 10l3-1 3 3 3-1"/><path d="M13 9l-2 5-4 3"/><path d="M11 14l4 2 1 5"/></svg>'
+        color: '#f59e0b',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="5" r="2" fill="currentColor"/><path d="M10 10l3-1 3 3 3-1"/><path d="M13 9l-2 5-4 3"/><path d="M11 14l4 2 1 5"/></svg>'
       },
       {
         id: 'hoc_tap',
         target: 2,
         label: 'Học tập tốt',
-        svg: '<svg viewBox="0 0 24 24"><path d="M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/><line x1="22" y1="10" x2="22" y2="16"/></svg>'
+        color: '#ef4444',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v4c0 1.5 2.7 2.8 6 2.8s6-1.3 6-2.8v-4"/><line x1="22" y1="9" x2="22" y2="15"/><path d="M4 19c2.5-1 5-1 8 0.8 3-1.8 5.5-1.8 8-0.8"/></svg>'
       },
       {
         id: 'tinh_nguyen',
         target: 4,
         label: 'Tình nguyện tốt',
-        svg: '<svg viewBox="0 0 24 24"><path d="M12 12c-1.8-2-5-1.5-5 1.2 0 2.3 5 4.8 5 4.8s5-2.5 5-4.8c0-2.7-3.2-3.2-5-1.2z"/><path d="M4 13v5a2 2 0 0 0 2 2h2"/><path d="M20 13v5a2 2 0 0 1-2 2h-2"/></svg>'
+        color: '#10b981',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5c1.2-1.6 3.8-1.6 5 0 1.2 1.5 1.2 3.8 0 5.3L12 16l-5-5.2c-1.2-1.5-1.2-3.8 0-5.3 1.2-1.6 3.8-1.6 5 0z" fill="currentColor"/><path d="M3 18c2-2 4.5-2 6.5-1l2.5-1"/><path d="M21 18c-2-2-4.5-2-6.5-1l-2.5-1"/></svg>'
       },
       {
         id: 'dao_duc',
         target: 1,
         label: 'Đạo đức tốt',
-        svg: '<svg viewBox="0 0 24 24"><path d="M2 6h7a3 3 0 0 1 3 3v10a2 2 0 0 0-2-2H2z"/><path d="M22 6h-7a3 3 0 0 0-3 3v10a2 2 0 0 1 2-2h8z"/></svg>'
+        color: '#3b82f6',
+        svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5c1.4-1.8 4.2-1.8 5.6 0 1.4 1.8 1.4 4.2 0 6L12 16.5l-5.6-6c-1.4-1.8-1.4-4.2 0-6 1.4-1.8 4.2-1.8 5.6 0z" fill="currentColor"/><path d="M2 17h5l3 2h5a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2h-3"/></svg>'
       }
     ];
 
@@ -2743,7 +2753,7 @@ QUY TẮC GIẢI ĐỐ TRẠM 5:
         const el = document.createElement('div');
         el.className = 'sv5t-badge';
         el.id = 'sv5t-badge-' + b.id;
-        el.innerHTML = '<div class="sv5t-circle">' + b.svg + '</div><div class="sv5t-badge-name">' + b.label + '</div>';
+        el.innerHTML = '<div class="sv5t-circle" style="border-color:' + (b.color || '#29d8ff') + ';box-shadow:0 0 12px ' + (b.color || '#29d8ff') + '88;">' + b.svg + '</div><div class="sv5t-badge-name">' + b.label + '</div>';
         el.addEventListener('pointerdown', e => onSv5tPointerDown(e, b.id));
         dock.appendChild(el);
       });
@@ -2886,7 +2896,7 @@ QUY TẮC GIẢI ĐỐ TRẠM 5:
 
       sv5tMatched[badgeId] = true;
       slot.classList.add('filled');
-      slot.innerHTML = '<div class="sv5t-circle" style="width:40px;height:40px;margin-bottom:4px;">' + badge.svg + '</div><div class="sv5t-badge-name" style="font-size:10px;">' + badge.label + '</div>';
+      slot.innerHTML = '<div class="sv5t-circle" style="width:40px;height:40px;margin-bottom:4px;border-color:' + (badge.color || '#29d8ff') + ';box-shadow:0 0 14px ' + (badge.color || '#29d8ff') + 'aa;">' + badge.svg + '</div><div class="sv5t-badge-name" style="font-size:10px;">' + badge.label + '</div>';
 
       const srcEl = document.getElementById('sv5t-badge-' + badgeId);
       if (srcEl) srcEl.classList.add('placed-hidden');
