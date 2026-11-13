@@ -178,45 +178,59 @@ switch (station) {
     }
 
     case 5: {
-      const isPaperQuery =
-        query.includes('mảnh giấy') || query.includes('manh giay') ||
-        query.includes('4 mảnh') || query.includes('bon manh') ||
-        query.includes('tờ giấy') || query.includes('to giay') ||
-        query.includes('4 tờ') || query.includes('bon to') ||
-        query.includes('a4') || query.includes('tờ a4') ||
-        query.includes('kí tự') || query.includes('ki tu') || query.includes('ký tự') || query.includes('ky tu') ||
-        query.includes('đúng sai') || query.includes('dung sai') ||
-        query.includes('vị trí') || query.includes('vi tri') ||
-        query.includes('kho báu') || query.includes('kho bau') ||
-        query.includes('phần thưởng') || query.includes('phan thuong');
+      const isBlue = query.includes('xanh') || query.includes('xanh dương') || query.includes('bảng chữ cái') || query.includes('bang chu cai') || query.includes('chữ cái') || query.includes('chu cai') || query.includes('dịch chuyển') || query.includes('dich chuyen') || query.includes('lùi') || query.includes('lui');
 
-      const isLetterQuery =
-        query.includes('mật thư') || query.includes('mat thu') ||
-        query.includes('bạch văn') || query.includes('bach van') ||
-        query.includes('cách giải') || query.includes('cach giai') ||
-        query.includes('giải sao') || query.includes('giai sao') ||
-        query.includes('giải như thế nào') || query.includes('giai nhu the nao') ||
-        query.includes('làm sao') || query.includes('lam sao') ||
-        query.includes('ý nghĩa') || query.includes('y nghia') ||
-        query.includes('đáp án') || query.includes('dap an') ||
-        query.includes('gợi ý') || query.includes('goi y') ||
-        query.includes('manh mối') || query.includes('manh moi') ||
-        query.includes('giúp') || query.includes('giup');
+      const isRed = query.includes('đỏ') || query.includes('do') || query.includes('mica') || query.includes('chồng') || query.includes('chong') || query.includes('đặt chồng') || query.includes('dat chong') || query.includes('cộng') || query.includes('cong') || query.includes('cộng dồn') || query.includes('cong don');
 
-      if (isPaperQuery) {
-        const paperHints = [
-          "🤖 LOTUS-X gợi ý: Trong hành trình 'KẾT NỐI', không có dữ kiện nào từ bốn chặng đường là thừa thãi. Bốn trang mật bản tựa như bốn góc nhìn phản chiếu độ chuẩn xác của cùng một thực thể... Hãy đặt chúng cạnh nhau, đối chiếu những điểm giao thoa và gạn lọc dần những điều mâu thuẫn; con số định mệnh mở lối kho báu sẽ dần hiển lộ. 📜🧭",
-          "🤖 LOTUS-X gợi ý: Cánh cổng kho báu chỉ mở ra trước một tư duy liên kết trọn vẹn và sắc bén. Bốn tờ giấy A4 chính là chiếc la bàn đo lường mức độ hòa hợp giữa từng giả định và chân lý... Đừng phân tích đơn lẻ từng mảnh, hãy để cả bốn dữ kiện bổ khuyết và thử thách lẫn nhau; điểm hội tụ duy nhất sẽ dẫn lối bạn tới phần thưởng tối thượng. 🧩✨",
-          "🤖 LOTUS-X gợi ý: Bốn mảnh ghép từ bốn chặng đường đang nắm giữ những phản hồi thầm lặng về sự hiện diện và trật tự của chân lý. Hãy kết nối toàn bộ dữ kiện lại với nhau, dùng lý trí loại suy những điều xung đột... Khi mọi góc nhìn cùng đồng thuận tại một điểm chung, mật mã vinh quang sẽ lập tức tỏa sáng! 🌟🔓"
+      const isYellow = query.includes('vàng') || query.includes('vang') || query.includes('chấm đen') || query.includes('cham den') || query.includes('hướng') || query.includes('huong') || query.includes('đông') || query.includes('dong') || query.includes('tây') || query.includes('tay') || query.includes('nam') || query.includes('bắc') || query.includes('bac') || query.includes('đtnb') || query.includes('dtnb') || query.includes('la bàn') || query.includes('la ban') || query.includes('di chuyển') || query.includes('di chuyen') || query.includes('lộ trình') || query.includes('lo trinh');
+
+      const isPurple = query.includes('tím') || query.includes('tim') || query.includes('dạ quang') || query.includes('da quang') || query.includes('dấu x') || query.includes('dau x') || query.includes('bản đồ') || query.includes('ban do') || query.includes('soi') || query.includes('ánh sáng') || query.includes('anh sang');
+
+      const isTreasure = query.includes('kho báu') || query.includes('kho bau') || query.includes('phần thưởng') || query.includes('phan thuong') || query.includes('giấy màu') || query.includes('giay mau') || query.includes('tờ giấy') || query.includes('to giay') || query.includes('2 tờ') || query.includes('hai tờ') || query.includes('cùng màu') || query.includes('cung mau') || query.includes('màu sắc') || query.includes('mau sac') || query.includes('mật khẩu') || query.includes('mat khau') || query.includes('4 ô') || query.includes('bon o') || query.includes('mảnh giấy') || query.includes('manh giay') || query.includes('a4');
+
+      const isLetterQuery = query.includes('mật thư') || query.includes('mat thu') || query.includes('bạch văn') || query.includes('bach van') || query.includes('đọc ngược') || query.includes('doc nguoc') || query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') || query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') || query.includes('gợi ý') || query.includes('goi y') || query.includes('manh mối') || query.includes('manh moi') || query.includes('giúp') || query.includes('giup');
+
+      if (isBlue) {
+        const blueHints = [
+          "🤖 LOTUS-X gợi ý: Trong hành trình 'KẾT NỐI', sắc xanh dương mang linh hồn của những bước lùi thời gian. Những con chữ các bạn nắm giữ dường như đang khoác lên một mật mã dịch chuyển... Thử để mỗi ký tự lùi lại một vài nhịp bước trên dòng hành trình chữ cái alphabet (A–Z) quen thuộc; hình hài con số bí ẩn sẽ tự khắc khai sinh từ chính những ký tự nguyên bản ấy. 🌊🔤",
+          "🤖 LOTUS-X gợi ý: Với sắc xanh dương, đôi khi lùi bước lại là chìa khóa để tiến tới chân lý. Thông điệp trên trang giấy đang ẩn sau một quy luật hoán vị của bảng chữ cái tiếng Anh... Hãy thử đảo ngược bánh xe chữ cái về phía trước vài vị trí cố định; những con chữ ẩn mình sẽ trả về con số đích thực mà các bạn đang tìm kiếm. 🔷📖",
+          "🤖 LOTUS-X gợi ý: Đừng vội đọc những con chữ sắc xanh theo lẽ thông thường. Hãy lắng nghe dòng chảy ngược dòng của bảng mẫu tự alphabet, đưa mỗi ký tự lùi về vài nhịp bước quá khứ; một thông điệp sáng tỏ sẽ định hình nên con số mở kho báu. 🌐✨"
         ];
-        responseText = paperHints[Math.floor(Math.random() * paperHints.length)];
+        text = blueHints[Math.floor(Math.random() * blueHints.length)];
+      } else if (isRed) {
+        const redHints = [
+          "🤖 LOTUS-X gợi ý: Sắc đỏ của nhiệt huyết chỉ tỏa sáng trọn vẹn khi có sự giao thoa giữa hai tầng thực thể. Tấm màng trong suốt các bạn nắm giữ tựa như đôi mắt soi tỏ những chi tiết đang ngủ yên trên nền giấy đỏ... Hãy để hai lớp tương ngộ, đặt chúng chồng khít lên nhau và gom góp những mảnh số cạnh nhau lại bằng phép liên kết cộng dồn; con số tối thượng sẽ bừng nở. 🔴✨",
+          "🤖 LOTUS-X gợi ý: Với gam màu đỏ, sự thật ẩn giấu sau hai lớp dữ kiện song hành. Một nửa nằm trên tờ giấy màu, nửa còn lại đợi chờ từ tấm màng Mica trong suốt... Khi bạn đặt chúng hòa làm một, các con số kề vai sát cánh sẽ hiện rõ; hãy kết nối và cộng dồn chúng lại theo chỉ dẫn, cánh cửa phần thưởng sẽ mở lối. 🧩🔺",
+          "🤖 LOTUS-X gợi ý: Hai mảnh ghép của sắc đỏ tựa như thể xác và linh hồn. Tấm giấy trong suốt sẽ đánh thức những con số tiềm ẩn khi được đặt vừa vặn lên nền đỏ rực rỡ; đối chiếu các con số liền kề và thực hiện phép cộng dồn tương ứng, đáp án sẽ tỏa sáng. 💫🔥"
+        ];
+        text = redHints[Math.floor(Math.random() * redHints.length)];
+      } else if (isYellow) {
+        const yellowHints = [
+          "🤖 LOTUS-X gợi ý: Sắc vàng rực rỡ mang định hướng của những cuộc hải trình mở lối tương lai. Chấm đen cô độc trên trang giấy chính là tọa độ điểm xuất phát của chuyến phiêu lưu... Hãy để chiếc la bàn phương hướng (Đông – Tây – Nam – Bắc) dẫn dắt nét vẽ của bạn qua từng ký tự chỉ lối; quỹ đạo di chuyển ấy sẽ tự khắc tạc nên hình hài một con số kỳ diệu. 🟡🧭",
+          "🤖 LOTUS-X gợi ý: Với gam màu vàng, bước chân di chuyển chính là ngòi bút kiến tạo nên mật mã. Bắt đầu từ chấm đen khởi nguồn, hãy lần theo từng hướng đi được mã hóa bằng các ký hiệu phương hướng địa lý quốc tế... Quan sát lộ trình vẽ ra trên mặt giấy, bạn sẽ nhận ra con số ẩn giấu đằng sau hành trình ấy. ☀️🗺️",
+          "🤖 LOTUS-X gợi ý: Đừng nhìn chấm đen như một dấu chấm kết thúc, đó là điểm tựa để bắt đầu vạch nên đường đi. Lắng nghe tiếng gọi của bốn phương trời qua các ký tự chỉ hướng tiếng Anh; con đường bạn bước qua sẽ lưu lại dấu tích của một con số định mệnh. 🧭✨"
+        ];
+        text = yellowHints[Math.floor(Math.random() * yellowHints.length)];
+      } else if (isPurple) {
+        const purpleHints = [
+          "🤖 LOTUS-X gợi ý: Sắc tím huyền bí đòi hỏi một nguồn sáng đặc biệt để đánh thức những dấu tích đang say ngủ. Tấm bản đồ kia chỉ thực sự cất lời khi gặp được tia sáng dạ quang khai mở... Hãy soi tỏ màn đêm để tìm kiếm những điểm giao thoa hình dấu X đang ẩn mình; số lượng những dấu ấn kỳ diệu các bạn đếm được chính là chiếc chìa khóa số của sắc tím. 🟣🔍",
+          "🤖 LOTUS-X gợi ý: Dưới ánh sáng thường, tấm bản đồ màu tím giữ trọn sự trầm mặc, nhưng ngọn đèn dạ quang sẽ soi tỏ những tọa độ bí mật. Hãy quan sát thật kỹ từng dấu X phát sáng được đánh dấu trên bản đồ; chính tổng số lượng những điểm giao nhau ấy sẽ trao cho bạn con số định mệnh. 🔮🗺️",
+          "🤖 LOTUS-X gợi ý: Ánh sáng huyền ảo của bút dạ quang chính là chiếc chìa khóa đánh thức bí mật sắc tím. Khi soi tỏ lên bản đồ, những dấu tích chữ X sẽ lần lượt xuất hiện; hãy đếm trọn vẹn số lượng của chúng, con số ấy sẽ đưa bạn tới gần kho báu hơn một bước. 💜🔦"
+        ];
+        text = purpleHints[Math.floor(Math.random() * purpleHints.length)];
+      } else if (isTreasure) {
+        const treasureHints = [
+          "🤖 LOTUS-X gợi ý: Trong suốt hành trình hội tụ về Chặng 5, mỗi chặng dừng chân đều để lại cho các bạn những gợi ý trên hai tờ giấy sắc màu. Hãy nhớ rằng hai tờ giấy cùng một màu sắc mới dệt nên một bộ gợi ý hoàn chỉnh để mở ra một con số duy nhất... Bốn sắc màu (xanh dương, đỏ, vàng, tím) tương ứng với bốn quy luật giải mã riêng biệt; khi bốn con số cùng quy tụ vào các ô màu định mệnh, kho báu vĩ đại sẽ mở ra! 🌈💎",
+          "🤖 LOTUS-X gợi ý: Cánh cửa kho báu tối thượng đòi hỏi sự kết hợp của 4 con số tương ứng với 4 sắc màu mà các bạn đã thu thập qua các chặng. Mỗi sắc màu đại diện cho một cách thức giải mã độc lập: xanh dương chuyển dịch ký tự, đỏ chồng ghép mica cộng dồn, vàng vạch lộ trình theo la bàn, và tím soi sáng dấu tích bản đồ... Hãy đối chiếu từng cặp giấy cùng màu để hoàn thiện chiếc chìa khóa cuối cùng. 🗝️✨"
+        ];
+        text = treasureHints[Math.floor(Math.random() * treasureHints.length)];
       } else if (isLetterQuery) {
         const letterHints = [
           "🤖 LOTUS-X gợi ý: Trong hành trình 'KẾT NỐI', đôi khi để chạm tới khởi nguyên của chân lý, tâm trí lại phải bắt đầu từ nơi kết thúc. Bản mật thư này tựa như một dòng sông đang chảy ngược chiều thời gian, từ chối lối mòn nhìn nhận thông thường... Hãy thử để ánh mắt trôi từ bến cuối trở về nguồn cội; bức màn bí ẩn sẽ tự khắc vén mở. 🌀🔄",
           "🤖 LOTUS-X gợi ý: Một bước lùi về góc nhìn đôi khi lại là bước tiến lớn đến với sự thật. Những con chữ trên bản mật thư đang ẩn mình sau một trật tự đối nghịch với thói quen xuôi dòng... Khi bạn biết lật ngược dòng tự sự và lắng nghe từ điểm khép lại trở về ban đầu, thanh âm đích thực sẽ lập tức vang vọng. 🔮🪞",
           "🤖 LOTUS-X gợi ý: Sự hội nhập sâu sắc đòi hỏi khả năng thấu suốt từ chiều không gian đối lập. Nơi câu chữ dừng lại chính là nơi ý niệm bắt đầu hé lộ... Hãy thử đảo ngược hướng đi của đôi mắt từ cuối hành trình về điểm xuất phát; lời giải đáp bí mật sẽ tự nhiên hiển hiện trước mắt bạn. ⚡📜"
         ];
-        responseText = letterHints[Math.floor(Math.random() * letterHints.length)];
+        text = letterHints[Math.floor(Math.random() * letterHints.length)];
       }
       break;
     }
