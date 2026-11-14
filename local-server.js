@@ -72,7 +72,7 @@ switch (station) {
         query.includes('mật mã') || query.includes('mat ma');
 
       if (isChipOrProf) {
-        text = "[PROF_IMG] Ah, câu hỏi tuyệt vời! 😄 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨";
+        text = "Ah, câu hỏi tuyệt vời! 😄 Tôi là Cổ Máy LOTUS-X, được chế tạo bởi Giáo sư Lotus X vào năm 3026, thuộc Kỷ Nguyên Vươn Mình Và Trí Tuệ Tỉnh Thức. Nhiệm vụ của tôi là lưu giữ dữ liệu lịch sử và lý tưởng BĐV qua hàng nghìn năm. ⚙️✨";
       } else if (isColorOrPuzzle) {
         const colorHints = [
           "🤖 LOTUS-X gợi ý: Trong hành trình 'TÂM SÁNG', không có sắc màu nào đứng riêng rẽ. Những con số rực rỡ thu về sau các thử thách tựa như những nhịp đập ký ức đang tìm kiếm chiếc chìa khóa định hình trật tự... BTC đã âm thầm gửi gắm chiếc chìa khóa ấy trong bài viết trên kênh thông tin mới của đoàn trường là 'OA TUỔI TRẺ VIETTEL TAMMI'. Hãy ghé thăm nơi ấy, lắng đọng cùng thước phim và bài viết để dõi theo dòng chảy của 4 sắc màu; khi đối chiếu từng con số các bạn đang nắm giữ với thứ tự màu sắc ấy, dãy mật mã hoàn chỉnh sẽ tự khắc hiển lộ. 🌿✨",
@@ -261,7 +261,7 @@ switch (station) {
   }
 
   if (text) {
-    text = text.replace(/\*+/g, '');
+    text = text.replace(/\*+/g, '').replace(/\[PROF_IMG\]/g, '').trim();
     return { content: [{ type: 'text', text: text }] };
   }
   return null; // Không khớp từ khóa → fallback sang API AI
@@ -457,7 +457,7 @@ const server = http.createServer(async (req, res) => {
           const data = await groqRes.json();
           if (groqRes.ok) {
             let text = data.choices?.[0]?.message?.content || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
-            text = text.replace(/\*+/g, '');
+            text = text.replace(/\*+/g, '').replace(/\[PROF_IMG\]/g, '').trim();
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ content: [{ type: 'text', text }] }));
             return;
@@ -486,7 +486,7 @@ const server = http.createServer(async (req, res) => {
           const data = await gemRes.json();
           if (gemRes.ok) {
             let text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
-            text = text.replace(/\*+/g, '');
+            text = text.replace(/\*+/g, '').replace(/\[PROF_IMG\]/g, '').trim();
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ content: [{ type: 'text', text }] }));
             return;
