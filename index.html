@@ -1494,6 +1494,33 @@
           ÁN</button>
       </div>
 
+      <!-- Điều khiển Tạm dừng Chặng 4 -->
+      <div class="admin-section">
+        <div class="admin-section-title">🛑 Tạm dừng Chặng 4 (SỨ MỆNH - TÌNH NGUYỆN)</div>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.4;">
+          Bật/tắt các tùy chọn bên dưới để tạm dừng người chơi sử dụng Chatbot AI hoặc nộp câu trả lời tại Chặng 4 trong thời gian thực (tự động đồng bộ ngay lập tức cho tất cả thiết bị).
+        </p>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <!-- Tạm dừng AI Chặng 4 -->
+          <label style="display:flex; align-items:center; justify-content:space-between; background:rgba(2,12,24,.8); padding:12px 14px; border-radius:8px; border:1px solid rgba(0,200,255,.25); cursor:pointer;">
+            <div style="padding-right:12px;">
+              <div style="font-size:13px; font-weight:700; color:var(--cyan); margin-bottom:2px;">🤖 Tạm dừng sử dụng AI Chặng 4</div>
+              <div style="font-size:11px; color:var(--muted);">Khóa khung chat, người chơi không thể gửi câu hỏi cho AI LOTUS-X ở Chặng 4</div>
+            </div>
+            <input type="checkbox" id="admin-pause-ai-4" onchange="toggleStage4Control('pauseAI')" style="width:22px;height:22px;accent-color:var(--cyan);cursor:pointer;flex-shrink:0;">
+          </label>
+
+          <!-- Tạm dừng nộp câu trả lời Chặng 4 -->
+          <label style="display:flex; align-items:center; justify-content:space-between; background:rgba(2,12,24,.8); padding:12px 14px; border-radius:8px; border:1px solid rgba(0,200,255,.25); cursor:pointer;">
+            <div style="padding-right:12px;">
+              <div style="font-size:13px; font-weight:700; color:var(--gold); margin-bottom:2px;">📝 Tạm dừng nộp câu trả lời Chặng 4</div>
+              <div style="font-size:11px; color:var(--muted);">Khóa ô nhập và nút nộp đáp án, người chơi không thể nộp câu trả lời Chặng 4</div>
+            </div>
+            <input type="checkbox" id="admin-pause-ans-4" onchange="toggleStage4Control('pauseAns')" style="width:22px;height:22px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;">
+          </label>
+        </div>
+      </div>
+
       <!-- Thiết lập Chatbot -->
       <div class="admin-section">
         <div class="admin-section-title">💬 Thiết lập Chatbot Chặng</div>
@@ -1722,6 +1749,7 @@
     let ARTICLES = { 1: { title: "", blocks: [] }, 2: { title: "", blocks: [] } };
     let REWARD_PW = "";
     let REWARD_SLOTS = ["", "", "", ""];
+    let STAGE4_CONTROL = { pauseAI: false, pauseAns: false };
     let REWARD_COLORS = ["#ff3b3b", "#00c8ff", "#ffd600", "#00e676"];
     let rewardPwMasked = false;
 
@@ -1899,6 +1927,19 @@
         }
       });
 
+      // 6. Sync Stage 4 controls (pause AI & pause Answering)
+      db.ref("stage4Control").on("value", snapshot => {
+        const data = snapshot.val();
+        if (data) {
+          STAGE4_CONTROL.pauseAI = !!data.pauseAI;
+          STAGE4_CONTROL.pauseAns = !!data.pauseAns;
+        } else {
+          db.ref("stage4Control").set(STAGE4_CONTROL);
+        }
+        renderAdminStage4Controls();
+        applyStationControls();
+      });
+
       db.ref("rewardColors").on("value", snapshot => {
         const data = snapshot.val();
         if (Array.isArray(data) && data.length === 4) {
@@ -2013,6 +2054,99 @@
     }
 
 
+    
+    function applyStationControls() {
+      const chatInput = document.getElementById('chat-input');
+      const btnSend = document.getElementById('btn-send');
+      const ansInput = document.getElementById('ans-input');
+      const btnSubmit = document.querySelector('.answer-row .btn-submit');
+      const ansFeedback = document.getElementById('ans-feedback');
+
+      if (!chatInput || !ansInput) return;
+
+      const st = APP.station;
+      const isSt4 = (st === 4);
+      const pauseAI = isSt4 && STAGE4_CONTROL.pauseAI;
+      const pauseAns = isSt4 && STAGE4_CONTROL.pauseAns;
+
+      // 1. Điều khiển Khung Chat AI Chặng 4
+      if (pauseAI) {
+        chatInput.disabled = true;
+        chatInput.placeholder = '⛔ BTC tạm dừng sử dụng AI ở Chặng 4';
+        if (btnSend) {
+          btnSend.disabled = true;
+          btnSend.style.opacity = '0.4';
+          btnSend.style.cursor = 'not-allowed';
+        }
+      } else {
+        chatInput.disabled = false;
+        chatInput.placeholder = 'Hỏi LOTUS-X...';
+        if (btnSend) {
+          btnSend.disabled = false;
+          btnSend.style.opacity = '1';
+          btnSend.style.cursor = 'pointer';
+        }
+      }
+
+      // 2. Điều khiển Nộp đáp án Chặng 4
+      if (pauseAns) {
+        ansInput.disabled = true;
+        ansInput.placeholder = '⛔ BTC tạm dừng nộp đáp án Chặng 4';
+        if (btnSubmit) {
+          btnSubmit.disabled = true;
+          btnSubmit.style.opacity = '0.4';
+          btnSubmit.style.cursor = 'not-allowed';
+        }
+        if (ansFeedback && ansFeedback.innerText === '') {
+          ansFeedback.style.color = 'var(--gold)';
+          ansFeedback.innerText = '⛔ Cổng nộp câu trả lời Chặng 4 đang tạm đóng theo yêu cầu BTC.';
+        }
+      } else {
+        ansInput.disabled = false;
+        ansInput.placeholder = 'Nhập đáp án...';
+        if (btnSubmit) {
+          btnSubmit.disabled = false;
+          btnSubmit.style.opacity = '1';
+          btnSubmit.style.cursor = 'pointer';
+        }
+        if (ansFeedback && ansFeedback.innerText.includes('Cổng nộp câu trả lời Chặng 4 đang tạm đóng')) {
+          ansFeedback.innerText = '';
+        }
+      }
+    }
+
+    function toggleStage4Control(field) {
+      if (field === 'pauseAI') {
+        const cb = document.getElementById('admin-pause-ai-4');
+        if (cb) STAGE4_CONTROL.pauseAI = cb.checked;
+      } else if (field === 'pauseAns') {
+        const cb = document.getElementById('admin-pause-ans-4');
+        if (cb) STAGE4_CONTROL.pauseAns = cb.checked;
+      }
+
+      if (isFirebaseConnected) {
+        db.ref('stage4Control').set(STAGE4_CONTROL)
+          .then(() => {
+            const statusText = STAGE4_CONTROL[field] ? 'ĐÃ BẬT TẠM DỪNG' : 'ĐÃ MỞ LẠI';
+            showToast('✅ ' + (field === 'pauseAI' ? 'AI Chặng 4' : 'Nộp đáp án Chặng 4') + ': ' + statusText);
+          })
+          .catch(e => showToast('❌ Lỗi Firebase: ' + e.message));
+      } else {
+        saveLocal();
+        const statusText = STAGE4_CONTROL[field] ? 'ĐÃ BẬT TẠM DỪNG' : 'ĐÃ MỞ LẠI';
+        showToast('✅ ' + (field === 'pauseAI' ? 'AI Chặng 4' : 'Nộp đáp án Chặng 4') + ': ' + statusText);
+      }
+
+      applyStationControls();
+    }
+
+    function renderAdminStage4Controls() {
+      const cbAi = document.getElementById('admin-pause-ai-4');
+      const cbAns = document.getElementById('admin-pause-ans-4');
+      if (cbAi) cbAi.checked = !!STAGE4_CONTROL.pauseAI;
+      if (cbAns) cbAns.checked = !!STAGE4_CONTROL.pauseAns;
+    }
+
     function goStation(st) {
       const canEnter = st === 1 || isDone(st - 1);
       if (!canEnter) { showToast("🔒 Cần hoàn thành trạm " + (st - 1) + " trước!"); return; }
@@ -2041,6 +2175,7 @@
         });
       }
 
+      applyStationControls();
       goScreen('scr-chat');
     }
 
@@ -2214,6 +2349,12 @@ QUY TẮC BẮT BUỘC KHI TRẢ LỜI / GỢI Ý KHO BÁU CHẶNG 5:
       const btn = document.getElementById('btn-send');
       btn.disabled = true; btn.innerText = '...';
       const st = APP.station;
+      if (st === 4 && STAGE4_CONTROL.pauseAI) {
+        showToast('⛔ Ban Tổ chức đang tạm dừng sử dụng AI ở Chặng 4!');
+        input.value = '';
+        btn.disabled = false; btn.innerText = 'GỬI';
+        return;
+      }
       APP.histories[st].push({ role: 'user', content: text });
       saveChatHistory(st);
 
@@ -2290,6 +2431,12 @@ QUY TẮC BẮT BUỘC KHI TRẢ LỜI / GỢI Ý KHO BÁU CHẶNG 5:
     ═══════════════════════════════════════════════════════════ */
     function submitAns() {
       const st = APP.station;
+      if (st === 4 && STAGE4_CONTROL.pauseAns) {
+        fb.style.color = 'var(--gold)';
+        fb.innerText = '⛔ Cổng nộp câu trả lời Chặng 4 đang tạm đóng theo yêu cầu BTC.';
+        showToast('⛔ Ban Tổ chức đang tạm dừng nộp câu trả lời ở Chặng 4!');
+        return;
+      }
       const input = document.getElementById('ans-input');
       const fb = document.getElementById('ans-feedback');
       const ans = input.value.trim().toLowerCase();
@@ -3002,7 +3149,7 @@ QUY TẮC BẮT BUỘC KHI TRẢ LỜI / GỢI Ý KHO BÁU CHẶNG 5:
 
     function saveLocal() {
       try {
-        localStorage.setItem('gdpt_data', JSON.stringify({ ANSWERS, RESULTS, PASSCODES, CHAT_RULES, ARTICLES, REWARD_PW, REWARD_SLOTS, REWARD_COLORS }));
+        localStorage.setItem('gdpt_data', JSON.stringify({ ANSWERS, RESULTS, PASSCODES, CHAT_RULES, ARTICLES, REWARD_PW, REWARD_SLOTS, REWARD_COLORS, STAGE4_CONTROL }));
       } catch (e) {
         alert('❌ Không thể lưu dữ liệu (Local)! Bộ nhớ đã đầy hoặc ảnh quá lớn. Vui lòng giảm dung lượng ảnh hoặc số lượng ảnh.');
       }
@@ -3014,6 +3161,7 @@ QUY TẮC BẮT BUỘC KHI TRẢ LỜI / GỢI Ý KHO BÁU CHẶNG 5:
         if (d.ANSWERS) ANSWERS = { ...ANSWERS, ...d.ANSWERS };
         if (d.RESULTS) RESULTS = { ...RESULTS, ...d.RESULTS };
         if (d.PASSCODES && !isFirebaseConnected) PASSCODES = { ...PASSCODES, ...d.PASSCODES };
+        if (d.STAGE4_CONTROL) STAGE4_CONTROL = { ...STAGE4_CONTROL, ...d.STAGE4_CONTROL };
         if (d.REWARD_PW !== undefined) REWARD_PW = d.REWARD_PW;
         if (Array.isArray(d.REWARD_SLOTS) && d.REWARD_SLOTS.length === 4) REWARD_SLOTS = d.REWARD_SLOTS;
         if (Array.isArray(d.REWARD_COLORS) && d.REWARD_COLORS.length === 4) REWARD_COLORS = d.REWARD_COLORS;
