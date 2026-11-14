@@ -154,6 +154,8 @@ switch (station) {
     }
 
     case 5: {
+      const isDone5 = Boolean(clientPayload.isDone5 || sys.includes('ĐÃ GIẢI THÀNH CÔNG'));
+
       const isBlue = query.includes('xanh') || query.includes('xanh dương') || query.includes('bảng chữ cái') || query.includes('bang chu cai') || query.includes('chữ cái') || query.includes('chu cai') || query.includes('dịch chuyển') || query.includes('dich chuyen') || query.includes('lùi') || query.includes('lui');
 
       const isRed = query.includes('đỏ') || query.includes('do') || query.includes('mica') || query.includes('chồng') || query.includes('chong') || query.includes('đặt chồng') || query.includes('dat chong') || query.includes('cộng') || query.includes('cong') || query.includes('cộng dồn') || query.includes('cong don');
@@ -166,48 +168,69 @@ switch (station) {
 
       const isLetterQuery = query.includes('mật thư') || query.includes('mat thu') || query.includes('bạch văn') || query.includes('bach van') || query.includes('bàn phím') || query.includes('ban phim') || query.includes('phím') || query.includes('phim') || query.includes('điện thoại') || query.includes('dien thoai') || query.includes('iphone') || query.includes('cách giải') || query.includes('cach giai') || query.includes('giải sao') || query.includes('giai sao') || query.includes('giải như thế nào') || query.includes('giai nhu the nao') || query.includes('làm sao') || query.includes('lam sao') || query.includes('gợi ý') || query.includes('goi y') || query.includes('manh mối') || query.includes('manh moi') || query.includes('giúp') || query.includes('giup');
 
-      if (isBlue) {
-        const blueHints = [
-          "🤖 LOTUS-X gợi ý: Trong hành trình 'KẾT NỐI', sắc xanh dương mang linh hồn của những bước lùi thời gian. Những con chữ các bạn nắm giữ dường như đang khoác lên một mật mã dịch chuyển... Thử để mỗi ký tự lùi lại một vài nhịp bước trên dòng hành trình chữ cái alphabet (A–Z) quen thuộc; hình hài con số bí ẩn sẽ tự khắc khai sinh từ chính những ký tự nguyên bản ấy. 🌊🔤",
-          "🤖 LOTUS-X gợi ý: Với sắc xanh dương, đôi khi lùi bước lại là chìa khóa để tiến tới chân lý. Thông điệp trên trang giấy đang ẩn sau một quy luật hoán vị của bảng chữ cái tiếng Anh... Hãy thử đảo ngược bánh xe chữ cái về phía trước vài vị trí cố định; những con chữ ẩn mình sẽ trả về con số đích thực mà các bạn đang tìm kiếm. 🔷📖",
-          "🤖 LOTUS-X gợi ý: Đừng vội đọc những con chữ sắc xanh theo lẽ thông thường. Hãy lắng nghe dòng chảy ngược dòng của bảng mẫu tự alphabet, đưa mỗi ký tự lùi về vài nhịp bước quá khứ; một thông điệp sáng tỏ sẽ định hình nên con số mở kho báu. 🌐✨"
-        ];
-        text = blueHints[Math.floor(Math.random() * blueHints.length)];
-      } else if (isRed) {
-        const redHints = [
-          "🤖 LOTUS-X gợi ý: Sắc đỏ của nhiệt huyết chỉ tỏa sáng trọn vẹn khi có sự giao thoa giữa hai tầng thực thể. Tấm màng trong suốt các bạn nắm giữ tựa như đôi mắt soi tỏ những chi tiết đang ngủ yên trên nền giấy đỏ... Hãy để hai lớp tương ngộ, đặt chúng chồng khít lên nhau và gom góp những mảnh số cạnh nhau lại bằng phép liên kết cộng dồn; con số tối thượng sẽ bừng nở. 🔴✨",
-          "🤖 LOTUS-X gợi ý: Với gam màu đỏ, sự thật ẩn giấu sau hai lớp dữ kiện song hành. Một nửa nằm trên tờ giấy màu, nửa còn lại đợi chờ từ tấm màng Mica trong suốt... Khi bạn đặt chúng hòa làm một, các con số kề vai sát cánh sẽ hiện rõ; hãy kết nối và cộng dồn chúng lại theo chỉ dẫn, cánh cửa phần thưởng sẽ mở lối. 🧩🔺",
-          "🤖 LOTUS-X gợi ý: Hai mảnh ghép của sắc đỏ tựa như thể xác và linh hồn. Tấm giấy trong suốt sẽ đánh thức những con số tiềm ẩn khi được đặt vừa vặn lên nền đỏ rực rỡ; đối chiếu các con số liền kề và thực hiện phép cộng dồn tương ứng, đáp án sẽ tỏa sáng. 💫🔥"
-        ];
-        text = redHints[Math.floor(Math.random() * redHints.length)];
-      } else if (isYellow) {
-        const yellowHints = [
-          "🤖 LOTUS-X gợi ý: Sắc vàng rực rỡ mang định hướng của những cuộc hải trình mở lối tương lai. Chấm đen cô độc trên trang giấy chính là tọa độ điểm xuất phát của chuyến phiêu lưu... Hãy để chiếc la bàn phương hướng (Đông – Tây – Nam – Bắc) dẫn dắt nét vẽ của bạn qua từng ký tự chỉ lối; quỹ đạo di chuyển ấy sẽ tự khắc tạc nên hình hài một con số kỳ diệu. 🟡🧭",
-          "🤖 LOTUS-X gợi ý: Với gam màu vàng, bước chân di chuyển chính là ngòi bút kiến tạo nên mật mã. Bắt đầu từ chấm đen khởi nguồn, hãy lần theo từng hướng đi được mã hóa bằng các ký hiệu phương hướng địa lý quốc tế... Quan sát lộ trình vẽ ra trên mặt giấy, bạn sẽ nhận ra con số ẩn giấu đằng sau hành trình ấy. ☀️🗺️",
-          "🤖 LOTUS-X gợi ý: Đừng nhìn chấm đen như một dấu chấm kết thúc, đó là điểm tựa để bắt đầu vạch nên đường đi. Lắng nghe tiếng gọi của bốn phương trời qua các ký tự chỉ hướng tiếng Anh; con đường bạn bước qua sẽ lưu lại dấu tích của một con số định mệnh. 🧭✨"
-        ];
-        text = yellowHints[Math.floor(Math.random() * yellowHints.length)];
-      } else if (isPurple) {
-        const purpleHints = [
-          "🤖 LOTUS-X gợi ý: Sắc tím huyền bí đòi hỏi một nguồn sáng đặc biệt để đánh thức những dấu tích đang say ngủ. Tấm bản đồ kia chỉ thực sự cất lời khi gặp được tia sáng dạ quang khai mở... Hãy soi tỏ màn đêm để tìm kiếm những điểm giao thoa hình dấu X đang ẩn mình; số lượng những dấu ấn kỳ diệu các bạn đếm được chính là chiếc chìa khóa số của sắc tím. 🟣🔍",
-          "🤖 LOTUS-X gợi ý: Dưới ánh sáng thường, tấm bản đồ màu tím giữ trọn sự trầm mặc, nhưng ngọn đèn dạ quang sẽ soi tỏ những tọa độ bí mật. Hãy quan sát thật kỹ từng dấu X phát sáng được đánh dấu trên bản đồ; chính tổng số lượng những điểm giao nhau ấy sẽ trao cho bạn con số định mệnh. 🔮🗺️",
-          "🤖 LOTUS-X gợi ý: Ánh sáng huyền ảo của bút dạ quang chính là chiếc chìa khóa đánh thức bí mật sắc tím. Khi soi tỏ lên bản đồ, những dấu tích chữ X sẽ lần lượt xuất hiện; hãy đếm trọn vẹn số lượng của chúng, con số ấy sẽ đưa bạn tới gần kho báu hơn một bước. 💜🔦"
-        ];
-        text = purpleHints[Math.floor(Math.random() * purpleHints.length)];
-      } else if (isTreasure) {
-        const treasureHints = [
-          "🤖 LOTUS-X gợi ý: Trong suốt hành trình hội tụ về Chặng 5, mỗi chặng dừng chân đều để lại cho các bạn những gợi ý trên hai tờ giấy sắc màu. Hãy nhớ rằng hai tờ giấy cùng một màu sắc mới dệt nên một bộ gợi ý hoàn chỉnh để mở ra một con số duy nhất... Bốn sắc màu (xanh dương, đỏ, vàng, tím) tương ứng với bốn quy luật giải mã riêng biệt; khi bốn con số cùng quy tụ vào các ô màu định mệnh, kho báu vĩ đại sẽ mở ra! 🌈💎",
-          "🤖 LOTUS-X gợi ý: Cánh cửa kho báu tối thượng đòi hỏi sự kết hợp của 4 con số tương ứng với 4 sắc màu mà các bạn đã thu thập qua các chặng. Mỗi sắc màu đại diện cho một cách thức giải mã độc lập: xanh dương chuyển dịch ký tự, đỏ chồng ghép mica cộng dồn, vàng vạch lộ trình theo la bàn, và tím soi sáng dấu tích bản đồ... Hãy đối chiếu từng cặp giấy cùng màu để hoàn thiện chiếc chìa khóa cuối cùng. 🗝️✨"
-        ];
-        text = treasureHints[Math.floor(Math.random() * treasureHints.length)];
-      } else if (isLetterQuery) {
-        const letterHints = [
-          "🤖 LOTUS-X gợi ý: Trong hành trình 'KẾT NỐI', đôi khi chiếc chìa khóa vĩ đại nhất lại nằm ngay nơi thiết bị mang biểu tượng trái táo khuyết trong lòng bàn tay các bạn. Hãy mở giao diện bàn phím số quen thuộc của chiếc điện thoại ấy – nơi những con chữ latin nép mình bên dưới từng con số tròn trịa... Sự đối chiếu tương ngộ giữa chữ và số trên từng phím chạm sẽ tự khắc vén mở bức màn bí mật của Chặng 5. 📱🍎✨",
-          "🤖 LOTUS-X gợi ý: Bí mật của chặng cuối là sự giao thoa kỳ diệu giữa thông điệp cổ điển và giao diện công nghệ hiện đại. Bản mật thư này đang chờ đợi được soi chiếu qua lăng kính bàn phím số của chiếc điện thoại nhà Táo... Nơi các phím bấm kinh điển cưu mang cả những con số lẫn các ký tự ngôn từ; hãy để chúng tương ngộ và hoán đổi cho nhau, lời giải đáp đích thực sẽ bừng sáng. 🔮💬",
-          "🤖 LOTUS-X gợi ý: Chiếc la bàn dẫn lối không ở đâu xa, mà ẩn mình sau những phím chạm tinh tế của chiếc điện thoại iPhone bạn luôn mang bên mình. Hãy mở giao diện bấm số cuộc gọi quen thuộc, quan sát sự gắn kết giữa chữ cái và con số trên từng phím bấm; mỗi tọa độ số sẽ gọi tên một ký tự đích thực để hoàn nguyên mật thư. ⚡🧭",
-          "🤖 LOTUS-X gợi ý: Khởi nguyên của thông điệp Chặng 5 ẩn sau sự quy ước giữa những con số và chữ cái trên màn hình chạm của người bạn mang biểu tượng quả táo cắn dở. Hãy đối chiếu các ký tự mật thư với vị trí của chúng trên bàn phím số cuộc gọi ấy; sự đồng điệu công nghệ ấy chính là chìa khóa mở toang cánh cửa cuối cùng. 🎯📜"
-        ];
-        text = letterHints[Math.floor(Math.random() * letterHints.length)];
+      if (!isDone5) {
+        // Chưa giải xong mật thư Chặng 5: Từ chối tiết lộ thông tin phần thưởng
+        if (isBlue || isRed || isYellow || isPurple || isTreasure) {
+          const lockedRewardHints = [
+            "🤖 LOTUS-X thông báo: Cánh cửa kho báu tối thượng Chặng 5 vẫn đang được phong tỏa nghiêm ngặt! 🔐✨ Để đánh thức bí mật của các sắc màu và phần thưởng vĩ đại, trước tiên đội của bạn phải giải mã thành công bản Mật thư Chặng 5 do Ban Tổ chức phát và gửi đáp án chính xác lên hệ thống. Hãy dồn toàn tâm trí vượt qua cửa ải mật thư này trước nhé!",
+            "🤖 LOTUS-X thông báo: Nguồn năng lượng giải mã phần thưởng Chặng 5 chưa được kích hoạt! ⚡ Bạn cần giải phóng phong ấn của Mật thư Chặng 5 trước tiên. Hãy quan sát thật kỹ các ký tự trên mật thư BTC trao và giải mã thành công; khi hệ thống ghi nhận hoàn thành Chặng 5, mọi bí mật về các sắc màu định mệnh sẽ tự động khai mở! 📜🧭",
+            "🤖 LOTUS-X thông báo: Dữ liệu về phần thưởng và kho báu Chặng 5 hiện đang ở trạng thái khóa mã! 🛡️ Chìa khóa duy nhất để mở khóa tầng thông tin này là đáp án chính xác của Mật thư Chặng 5. Hãy hoàn thành việc giải mật thư và xác nhận hoàn thành chặng trên hệ thống, tôi sẽ lập tức đồng hành cùng bạn chinh phục kho báu! 💎🌟"
+          ];
+          text = lockedRewardHints[Math.floor(Math.random() * lockedRewardHints.length)];
+        } else if (isLetterQuery) {
+          const letterHints = [
+            "🤖 LOTUS-X gợi ý: Trong hành trình 'KẾT NỐI', đôi khi chiếc chìa khóa vĩ đại nhất lại nằm ngay nơi thiết bị mang biểu tượng trái táo khuyết trong lòng bàn tay các bạn. Hãy mở giao diện bàn phím số quen thuộc của chiếc điện thoại ấy – nơi những con chữ latin nép mình bên dưới từng con số tròn trịa... Sự đối chiếu tương ngộ giữa chữ và số trên từng phím chạm sẽ tự khắc vén mở bức màn bí mật của Chặng 5. 📱🍎✨",
+            "🤖 LOTUS-X gợi ý: Bí mật của chặng cuối là sự giao thoa kỳ diệu giữa thông điệp cổ điển và giao diện công nghệ hiện đại. Bản mật thư này đang chờ đợi được soi chiếu qua lăng kính bàn phím số của chiếc điện thoại nhà Táo... Nơi các phím bấm kinh điển cưu mang cả những con số lẫn các ký tự ngôn từ; hãy để chúng tương ngộ và hoán đổi cho nhau, lời giải đáp đích thực sẽ bừng sáng. 🔮💬",
+            "🤖 LOTUS-X gợi ý: Chiếc la bàn dẫn lối không ở đâu xa, mà ẩn mình sau những phím chạm tinh tế của chiếc điện thoại iPhone bạn luôn mang bên mình. Hãy mở giao diện bấm số cuộc gọi quen thuộc, quan sát sự gắn kết giữa chữ cái và con số trên từng phím bấm; mỗi tọa độ số sẽ gọi tên một ký tự đích thực để hoàn nguyên mật thư. ⚡🧭",
+            "🤖 LOTUS-X gợi ý: Khởi nguyên của thông điệp Chặng 5 ẩn sau sự quy ước giữa những con số và chữ cái trên màn hình chạm của người bạn mang biểu tượng quả táo cắn dở. Hãy đối chiếu các ký tự mật thư với vị trí của chúng trên bàn phím số cuộc gọi ấy; sự đồng điệu công nghệ ấy chính là chìa khóa mở toang cánh cửa cuối cùng. 🎯📜"
+          ];
+          text = letterHints[Math.floor(Math.random() * letterHints.length)];
+        }
+      } else {
+        // Đã giải xong mật thư Chặng 5: Mở khóa hướng dẫn giải phần thưởng
+        if (isBlue) {
+          const blueHints = [
+            "🤖 LOTUS-X gợi ý: Trong hành trình 'KẾT NỐI', sắc xanh dương mang linh hồn của những bước lùi thời gian. Những con chữ các bạn nắm giữ dường như đang khoác lên một mật mã dịch chuyển... Thử để mỗi ký tự lùi lại một vài nhịp bước trên dòng hành trình chữ cái alphabet (A–Z) quen thuộc; hình hài con số bí ẩn sẽ tự khắc khai sinh từ chính những ký tự nguyên bản ấy. 🌊🔤",
+            "🤖 LOTUS-X gợi ý: Với sắc xanh dương, đôi khi lùi bước lại là chìa khóa để tiến tới chân lý. Thông điệp trên trang giấy đang ẩn sau một quy luật hoán vị của bảng chữ cái tiếng Anh... Hãy thử đảo ngược bánh xe chữ cái về phía trước vài vị trí cố định; những con chữ ẩn mình sẽ trả về con số đích thực mà các bạn đang tìm kiếm. 🔷📖",
+            "🤖 LOTUS-X gợi ý: Đừng vội đọc những con chữ sắc xanh theo lẽ thông thường. Hãy lắng nghe dòng chảy ngược dòng của bảng mẫu tự alphabet, đưa mỗi ký tự lùi về vài nhịp bước quá khứ; một thông điệp sáng tỏ sẽ định hình nên con số mở kho báu. 🌐✨"
+          ];
+          text = blueHints[Math.floor(Math.random() * blueHints.length)];
+        } else if (isRed) {
+          const redHints = [
+            "🤖 LOTUS-X gợi ý: Sắc đỏ của nhiệt huyết chỉ tỏa sáng trọn vẹn khi có sự giao thoa giữa hai tầng thực thể. Tấm màng trong suốt các bạn nắm giữ tựa như chiếc gương định vị ánh sáng... Hãy đặt khớp nối tấm mica ấy lên trang giấy màu đỏ một cách chuẩn xác; những nét vẽ giao duyên sẽ hòa làm một, gom góp và cộng dồn lại để định hình nên con số quyền lực. 🔴✨",
+            "🤖 LOTUS-X gợi ý: Chân lý sắc đỏ nằm ở sự cộng hưởng không gian. Khi tấm màng mica trong suốt tìm thấy điểm tựa vừa vặn trên bề mặt trang giấy đỏ, những nét ký họa rời rạc sẽ lập tức hội tụ thành những phép tính diệu kỳ... Hãy cộng dồn những giá trị xuất hiện sau lớp màng ấy để tìm ra con số đích thực. 🟥🔍",
+            "🤖 LOTUS-X gợi ý: Tấm mica không che khuất tầm nhìn, mà là lăng kính hội tụ cho trang giấy sắc đỏ. Đặt tấm màng trong suốt chồng khít lên giấy, quan sát những điểm giao thoa và cộng dồn các giá trị hiển lộ; con số mở lối sẽ hiện ra trước mắt bạn. 🧭❤️"
+          ];
+          text = redHints[Math.floor(Math.random() * redHints.length)];
+        } else if (isYellow) {
+          const yellowHints = [
+            "🤖 LOTUS-X gợi ý: Sắc vàng của trí tuệ khởi hành từ những chấm đen tĩnh lặng và bước chuyển mình của các phương hướng. Chiếc la bàn trong tay các bạn chính là kim chỉ nam định hướng hành trình... Hãy lần theo những bước dịch chuyển Đ–T–N–B từ điểm khởi đầu; mỗi nhịp bước trên lưới tọa độ sẽ dần dệt nên đường nét của con số bí mật. 🟡🧭",
+            "🤖 LOTUS-X gợi ý: Tấm giấy vàng là một mê cung phương hướng đang chờ chiếc la bàn đánh thức. Lắng nghe tiếng gọi của bốn phương Đông – Tây – Nam – Bắc, di chuyển từng bước chuẩn xác từ vị trí chấm đen ban đầu; hành trình bạn vẽ nên sẽ kết tinh thành con số cần tìm. 🟨🗺️",
+            "🤖 LOTUS-X gợi ý: Không có bước chân nào là vô nghĩa trên trang giấy sắc vàng. Khi la bàn xoay chuyển và từng tọa độ Đông – Tây – Nam – Bắc được kết nối liền mạch từ điểm đen xuất phát, một con số hoàn chỉnh sẽ tự khắc lộ diện. ☀️🧭"
+          ];
+          text = yellowHints[Math.floor(Math.random() * yellowHints.length)];
+        } else if (isPurple) {
+          const purpleHints = [
+            "🤖 LOTUS-X gợi ý: Sắc tím huyền bí đòi hỏi một nguồn sáng đặc biệt để đánh thức những dấu tích đang say ngủ. Tấm bản đồ kia chỉ thực sự cất lời khi gặp được tia sáng dạ quang khai mở... Hãy soi tỏ màn đêm để tìm kiếm những điểm giao thoa hình dấu X đang ẩn mình; số lượng những dấu ấn kỳ diệu các bạn đếm được chính là chiếc chìa khóa số của sắc tím. 🟣🔍",
+            "🤖 LOTUS-X gợi ý: Dưới ánh sáng thường, tấm bản đồ màu tím giữ trọn sự trầm mặc, nhưng ngọn đèn dạ quang sẽ soi tỏ những tọa độ bí mật. Hãy quan sát thật kỹ từng dấu X phát sáng được đánh dấu trên bản đồ; chính tổng số lượng những điểm giao nhau ấy sẽ trao cho bạn con số định mệnh. 🔮🗺️",
+            "🤖 LOTUS-X gợi ý: Ánh sáng huyền ảo của bút dạ quang chính là chiếc chìa khóa đánh thức bí mật sắc tím. Khi soi tỏ lên bản đồ, những dấu tích chữ X sẽ lần lượt xuất hiện; hãy đếm trọn vẹn số lượng của chúng, con số ấy sẽ đưa bạn tới gần kho báu hơn một bước. 💜🔦"
+          ];
+          text = purpleHints[Math.floor(Math.random() * purpleHints.length)];
+        } else if (isTreasure) {
+          const treasureHints = [
+            "🤖 LOTUS-X gợi ý: Trong suốt hành trình hội tụ về Chặng 5, mỗi chặng dừng chân đều để lại cho các bạn những gợi ý trên hai tờ giấy sắc màu. Hãy nhớ rằng hai tờ giấy cùng một màu sắc mới dệt nên một bộ gợi ý hoàn chỉnh để mở ra một con số duy nhất... Bốn sắc màu (xanh dương, đỏ, vàng, tím) tương ứng với bốn quy luật giải mã riêng biệt; khi bốn con số cùng quy tụ vào các ô màu định mệnh, kho báu vĩ đại sẽ mở ra! 🌈💎",
+            "🤖 LOTUS-X gợi ý: Cánh cửa kho báu tối thượng đòi hỏi sự kết hợp của 4 con số tương ứng với 4 sắc màu mà các bạn đã thu thập qua các chặng. Mỗi sắc màu đại diện cho một cách thức giải mã độc lập: xanh dương chuyển dịch ký tự, đỏ chồng ghép mica cộng dồn, vàng vạch lộ trình theo la bàn, và tím soi sáng dấu tích bản đồ... Hãy đối chiếu từng cặp giấy cùng màu để hoàn thiện chiếc chìa khóa cuối cùng. 🗝️✨"
+          ];
+          text = treasureHints[Math.floor(Math.random() * treasureHints.length)];
+        } else if (isLetterQuery) {
+          const letterHints = [
+            "🤖 LOTUS-X gợi ý: Trong hành trình 'KẾT NỐI', đôi khi chiếc chìa khóa vĩ đại nhất lại nằm ngay nơi thiết bị mang biểu tượng trái táo khuyết trong lòng bàn tay các bạn. Hãy mở giao diện bàn phím số quen thuộc của chiếc điện thoại ấy – nơi những con chữ latin nép mình bên dưới từng con số tròn trịa... Sự đối chiếu tương ngộ giữa chữ và số trên từng phím chạm sẽ tự khắc vén mở bức màn bí mật của Chặng 5. 📱🍎✨",
+            "🤖 LOTUS-X gợi ý: Bí mật của chặng cuối là sự giao thoa kỳ diệu giữa thông điệp cổ điển và giao diện công nghệ hiện đại. Bản mật thư này đang chờ đợi được soi chiếu qua lăng kính bàn phím số của chiếc điện thoại nhà Táo... Nơi các phím bấm kinh điển cưu mang cả những con số lẫn các ký tự ngôn từ; hãy để chúng tương ngộ và hoán đổi cho nhau, lời giải đáp đích thực sẽ bừng sáng. 🔮💬",
+            "🤖 LOTUS-X gợi ý: Chiếc la bàn dẫn lối không ở đâu xa, mà ẩn mình sau những phím chạm tinh tế của chiếc điện thoại iPhone bạn luôn mang bên mình. Hãy mở giao diện bấm số cuộc gọi quen thuộc, quan sát sự gắn kết giữa chữ cái và con số trên từng phím bấm; mỗi tọa độ số sẽ gọi tên một ký tự đích thực để hoàn nguyên mật thư. ⚡🧭",
+            "🤖 LOTUS-X gợi ý: Khởi nguyên của thông điệp Chặng 5 ẩn sau sự quy ước giữa những con số và chữ cái trên màn hình chạm của người bạn mang biểu tượng quả táo cắn dở. Hãy đối chiếu các ký tự mật thư với vị trí của chúng trên bàn phím số cuộc gọi ấy; sự đồng điệu công nghệ ấy chính là chìa khóa mở toang cánh cửa cuối cùng. 🎯📜"
+          ];
+          text = letterHints[Math.floor(Math.random() * letterHints.length)];
+        }
       }
       break;
     }

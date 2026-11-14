@@ -2387,6 +2387,21 @@ QUY TẮC BẮT BUỘC KHI TRẢ LỜI / GỢI Ý KHO BÁU CHẶNG 5:
         };
       }
 
+      const isDone5 = isDone(5);
+      let currentPrompt = PROMPTS[st];
+      if (st === 5) {
+        if (!isDone5) {
+          currentPrompt += `\n\n[QUY TẮC PHÂN TÁCH TIẾN TRÌNH CHẶNG 5 - BẮT BUỘC]:
+- Hiện tại đội chơi CHƯA GIẢI XONG mật thư Chặng 5 (chưa nhập đáp án mật thư Chặng 5 thành công trên hệ thống).
+- BẠN CHỈ ĐƯỢC PHÉP TRẢ LỜI/GỢI Ý VỀ MẬT THƯ CHẶNG 5 (gợi ý gián tiếp về bàn phím điện thoại iPhone).
+- NẾU người chơi hỏi về PHẦN THƯỞNG, KHO BÁU, GIẤY MÀU (xanh dương, đỏ, vàng, tím), MICA, LA BÀN, BÚT DẠ QUANG: BẠN TUYỆT ĐỐI TỪ CHỐI TRẢ LỜI VÀ KHÔNG TIẾT LỘ! Hãy trả lời nhẹ nhàng, bí ẩn và kiên quyết từ chối: Nhắc nhở rằng cánh cửa kho báu đang bị phong ấn; họ BẮT BUỘC phải giải xong mật thư Chặng 5 và gửi đáp án thành công lên hệ thống trước, khi đó AI mới được phép mở khóa dữ liệu hướng dẫn phần thưởng!`;
+        } else {
+          currentPrompt += `\n\n[QUY TẮC PHÂN TÁCH TIẾN TRÌNH CHẶNG 5 - BẮT BUỘC]:
+- Đội chơi ĐÃ GIẢI THÀNH CÔNG mật thư Chặng 5 trên hệ thống!
+- BẠN ĐƯỢC PHÉP mở khóa toàn bộ gợi ý về PHẦN THƯỞNG / KHO BÁU CHẶNG 5 (hướng dẫn về 4 sắc màu: xanh dương, đỏ, vàng, tím, mica, la bàn, đèn dạ quang...) để giúp đội chơi hoàn thành giải mã kho báu cuối cùng!`;
+        }
+      }
+
       try {
         const res = await fetch('/api/chat', {
           method: 'POST',
@@ -2394,9 +2409,10 @@ QUY TẮC BẮT BUỘC KHI TRẢ LỜI / GỢI Ý KHO BÁU CHẶNG 5:
           body: JSON.stringify({
             model: 'claude-sonnet-4-20250514',
             max_tokens: 1000,
-            system: PROMPTS[st],
+            system: currentPrompt,
             messages: apiMessages,
-            team: APP.team || 'guest'
+            team: APP.team || 'guest',
+            isDone5: isDone5
           })
         });
         const data = await res.json();
