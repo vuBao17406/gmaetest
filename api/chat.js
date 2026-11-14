@@ -222,6 +222,27 @@ switch (station) {
 // ═══════════════════════════════════════════════════════════
 // MAIN HANDLER
 // ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// HỖ TRỢ PHÂN LUỒNG NHIỀU API KEY THEO ĐỘI CHƠI (LOAD BALANCING + FAILOVER)
+// ═══════════════════════════════════════════════════════════
+function parseKeyList(envListVal, envSingleVal) {
+  const combined = (envListVal || '') + ',' + (envSingleVal || '');
+  return combined
+    .split(/[,;\n]+/)
+    .map(k => k.trim())
+    .filter(k => k && !k.startsWith('your_') && k.length > 5);
+}
+
+function getTeamKeyIndex(teamName, totalKeys) {
+  if (!teamName || totalKeys <= 1) return 0;
+  let hash = 0;
+  for (let i = 0; i < teamName.length; i++) {
+    hash = ((hash << 5) - hash) + teamName.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash) % totalKeys;
+}
+
 module.exports = async (req, res) => {
   // Only accept POST
   if (req.method !== 'POST') {
@@ -238,51 +259,82 @@ module.exports = async (req, res) => {
     const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
     const isValid = k => k && !k.startsWith('your_') && k.trim() !== '';
 
-    // ─── GROQ (free, no card) ───
-    if (isValid(groqApiKey)) {
-      console.log('[Mode] Groq API');
+    // ─── GROQ POOL (Phân luồng theo Đội + Tự động Failover) ───
+    const groqKeys = parseKeyList(process.env.GROQ_API_KEYS, process.env.GROQ_API_KEY);
+    if (groqKeys.length > 0) {
+      const teamName = (clientPayload.team || 'guest').trim();
+      const startKeyIdx = getTeamKeyIndex(teamName, groqKeys.length);
       const messages = [];
       if (clientPayload.system) messages.push({ role: 'system', content: clientPayload.system });
       for (const m of (clientPayload.messages || [])) messages.push({ role: m.role, content: m.content });
 
       const groqModels = ['openai/gpt-oss-120b', 'qwen/qwen3.8-27b', 'llama-3.3-70b-versatile', 'openai/gpt-oss-20b'];
-      for (const model of groqModels) {
-        try {
-          const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqApiKey}` },
-            body: JSON.stringify({ model, max_tokens: clientPayload.max_tokens || 1000, messages })
-          });
-          const data = await groqRes.json();
-          if (groqRes.ok && data.choices?.[0]?.message?.content) {
-            const text = data.choices[0].message.content;
-            res.status(200).json({ content: [{ type: 'text', text }] });
-            return;
+
+      for (let offset = 0; offset < groqKeys.length; offset++) {
+        const keyIdx = (startKeyIdx + offset) % groqKeys.length;
+        const currentApiKey = groqKeys[keyIdx];
+        const isFailover = offset > 0;
+        console.log(`[Groq Pool] Đội "${teamName}" -> Luồng/Key #${keyIdx + 1}/${groqKeys.length}${isFailover ? ' (Failover dự phòng)' : ''}`);
+
+        for (const model of groqModels) {
+          try {
+            const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${currentApiKey}`
+              },
+              body: JSON.stringify({ model, max_tokens: clientPayload.max_tokens || 1000, messages })
+            });
+            const data = await groqRes.json();
+            if (groqRes.ok && data.choices?.[0]?.message?.content) {
+              let text = data.choices[0].message.content;
+              text = text.replace(/\*+/g, '');
+              res.status(200).json({ content: [{ type: 'text', text }] });
+              return;
+            }
+            if (groqRes.status === 429) {
+              console.warn(`[Groq 429 Rate Limit] Luồng #${keyIdx + 1} hết hạn mức, đang tự động chuyển sang luồng tiếp theo...`);
+              break; // ngắt model để thử key tiếp theo ngay
+            }
+          } catch (err) {
+            console.error(`[Groq ${model} Error trên Luồng #${keyIdx + 1}]`, err.message);
           }
-        } catch (err) {
-          console.error(`[Groq ${model} Error]`, err);
         }
       }
     }
 
-    // ─── OPENROUTER (free models) ───
-    if (isValid(openrouterApiKey)) {
-      console.log('[Mode] OpenRouter API (fallback từ keyword)');
+    // ─── OPENROUTER POOL (Hỗ trợ nhiều key + Phân luồng theo Đội) ───
+    const openrouterKeys = parseKeyList(process.env.OPENROUTER_API_KEYS, process.env.OPENROUTER_API_KEY);
+    if (openrouterKeys.length > 0) {
+      const teamName = (clientPayload.team || 'guest').trim();
+      const startKeyIdx = getTeamKeyIndex(teamName, openrouterKeys.length);
       const messages = [];
       if (clientPayload.system) messages.push({ role: 'system', content: clientPayload.system });
       for (const m of (clientPayload.messages || [])) messages.push({ role: m.role, content: m.content });
 
-      const orRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${openrouterApiKey}` },
-        body: JSON.stringify({ model: 'meta-llama/llama-3.3-70b-instruct:free', max_tokens: clientPayload.max_tokens || 1000, messages })
-      });
-      const data = await orRes.json();
-      if (orRes.ok) {
-        let text = data.choices?.[0]?.message?.content || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
-        text = text.replace(/\*+/g, '');
-        res.status(200).json({ content: [{ type: 'text', text }] });
-        return;
+      for (let offset = 0; offset < openrouterKeys.length; offset++) {
+        const keyIdx = (startKeyIdx + offset) % openrouterKeys.length;
+        const currentApiKey = openrouterKeys[keyIdx];
+        try {
+          const orRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${currentApiKey}`
+            },
+            body: JSON.stringify({ model: 'meta-llama/llama-3.3-70b-instruct:free', max_tokens: clientPayload.max_tokens || 1000, messages })
+          });
+          const data = await orRes.json();
+          if (orRes.ok && data.choices?.[0]?.message?.content) {
+            let text = data.choices[0].message.content;
+            text = text.replace(/\*+/g, '');
+            res.status(200).json({ content: [{ type: 'text', text }] });
+            return;
+          }
+        } catch (err) {
+          console.error(`[OpenRouter Error trên Luồng #${keyIdx + 1}]`, err.message);
+        }
       }
     }
 

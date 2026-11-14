@@ -2252,7 +2252,8 @@ QUY TẮC BẮT BUỘC KHI TRẢ LỜI / GỢI Ý KHO BÁU CHẶNG 5:
             model: 'claude-sonnet-4-20250514',
             max_tokens: 1000,
             system: PROMPTS[st],
-            messages: apiMessages
+            messages: apiMessages,
+            team: APP.team || 'guest'
           })
         });
         const data = await res.json();

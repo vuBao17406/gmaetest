@@ -246,7 +246,32 @@ switch (station) {
 // ═══════════════════════════════════════════════════════════
 // GROQ API PROXY
 // ═══════════════════════════════════════════════════════════
-async function handleGroq(groqApiKey, clientPayload) {
+// ═══════════════════════════════════════════════════════════
+// HỖ TRỢ PHÂN LUỒNG NHIỀU API KEY THEO ĐỘI CHƠI (LOAD BALANCING + FAILOVER)
+// ═══════════════════════════════════════════════════════════
+function parseKeyList(envListVal, envSingleVal) {
+  const combined = (envListVal || '') + ',' + (envSingleVal || '');
+  return combined
+    .split(/[,;\n]+/)
+    .map(k => k.trim())
+    .filter(k => k && !k.startsWith('your_') && k.length > 5);
+}
+
+function getTeamKeyIndex(teamName, totalKeys) {
+  if (!teamName || totalKeys <= 1) return 0;
+  let hash = 0;
+  for (let i = 0; i < teamName.length; i++) {
+    hash = ((hash << 5) - hash) + teamName.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash) % totalKeys;
+}
+
+async function handleGroq(groqKeysInput, clientPayload) {
+  const groqKeys = Array.isArray(groqKeysInput) ? groqKeysInput : [groqKeysInput];
+  const teamName = (clientPayload.team || 'guest').trim();
+  const startKeyIdx = getTeamKeyIndex(teamName, groqKeys.length);
+
   const messages = [];
   if (clientPayload.system) {
     messages.push({ role: 'system', content: clientPayload.system });
@@ -256,49 +281,47 @@ async function handleGroq(groqApiKey, clientPayload) {
   }
 
   const groqModels = ['openai/gpt-oss-120b', 'qwen/qwen3.8-27b', 'llama-3.3-70b-versatile', 'openai/gpt-oss-20b'];
-  for (const model of groqModels) {
-    try {
-      const groqPayload = {
-        model: model,
-        max_tokens: clientPayload.max_tokens || 1000,
-        messages: messages
-      };
 
-      const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${groqApiKey}`
-        },
-        body: JSON.stringify(groqPayload)
-      });
+  for (let offset = 0; offset < groqKeys.length; offset++) {
+    const keyIdx = (startKeyIdx + offset) % groqKeys.length;
+    const currentApiKey = groqKeys[keyIdx];
+    const isFailover = offset > 0;
+    console.log(`[Groq Pool] Đội "${teamName}" -> Luồng/Key #${keyIdx + 1}/${groqKeys.length}${isFailover ? ' (Failover dự phòng)' : ''}`);
 
-      if (groqResponse.ok) {
-        return groqResponse;
+    for (const model of groqModels) {
+      try {
+        const groqPayload = {
+          model: model,
+          max_tokens: clientPayload.max_tokens || 1000,
+          messages: messages
+        };
+
+        const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${currentApiKey}`
+          },
+          body: JSON.stringify(groqPayload)
+        });
+
+        if (groqResponse.ok) {
+          return groqResponse;
+        }
+
+        if (groqResponse.status === 429) {
+          console.warn(`[Groq 429 Rate Limit] Luồng #${keyIdx + 1} hết hạn mức, đang chuyển sang luồng tiếp theo...`);
+          break; // chuyển sang key tiếp theo ngay
+        }
+      } catch (err) {
+        console.error(`[Groq ${model} Error trên Luồng #${keyIdx + 1}]`, err.message);
       }
-    } catch (e) {
-      console.error(`[Groq ${model} Error]`, e);
     }
   }
 
-  // Cuối cùng thử model mặc định
-  return fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${groqApiKey}`
-    },
-    body: JSON.stringify({
-      model: 'openai/gpt-oss-120b',
-      max_tokens: clientPayload.max_tokens || 1000,
-      messages: messages
-    })
-  });
+  return { ok: false, json: async () => ({ error: 'All Groq keys failed' }) };
 }
 
-// ═══════════════════════════════════════════════════════════
-// OPENROUTER API PROXY
-// ═══════════════════════════════════════════════════════════
 async function handleOpenRouter(openrouterApiKey, clientPayload) {
   const messages = [];
   if (clientPayload.system) {
@@ -400,15 +423,13 @@ const server = http.createServer(async (req, res) => {
 
         const geminiApiKey = process.env.GEMINI_API_KEY;
         const anthropicApiKey = process.env.ANTHROPIC_API_KEY;
-        const groqApiKey = process.env.GROQ_API_KEY;
-        const openrouterApiKey = process.env.OPENROUTER_API_KEY;
-
+        const groqKeys = parseKeyList(process.env.GROQ_API_KEYS, process.env.GROQ_API_KEY);
+        const openrouterKeys = parseKeyList(process.env.OPENROUTER_API_KEYS, process.env.OPENROUTER_API_KEY);
         const isValid = k => k && !k.startsWith('your_') && k !== '';
 
-        // ─── GROQ (free, no card needed) ───
-        if (isValid(groqApiKey)) {
-          console.log('[Mode] Groq API');
-          const groqRes = await handleGroq(groqApiKey, clientPayload);
+        // ─── GROQ POOL (Chia luồng theo Đội + Tự động Failover) ───
+        if (groqKeys.length > 0) {
+          const groqRes = await handleGroq(groqKeys, clientPayload);
           const data = await groqRes.json();
           if (groqRes.ok) {
             let text = data.choices?.[0]?.message?.content || 'Tín hiệu nhiễu... Thử lại nhé! 📡';
