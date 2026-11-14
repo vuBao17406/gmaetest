@@ -269,7 +269,7 @@ module.exports = async (req, res) => {
       if (clientPayload.system) messages.push({ role: 'system', content: clientPayload.system });
       for (const m of (clientPayload.messages || [])) messages.push({ role: m.role, content: m.content });
 
-      const groqModels = ['openai/gpt-oss-120b', 'qwen/qwen3.8-27b', 'llama-3.3-70b-versatile', 'openai/gpt-oss-20b'];
+      const groqModels = ['qwen/qwen3.8-27b', 'openai/gpt-oss-120b', 'openai/gpt-oss-20b'];
 
       for (let offset = 0; offset < groqKeys.length; offset++) {
         const keyIdx = (startKeyIdx + offset) % groqKeys.length;
